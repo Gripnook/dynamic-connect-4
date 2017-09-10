@@ -76,18 +76,32 @@ private:
     bool checkRows(int32_t player, const StateType& state) const
     {
         for (size_t i = 0; i < boardSize; ++i)
-            for (size_t j = 0; j < boardSize; ++j)
-                if (state.board[i][j] != player)
-                    return false;
+            if (checkRow(player, state, i))
+                return true;
+        return false;
+    }
+
+    bool checkRow(int32_t player, const StateType& state, size_t row) const
+    {
+        for (size_t i = 0; i < boardSize; ++i)
+            if (state.board[row][i] != player)
+                return false;
         return true;
     }
 
     bool checkColumns(int32_t player, const StateType& state) const
     {
         for (size_t i = 0; i < boardSize; ++i)
-            for (size_t j = 0; j < boardSize; ++j)
-                if (state.board[j][i] != player)
-                    return false;
+            if (checkColumn(player, state, i))
+                return true;
+        return false;
+    }
+
+    bool checkColumn(int32_t player, const StateType& state, size_t col) const
+    {
+        for (size_t i = 0; i < boardSize; ++i)
+            if (state.board[i][col] != player)
+                return false;
         return true;
     }
 
