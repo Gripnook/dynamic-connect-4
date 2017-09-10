@@ -1,0 +1,311 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+
+<title>Assignment #1</title>
+<!--  ------------------------------------------------------------ -->
+
+        <link rel="stylesheet" type="text/css" href="Assignment%20%231_files/style01.css">
+
+<!--  ------------------------------------------------------------ -->
+</head><body bgcolor="#ffffff"> 
+
+<h1> Assignment #1: Dynamic Connect-4 </h1>
+<h3> Due: Qualifying submission by September 26; final submission by September 28</h3>
+
+<p>
+This assignment is to be done <b>individually</b>.
+
+</p><p>
+<img src="Assignment%20%231_files/h_line.gif">
+
+
+</p><h2>Academic Integrity</h2>
+
+<p>
+<i>
+The following is offered with apologies to the vast majority of
+students who do their work honestly and take their university learning
+seriously:
+</i>
+
+</p><p>
+Your instructor takes academic integrity seriously and has no
+tolerance for plagiarism or any other form of academic misconduct.
+Failure to respect these guidelines will result in you receiving a
+grade of <b>zero</b> on this assignment.
+
+</p><p>
+Acceptable collaboration between students, provided it is acknowledged explicitly in your report and code, might include:
+
+</p><ol>
+<li> discussing some aspect of the assignment specifications in attempting to understand a particular point
+</li><li> discussing high-level features of your heuristic
+</li><li> discussing a problem you encountered while implementing the alpha-beta pruning algorithm as described in the course text
+</li></ol>
+
+Sharing of any computer code between students, or re-using any code from a third party (e.g., open source) is acceptable, <b>provided that you indicate this explicitly at the start of your report and (as comments) in the source code</b>.  In this case, only the portion of work that you did <b>individually</b> will be considered toward your grade. 
+
+<p>
+<b>Unacceptable collaboration</b> and violations of academic integrity include, but are not limited to:
+
+</p><ol>
+<li> including any code that was not your own and failing to indicate so
+</li><li> copying part of another student's report
+</li></ol>
+
+If you are uncertain about any of these guidelines, please discuss with your instructor as soon as possible.
+
+<p>
+<img src="Assignment%20%231_files/h_line.gif">
+
+</p><h2>Introduction</h2>
+
+<p>
+The game of "dynamic connect-4" is played on a 7x7 grid as follows:
+Starting from the initial position illustrated below, players take turns
+moving one piece of their colour by one square, either horizontally
+or vertically.  White plays first.  Pieces can only move to unoccupied
+squares.  
+The winner is the first player to line up <b>four</b> of its 
+pieces either horizontally, vertically, or diagonally. 
+
+<br>
+<img src="Assignment%20%231_files/dyncon4.png">
+</p>
+
+<h2> Game Agent</h2>
+
+<p> 
+  Implement a game-playing agent to play the game of dynamic
+  connect-4. Your agent must be capable of playing
+  either white or black. The time limit for your agent to output its
+  move is 20 seconds.
+  It is strongly suggested that you display the game state using 
+  the text representation of a 
+  matrix of comma-separated characters, with O denoting a white piece, X
+  denoting a black piece, and suitably formatted whitespace denoting an
+  empty square.  For example, the starting board configuration above
+  would be represented as follows:
+</p>
+
+<pre>  1 2 3 4 5 6 7
+  1  , , , , , ,X
+  2 X, , , , , ,O
+  3 O, , , , , ,X
+  4 X, , , , , ,O
+  5 O, , , , , ,X
+  6 X, , , , , ,O
+  7 O, , , , , ,
+</pre>
+
+<p>
+  Each square in the grid can be labeled by its &lt;x,y&gt; position,
+  with &lt;1,1&gt; corresponding to the top-left square.  Moves are entered 
+  by specifying the position of the piece to move in the form &lt;x,y&gt;
+  followed by one of the cardinal directions <tt>N, S, E, W</tt>.
+</p>
+
+<p> 
+For example, to move the black piece at the top right of the board one
+square to the left, the command would be <tt>71W</tt>.  These commands
+will be exchanged, either with a human opponent or an AI competitor,
+through the <a href="http://www.cim.mcgill.ca/%7Ejer/courses/ai/assignments/gameserver.tgz">game server</a> for which a
+sample client is provided in C.  Note that each string sent to the
+game server must terminate with a carriage return ("\n"); this is done
+to facilitate testing by hand,
+e..g., using <tt>telnet &lt;server host address&gt; 12345</tt>. For the
+purposes of human-readability, your agent should echo to screen each
+of the moves being played.
+</p>
+<!-- 
+     For this part of the assignment you <b>must</b> evaluate game states
+     as being either a win (+1), a loss (-1), or a neutral state (0). 
+     Implement both the minimax and alpha-beta algorithms. Also, 
+  -->
+
+<h2>Testing</h2>
+
+<p>
+  Your program should have an option for specifying the initial game
+  state (either through an input file or manually, as you wish). This
+  will be used to test your program with specific game scenarios.
+</p>
+
+<h2> Suggested Development Strategy</h2>
+
+<p>
+Start with minimax, and verify your implementation is working
+correctly.  Initially, you should consider only the simple evaluation
+function of +1 for a win, -1 for a loss at terminal nodes.  Next,
+incorporate alpha-beta pruning to reduce the search space. 
+</p>
+
+<p>
+Obviously, the simple evaluation function can only make intelligent
+moves when its look-ahead horizon detects a sequence leading to a
+guaranteed win.  However, since your agent typically won't be able to
+search that deep in the tree, it is necessary to cut off the search at
+non-terminal nodes, and use a heuristic evaluation function to provide a
+meaningful value representing the "goodness" of the corresponding
+state.  The quality of your heuristic function will determine how well
+your agent plays the game.
+</p>
+
+
+
+<h2> Additional notes </h2>
+
+<p>
+You may program your assignment in any computer language of your
+preference, provided it can be compiled and run on the Trottier
+Engineering Linux machines (156TRLinux.ece.mcgill.ca). Note that to ensure a "level playing field",
+we will use these for the class tournament, so you should tune your
+program's search depth to respect the time limit per move (see above)
+on these machines. To login, use your McGill UEA
+(first.last@mail.mcgill.ca).
+</p>
+
+<h2>Report</h2>
+
+<p>
+Your report should address the following questions:
+</p>
+
+<ol>
+  <li> Consider the three game states shown below:
+    <table>
+      <tbody><tr>
+	  <td>
+
+<pre> , , , , , , 
+ , , , , , , 
+O, ,X, , , , 
+ , , ,O, , ,X
+ , , , ,O,X,X
+ , ,O, , ,O,X
+ , , ,X,O, , 
+
+     (a)
+</pre>
+</td>
+<td width="50">&nbsp;</td>
+<td>
+<pre>O,O, , , , , 
+X, , , , , , 
+ , ,X, , ,O, 
+ , ,X,O, , ,X
+ , , , ,O,X,
+ ,X, , , , , 
+O, , , , , , 
+
+     (b)
+</pre>
+</td>
+<td width="50">&nbsp;</td>
+<td>
+<pre> , ,O, ,X, , 
+ , ,O, ,X, , 
+ , ,X, ,O, , 
+ , ,X, ,O, , 
+ , , , , , , 
+ , ,O, ,X, , 
+ , ,X, ,O, , 
+
+     (c)
+</pre>
+	  </td>
+	</tr>
+    </tbody></table>
+
+    For each of these configurations, graph the total number of states
+    explored by your program when using depth cutoffs of 3, 4, 5 and
+    6, both with minimax and alpha-beta. Assume it is white's turn to
+    play.    
+  </li>
+
+  <li>
+    Estimate a formula that relates the depth cutoff to the
+    number of states visited for each of minimax and alpha-beta
+    algorithms.
+  </li>
+
+  <li> Explain whether the number of states explored depends on the
+    order in which you generate new states during the search. Justify
+    your response using results from your program.
+  </li>
+
+  <li> Explain the heuristic evaluation function you used and
+    provides a clear rationale for the factors you included.
+  </li>
+
+  <li> Discuss the computational trade-offs with respect to the use
+    of a more complex evaluation function and the depth of the game
+    tree that can be evaluated.
+  </li>
+</ol>
+
+<h2> Submitting your assignment</h2>
+
+<!--
+<a name="hardcopy"></a>
+
+<p>
+You must submit, at the start of class on the due date, a brief
+hardcopy report that explains the design decisions you made and
+addresses the items noted above.  Avoid discussion of the
+alpha-beta pruning algorithm as you didn't design it and we are
+already familiar with it.  Remember that your report is the main
+method of communicating what you have accomplished to the reader.
+Therefore, make sure that it is well organized and well written; you
+will lose marks for spelling errors and poor grammar.  The report
+should be a maximum of three pages in length; <em>anything beyond the
+three-page limit will not be read</em>.  You are welcome to include
+illustrations, such as game state diagrams, to elucidate the text.  A
+hardcopy of your source code should be included as an appendix.
+-->
+
+<p>Your assignment must be submitted through <a href="http://moodle.cim.mcgill.ca/">moodle</a> to allow for peer- and self-assessment.  The submission must contain:
+</p>
+
+<ul>
+  <li> a softcopy of your report</li>
+  
+  <li>
+    all of the source code ready to be compiled or interpreted on the
+    Trottier Engineering Linux machines
+  </li>
+
+  <li>
+    a Makefile as relevant 
+  </li>
+</ul>
+
+
+<p></p><h2> Marking scheme </h2>
+
+<table cellspacing="2" bordercolor="#000000" border="1">
+<tbody><tr><td valign="middle"> <b><font color="#000080">Component</font></b><font color="#000080"></font></td>
+<td valign="middle"> <b><font color="#000080">Weight</font></b><font color="#000080"></font></td>
+</tr>
+
+<tr><td> Question 1</td><td>5</td></tr>
+<tr><td> Question 2</td><td>2</td></tr>
+<tr><td> Question 3</td><td>5</td></tr>
+<tr><td> Question 4</td><td>5</td></tr>
+<tr><td> Question 5</td><td>4</td></tr>
+<tr><td> Code and documentation</td><td>3</td></tr>
+<tr><td> Tournament</td><td>3</td></tr>
+<tr><td> <b>Total</b></td><td><b>25</b></td></tr>
+</tbody></table>
+
+<p>
+<img src="Assignment%20%231_files/h_line.gif">
+
+</p><p>
+<i>
+Original specifications by Stéphane Pelletier and Jeremy Cooperstock<br>
+Last updated on 5 September 2017
+</i>
+
+</p>
+</body></html>
