@@ -3,7 +3,6 @@
 #include <vector>
 #include <array>
 #include <set>
-#include <cstdint>
 #include <utility>
 #include <tuple>
 #include <algorithm>
@@ -13,20 +12,20 @@
 class DynamicConnect4
 {
 public:
-    static const size_t boardSize = 7;
-    static const size_t piecesPerPlayer = 6;
+    static const int boardSize = 7;
+    static const int piecesPerPlayer = 6;
 
     struct StateType
     {
-        int32_t player{1};
-        std::array<std::pair<size_t, size_t>, piecesPerPlayer> whitePieces{
+        int player{1};
+        std::array<std::pair<int, int>, piecesPerPlayer> whitePieces{
             {std::make_pair(0, 2),
              std::make_pair(0, 4),
              std::make_pair(0, 6),
              std::make_pair(6, 1),
              std::make_pair(6, 3),
              std::make_pair(6, 5)}};
-        std::array<std::pair<size_t, size_t>, piecesPerPlayer> blackPieces{
+        std::array<std::pair<int, int>, piecesPerPlayer> blackPieces{
             {std::make_pair(0, 1),
              std::make_pair(0, 3),
              std::make_pair(0, 5),
@@ -43,7 +42,7 @@ public:
         south
     };
 
-    using ActionType = std::tuple<size_t, size_t, Direction>;
+    using ActionType = std::tuple<int, int, Direction>;
     using EvalType = double;
 
     std::vector<ActionType> getActions(const StateType& state) const
@@ -121,12 +120,12 @@ private:
             checkDiagonals(player, state) || checkAntiDiagonals(player, state);
     }
 
-    bool checkRows(int32_t player, const StateType& state) const
+    bool checkRows(int player, const StateType& state) const
     {
         auto pieces = player == 1 ? state.whitePieces : state.blackPieces;
         std::sort(std::begin(pieces), std::end(pieces));
-        size_t row = -1, col = -1;
-        size_t count = 0;
+        int row = -1, col = -1;
+        int count = 0;
         for (const auto& piece : pieces)
         {
             if (piece.first == row && piece.second == col + 1)
@@ -141,19 +140,18 @@ private:
         return false;
     }
 
-    bool checkColumns(int32_t player, const StateType& state) const
+    bool checkColumns(int player, const StateType& state) const
     {
         auto pieces = player == 1 ? state.whitePieces : state.blackPieces;
         std::sort(
             std::begin(pieces),
             std::end(pieces),
-            [](const std::pair<size_t, size_t>& lhs,
-               const std::pair<size_t, size_t>& rhs) {
+            [](const std::pair<int, int>& lhs, const std::pair<int, int>& rhs) {
                 return lhs.second == rhs.second ? lhs.first < rhs.first :
                                                   lhs.second < rhs.second;
             });
-        size_t row = -1, col = -1;
-        size_t count = 0;
+        int row = -1, col = -1;
+        int count = 0;
         for (const auto& piece : pieces)
         {
             if (piece.first == row + 1 && piece.second == col)
@@ -168,21 +166,20 @@ private:
         return false;
     }
 
-    bool checkDiagonals(int32_t player, const StateType& state) const
+    bool checkDiagonals(int player, const StateType& state) const
     {
         auto pieces = player == 1 ? state.whitePieces : state.blackPieces;
         std::sort(
             std::begin(pieces),
             std::end(pieces),
-            [&](const std::pair<size_t, size_t>& lhs,
-                const std::pair<size_t, size_t>& rhs) {
+            [&](const std::pair<int, int>& lhs, const std::pair<int, int>& rhs) {
                 auto lhsDiag = boardSize + lhs.first - lhs.second;
                 auto rhsDiag = boardSize + rhs.first - rhs.second;
                 return lhsDiag == rhsDiag ? lhs.first < rhs.first :
                                             lhsDiag < rhsDiag;
             });
-        size_t diag = -1, row = -1;
-        size_t count = 0;
+        int diag = -1, row = -1;
+        int count = 0;
         for (const auto& piece : pieces)
         {
             if (boardSize + piece.first - piece.second == diag &&
@@ -198,21 +195,20 @@ private:
         return false;
     }
 
-    bool checkAntiDiagonals(int32_t player, const StateType& state) const
+    bool checkAntiDiagonals(int player, const StateType& state) const
     {
         auto pieces = player == 1 ? state.whitePieces : state.blackPieces;
         std::sort(
             std::begin(pieces),
             std::end(pieces),
-            [](const std::pair<size_t, size_t>& lhs,
-               const std::pair<size_t, size_t>& rhs) {
+            [](const std::pair<int, int>& lhs, const std::pair<int, int>& rhs) {
                 auto lhsAntiDiag = lhs.first + lhs.second;
                 auto rhsAntiDiag = rhs.first + rhs.second;
                 return lhsAntiDiag == rhsAntiDiag ? lhs.first < rhs.first :
                                                     lhsAntiDiag < rhsAntiDiag;
             });
-        size_t antiDiag = -1, row = -1;
-        size_t count = 0;
+        int antiDiag = -1, row = -1;
+        int count = 0;
         for (const auto& piece : pieces)
         {
             if (piece.first + piece.second == antiDiag && piece.first == row + 1)
@@ -227,14 +223,14 @@ private:
         return false;
     }
 
-    int32_t other(int32_t player) const
+    int other(int player) const
     {
         return player == 1 ? 2 : 1;
     }
 
-    int32_t get(const StateType& state, size_t x, size_t y) const
+    int get(const StateType& state, int x, int y) const
     {
-        if (x >= boardSize || y >= boardSize)
+        if (x < 0 || x >= boardSize || y < 0 || y >= boardSize)
             return -1;
         for (const auto& piece : state.whitePieces)
         {

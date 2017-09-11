@@ -7,13 +7,15 @@
 #include <algorithm>
 
 #include "dynamic-connect-4.h"
-#include "iterative-alpha-beta.h"
 #include "heuristics.h"
+#include "minimax.h"
+#include "alpha-beta.h"
+#include "iterative-alpha-beta.h"
 
 using Game = DynamicConnect4;
 
-std::pair<int32_t, int32_t> parse(int argc, char** argv);
-void playGame(int32_t timeLimitInMs, int32_t humanPlayer);
+std::pair<int, int> parse(int argc, char** argv);
+void playGame(int timeLimitInMs, int humanPlayer);
 Game::ActionType getPlayerAction(const Game& game, const Game::StateType& state);
 void print(const Game::StateType& state);
 
@@ -24,13 +26,13 @@ int main(int argc, char** argv)
     return 0;
 }
 
-std::pair<int32_t, int32_t> parse(int argc, char** argv)
+std::pair<int, int> parse(int argc, char** argv)
 {
-    int32_t timeLimitInMs = 20000;
-    int32_t humanPlayer = 0;
+    int timeLimitInMs = 20000;
+    int humanPlayer = 0;
     if (argc > 1)
     {
-        int32_t temp;
+        int temp;
         std::stringstream ss{argv[1]};
         if (ss >> temp)
             timeLimitInMs = temp;
@@ -45,7 +47,7 @@ std::pair<int32_t, int32_t> parse(int argc, char** argv)
     return std::make_pair(timeLimitInMs, humanPlayer);
 }
 
-void playGame(int32_t timeLimitInMs, int32_t humanPlayer)
+void playGame(int timeLimitInMs, int humanPlayer)
 {
     Game game;
     IterativeAlphaBeta<Game> search{game, timeLimitInMs};
@@ -88,7 +90,7 @@ void playGame(int32_t timeLimitInMs, int32_t humanPlayer)
 Game::ActionType getPlayerAction(const Game& game, const Game::StateType& state)
 {
     char xc, yc, dirc;
-    size_t x, y;
+    int x, y;
     Game::Direction dir;
     auto actions = game.getActions(state);
     std::cout << "Enter an action > ";
@@ -142,10 +144,10 @@ Game::ActionType getPlayerAction(const Game& game, const Game::StateType& state)
 void print(const Game::StateType& state)
 {
     std::cout << "  1 2 3 4 5 6 7" << std::endl;
-    for (size_t y = 0; y < Game::boardSize; ++y)
+    for (int y = 0; y < Game::boardSize; ++y)
     {
         std::cout << (y + 1) << " ";
-        for (size_t x = 0; x < Game::boardSize; ++x)
+        for (int x = 0; x < Game::boardSize; ++x)
         {
             if (std::find(
                     std::begin(state.whitePieces),

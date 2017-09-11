@@ -6,7 +6,6 @@
 #include <utility>
 #include <functional>
 #include <chrono>
-#include <cstdint>
 
 template <typename Game>
 class IterativeAlphaBeta
@@ -17,21 +16,21 @@ public:
     using Eval = typename Game::EvalType;
     using Heuristic = std::function<Eval(const State&)>;
 
-    IterativeAlphaBeta(Game& game, int32_t timeLimitInMs)
-        : game(game), timeLimitInMs(timeLimitInMs)
+    IterativeAlphaBeta(Game& game, int timeLimitInMs)
+        : game{game}, timeLimitInMs{timeLimitInMs}
     {
     }
 
     Action searchMax(const State& state, Heuristic heuristic)
     {
-        count = 0;
+        count = 1;
         this->heuristic = heuristic;
         startTime = std::chrono::high_resolution_clock::now();
 
         auto actions = game.getActions(state);
         std::map<Action, Eval> values;
 
-        for (size_t depth = 1;; ++depth)
+        for (int depth = 1;; ++depth)
         {
             maxDepth = depth;
 
@@ -70,14 +69,14 @@ public:
 
     Action searchMin(const State& state, Heuristic heuristic)
     {
-        count = 0;
+        count = 1;
         this->heuristic = heuristic;
         startTime = std::chrono::high_resolution_clock::now();
 
         auto actions = game.getActions(state);
         std::map<Action, Eval> values;
 
-        for (size_t depth = 1;; ++depth)
+        for (int depth = 1;; ++depth)
         {
             maxDepth = depth;
 
@@ -114,27 +113,27 @@ public:
         }
     }
 
-    size_t getLastCount() const
+    int getLastCount() const
     {
         return count;
     }
 
-    size_t getLastDepth() const
+    int getLastDepth() const
     {
         return depth;
     }
 
 private:
     Game& game;
-    size_t maxDepth;
-    size_t count{0};
-    size_t depth{0};
+    int maxDepth;
+    int count{0};
+    int depth{0};
     Heuristic heuristic;
 
-    int32_t timeLimitInMs;
+    int timeLimitInMs;
     std::chrono::high_resolution_clock::time_point startTime;
 
-    Eval maxValue(const State& state, Eval alpha, Eval beta, size_t depth)
+    Eval maxValue(const State& state, Eval alpha, Eval beta, int depth)
     {
         ++count;
         if (game.isTerminal(state))
@@ -158,7 +157,7 @@ private:
         return value;
     }
 
-    Eval minValue(const State& state, Eval alpha, Eval beta, size_t depth)
+    Eval minValue(const State& state, Eval alpha, Eval beta, int depth)
     {
         ++count;
         if (game.isTerminal(state))

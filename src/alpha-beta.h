@@ -1,9 +1,10 @@
 #pragma once
 
+#include <map>
 #include <limits>
 #include <algorithm>
 #include <utility>
-#include <map>
+#include <functional>
 
 template <typename Game>
 class AlphaBeta
@@ -12,19 +13,22 @@ public:
     using State = typename Game::StateType;
     using Action = typename Game::ActionType;
     using Eval = typename Game::EvalType;
+    using Heuristic = std::function<Eval(const State&)>;
 
-    AlphaBeta(Game game) : game{game}
+    AlphaBeta(Game& game, int maxDepth) : game{game}, maxDepth{maxDepth}
     {
     }
 
-    Action searchMax(const State& state)
+    Action searchMax(const State& state, Heuristic heuristic)
     {
+        count = 1;
+        this->heuristic = heuristic;
+
         auto alpha = std::numeric_limits<Eval>::lowest();
         auto beta = std::numeric_limits<Eval>::max();
 
-        auto actions = sortByMaxAction(game.getActions(state), state);
-        if (actions.empty())
-            throw std::runtime_error("no actions possible");
+        auto actions =
+            heuristicSort(game.getActions(state), state, std::greater<Eval>{});
         auto bestAction =
             std::make_pair(actions.front(), std::numeric_limits<Eval>::lowest());
         for (const auto& action : actions)
@@ -37,14 +41,16 @@ public:
         return bestAction.first;
     }
 
-    Action searchMin(const State& state)
+    Action searchMin(const State& state, Heuristic heuristic)
     {
+        count = 1;
+        this->heuristic = heuristic;
+
         auto alpha = std::numeric_limits<Eval>::lowest();
         auto beta = std::numeric_limits<Eval>::max();
 
-        auto actions = sortByMinAction(game.getActions(state), state);
-        if (actions.empty())
-            throw std::runtime_error("no actions possible");
+        auto actions =
+            heuristicSort(game.getActions(state), state, std::less<Eval>{});
         auto bestAction =
             std::make_pair(actions.front(), std::numeric_limits<Eval>::max());
         for (const auto& action : actions)
@@ -57,12 +63,17 @@ public:
         return bestAction.first;
     }
 
-    Eval maxValue(const State& state, Eval alpha, Eval beta, size_t depth)
+    Eval maxValue(const State& state, Eval alpha, Eval beta, int depth)
     {
-        if (game.cutoffTest(state, depth))
-            return game.eval(state);
+        ++count;
+        if (game.isTerminal(state))
+            return game.getUtility(state);
+        else if (depth > maxDepth)
+            return heuristic(state);
+
         auto value = std::numeric_limits<Eval>::lowest();
-        auto actions = sortByMaxAction(game.getActions(state), state);
+        auto actions =
+            heuristicSort(game.getActions(state), state, std::greater<Eval>{});
         for (const auto& action : actions)
         {
             value = std::max(
@@ -75,12 +86,17 @@ public:
         return value;
     }
 
-    Eval minValue(const State& state, Eval alpha, Eval beta, size_t depth)
+    Eval minValue(const State& state, Eval alpha, Eval beta, int depth)
     {
-        if (game.cutoffTest(state, depth))
-            return game.eval(state);
+        ++count;
+        if (game.isTerminal(state))
+            return game.getUtility(state);
+        else if (depth > maxDepth)
+            return heuristic(state);
+
         auto value = std::numeric_limits<Eval>::max();
-        auto actions = sortByMinAction(game.getActions(state), state);
+        auto actions =
+            heuristicSort(game.getActions(state), state, std::less<Eval>{});
         for (const auto& action : actions)
         {
             value = std::min(
@@ -93,35 +109,30 @@ public:
         return value;
     }
 
-private:
-    Game game;
-
-    std::vector<Action>
-        sortByMaxAction(std::vector<Action> actions, const State& state) const
+    int getLastCount() const
     {
-        std::map<Action, Eval> values;
-        for (const auto& action : actions)
-            values[action] = game.eval(game.getResult(state, action));
-        std::sort(
-            std::begin(actions),
-            std::end(actions),
-            [&](const auto& lhs, const auto& rhs) {
-                return values[lhs] > values[rhs];
-            });
-        return actions;
+        return count;
     }
 
-    std::vector<Action>
-        sortByMinAction(std::vector<Action> actions, const State& state) const
+private:
+    Game& game;
+    int maxDepth;
+    int count{0};
+    Heuristic heuristic;
+
+    std::vector<Action> heuristicSort(
+        std::vector<Action> actions,
+        const State& state,
+        std::function<bool(Eval, Eval)> comp) const
     {
         std::map<Action, Eval> values;
         for (const auto& action : actions)
-            values[action] = game.eval(game.getResult(state, action));
+            values[action] = heuristic(game.getResult(state, action));
         std::sort(
             std::begin(actions),
             std::end(actions),
-            [&](const auto& lhs, const auto& rhs) {
-                return values[lhs] < values[rhs];
+            [&](const Action& lhs, const Action& rhs) {
+                return comp(values[lhs], values[rhs]);
             });
         return actions;
     }

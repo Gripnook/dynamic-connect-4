@@ -1,5 +1,7 @@
 #pragma once
 
+#include "dynamic-connect-4.h"
+
 using StateType = typename DynamicConnect4::StateType;
 using ActionType = typename DynamicConnect4::ActionType;
 using EvalType = typename DynamicConnect4::EvalType;
@@ -10,7 +12,7 @@ class Heuristic
 public:
     template <typename... EvalTypes>
     Heuristic(EvalType weight, EvalTypes... others)
-        : weight(weight), others(others...)
+        : weight{weight}, others{others...}
     {
     }
 
@@ -29,7 +31,7 @@ template <typename T>
 class Heuristic<T>
 {
 public:
-    Heuristic(EvalType weight) : weight(weight)
+    Heuristic(EvalType weight) : weight{weight}
     {
     }
 
@@ -56,13 +58,13 @@ public:
     }
 
 private:
-    EvalType evalRows(int32_t player, const StateType& state) const
+    EvalType evalRows(int player, const StateType& state) const
     {
         EvalType result = 0;
         auto pieces = player == 1 ? state.whitePieces : state.blackPieces;
         std::sort(std::begin(pieces), std::end(pieces));
-        size_t row = -1, col = -1;
-        size_t count = 0;
+        int row = -1, col = -1;
+        int count = 0;
         for (const auto& piece : pieces)
         {
             if (piece.first == row && piece.second == col + 1)
@@ -76,20 +78,19 @@ private:
         return result;
     }
 
-    EvalType evalColumns(int32_t player, const StateType& state) const
+    EvalType evalColumns(int player, const StateType& state) const
     {
         EvalType result = 0;
         auto pieces = player == 1 ? state.whitePieces : state.blackPieces;
         std::sort(
             std::begin(pieces),
             std::end(pieces),
-            [](const std::pair<size_t, size_t>& lhs,
-               const std::pair<size_t, size_t>& rhs) {
+            [](const std::pair<int, int>& lhs, const std::pair<int, int>& rhs) {
                 return lhs.second == rhs.second ? lhs.first < rhs.first :
                                                   lhs.second < rhs.second;
             });
-        size_t row = -1, col = -1;
-        size_t count = 0;
+        int row = -1, col = -1;
+        int count = 0;
         for (const auto& piece : pieces)
         {
             if (piece.first == row + 1 && piece.second == col)
@@ -103,15 +104,14 @@ private:
         return result;
     }
 
-    EvalType evalDiagonals(int32_t player, const StateType& state) const
+    EvalType evalDiagonals(int player, const StateType& state) const
     {
         EvalType result = 0;
         auto pieces = player == 1 ? state.whitePieces : state.blackPieces;
         std::sort(
             std::begin(pieces),
             std::end(pieces),
-            [&](const std::pair<size_t, size_t>& lhs,
-                const std::pair<size_t, size_t>& rhs) {
+            [&](const std::pair<int, int>& lhs, const std::pair<int, int>& rhs) {
                 auto lhsDiag =
                     DynamicConnect4::boardSize + lhs.first - lhs.second;
                 auto rhsDiag =
@@ -119,8 +119,8 @@ private:
                 return lhsDiag == rhsDiag ? lhs.first < rhs.first :
                                             lhsDiag < rhsDiag;
             });
-        size_t diag = -1, row = -1;
-        size_t count = 0;
+        int diag = -1, row = -1;
+        int count = 0;
         for (const auto& piece : pieces)
         {
             if (DynamicConnect4::boardSize + piece.first - piece.second == diag &&
@@ -135,22 +135,21 @@ private:
         return result;
     }
 
-    EvalType evalAntiDiagonals(int32_t player, const StateType& state) const
+    EvalType evalAntiDiagonals(int player, const StateType& state) const
     {
         EvalType result = 0;
         auto pieces = player == 1 ? state.whitePieces : state.blackPieces;
         std::sort(
             std::begin(pieces),
             std::end(pieces),
-            [](const std::pair<size_t, size_t>& lhs,
-               const std::pair<size_t, size_t>& rhs) {
+            [](const std::pair<int, int>& lhs, const std::pair<int, int>& rhs) {
                 auto lhsAntiDiag = lhs.first + lhs.second;
                 auto rhsAntiDiag = rhs.first + rhs.second;
                 return lhsAntiDiag == rhsAntiDiag ? lhs.first < rhs.first :
                                                     lhsAntiDiag < rhsAntiDiag;
             });
-        size_t antiDiag = -1, row = -1;
-        size_t count = 0;
+        int antiDiag = -1, row = -1;
+        int count = 0;
         for (const auto& piece : pieces)
         {
             if (piece.first + piece.second == antiDiag && piece.first == row + 1)
@@ -174,7 +173,7 @@ public:
     }
 
 private:
-    EvalType evalProximity(int32_t player, const StateType& state) const
+    EvalType evalProximity(int player, const StateType& state) const
     {
         auto& pieces = player == 1 ? state.whitePieces : state.blackPieces;
         auto maxRow =
@@ -184,16 +183,16 @@ private:
         auto maxCol = std::max_element(
                           std::begin(pieces),
                           std::end(pieces),
-                          [](const std::pair<size_t, size_t>& lhs,
-                             const std::pair<size_t, size_t>& rhs) {
+                          [](const std::pair<int, int>& lhs,
+                             const std::pair<int, int>& rhs) {
                               return lhs.second < rhs.second;
                           })
                           ->second;
         auto minCol = std::min_element(
                           std::begin(pieces),
                           std::end(pieces),
-                          [](const std::pair<size_t, size_t>& lhs,
-                             const std::pair<size_t, size_t>& rhs) {
+                          [](const std::pair<int, int>& lhs,
+                             const std::pair<int, int>& rhs) {
                               return lhs.second < rhs.second;
                           })
                           ->second;
@@ -212,7 +211,7 @@ public:
     }
 
 private:
-    EvalType evalCenter(int32_t player, const StateType& state) const
+    EvalType evalCenter(int player, const StateType& state) const
     {
         EvalType result = 0;
         auto& pieces = player == 1 ? state.whitePieces : state.blackPieces;
