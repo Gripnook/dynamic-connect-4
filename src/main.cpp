@@ -72,8 +72,8 @@ void challenger(int timeLimitInMs)
             auto c_heuristic =
                 Heuristic<ConsecutiveElements, Proximity, CentralDominance>{
                     alpha, beta + i * increment, gamma + j * increment};
-            std::array<int, 2> results{};
-            for (int k = 1; k < 2; ++k)
+            std::array<int, 2> results{0};
+            for (int k = 1; k <= 2; ++k)
             {
                 StateType state;
                 int moveCount = 0;

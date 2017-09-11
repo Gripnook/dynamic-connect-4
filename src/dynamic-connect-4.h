@@ -49,7 +49,7 @@ public:
     class Drawboard
     {
     public:
-        Drawboard(const StateType& state) : state{state}
+        Drawboard(StateType state) : state{state}
         {
             for (const auto& piece : state.whitePieces)
                 drawboard[piece.first][piece.second] = 1;
@@ -86,7 +86,7 @@ public:
     private:
         static std::array<std::array<int8_t, boardSize>, boardSize> drawboard;
 
-        const StateType& state;
+        StateType state;
         std::vector<std::pair<int, int>> sets;
     };
 
@@ -196,4 +196,4 @@ private:
 };
 
 std::array<std::array<int8_t, DynamicConnect4::boardSize>, DynamicConnect4::boardSize>
-    DynamicConnect4::Drawboard::drawboard{};
+    DynamicConnect4::Drawboard::drawboard{0};
