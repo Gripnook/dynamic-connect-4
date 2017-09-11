@@ -13,11 +13,15 @@
 #include "iterative-alpha-beta.h"
 
 using Game = DynamicConnect4;
+using StateType = Game::StateType;
+using ActionType = Game::ActionType;
+using EvalType = Game::EvalType;
+using Direction = Game::Direction;
 
 std::pair<int, int> parse(int argc, char** argv);
 void playGame(int timeLimitInMs, int humanPlayer);
-Game::ActionType getPlayerAction(const Game& game, const Game::StateType& state);
-void print(const Game::StateType& state);
+ActionType getPlayerAction(const Game& game, const StateType& state);
+void print(const StateType& state);
 
 int main(int argc, char** argv)
 {
@@ -51,15 +55,15 @@ void playGame(int timeLimitInMs, int humanPlayer)
 {
     Game game;
     IterativeAlphaBeta<Game> search{game, timeLimitInMs};
-    Game::StateType state;
+    StateType state;
     auto heuristic1 =
-        Heuristic<ConsecutiveElements, Proximity, CentralDomination>{1.0,
-                                                                     1.0,
-                                                                     1.0};
+        Heuristic<ConsecutiveElements, Proximity, CentralDominance>{1.0,
+                                                                    1.0,
+                                                                    1.0};
     auto heuristic2 =
-        Heuristic<ConsecutiveElements, Proximity, CentralDomination>{1.0,
-                                                                     0.40,
-                                                                     0.70};
+        Heuristic<ConsecutiveElements, Proximity, CentralDominance>{1.0,
+                                                                    1.0,
+                                                                    1.0};
     print(state);
     while (!game.isTerminal(state))
     {
@@ -87,11 +91,11 @@ void playGame(int timeLimitInMs, int humanPlayer)
     std::cout << game.getUtility(state) << std::endl;
 }
 
-Game::ActionType getPlayerAction(const Game& game, const Game::StateType& state)
+ActionType getPlayerAction(const Game& game, const StateType& state)
 {
     char xc, yc, dirc;
     int x, y;
-    Game::Direction dir;
+    Direction dir;
     auto actions = game.getActions(state);
     std::cout << "Enter an action > ";
     while (true)
@@ -110,19 +114,19 @@ Game::ActionType getPlayerAction(const Game& game, const Game::StateType& state)
         {
         case 'E':
         case 'e':
-            dir = Game::Direction::east;
+            dir = Direction::east;
             break;
         case 'W':
         case 'w':
-            dir = Game::Direction::west;
+            dir = Direction::west;
             break;
         case 'S':
         case 's':
-            dir = Game::Direction::south;
+            dir = Direction::south;
             break;
         case 'N':
         case 'n':
-            dir = Game::Direction::north;
+            dir = Direction::north;
             break;
         default:
             goto failure;
@@ -141,7 +145,7 @@ Game::ActionType getPlayerAction(const Game& game, const Game::StateType& state)
     }
 }
 
-void print(const Game::StateType& state)
+void print(const StateType& state)
 {
     std::cout << "  1 2 3 4 5 6 7" << std::endl;
     for (int y = 0; y < Game::boardSize; ++y)

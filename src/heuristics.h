@@ -2,9 +2,10 @@
 
 #include "dynamic-connect-4.h"
 
-using StateType = typename DynamicConnect4::StateType;
-using ActionType = typename DynamicConnect4::ActionType;
-using EvalType = typename DynamicConnect4::EvalType;
+using StateType = DynamicConnect4::StateType;
+using ActionType = DynamicConnect4::ActionType;
+using EvalType = DynamicConnect4::EvalType;
+using Drawboard = DynamicConnect4::Drawboard;
 
 template <typename T, typename... Args>
 class Heuristic
@@ -31,7 +32,7 @@ template <typename T>
 class Heuristic<T>
 {
 public:
-    Heuristic(EvalType weight) : weight{weight}
+    Heuristic(EvalType weight = 1) : weight{weight}
     {
     }
 
@@ -50,115 +51,29 @@ class ConsecutiveElements
 public:
     EvalType operator()(const StateType& state)
     {
-        auto evalPlayer1 = evalRows(1, state) + evalColumns(1, state) +
-            evalDiagonals(1, state) + evalAntiDiagonals(1, state);
-        auto evalPlayer2 = evalRows(2, state) + evalColumns(2, state) +
-            evalDiagonals(2, state) + evalAntiDiagonals(2, state);
-        return evalPlayer1 - evalPlayer2;
+        Drawboard board{state};
+        return eval(1, state, board) - eval(2, state, board);
     }
 
 private:
-    EvalType evalRows(int player, const StateType& state) const
+    EvalType
+        eval(int player, const StateType& state, const Drawboard& board) const
     {
         EvalType result = 0;
         auto pieces = player == 1 ? state.whitePieces : state.blackPieces;
         std::sort(std::begin(pieces), std::end(pieces));
-        int row = -1, col = -1;
-        int count = 0;
         for (const auto& piece : pieces)
         {
-            if (piece.first == row && piece.second == col + 1)
-                ++count;
-            else
-                count = 0;
-            result += count;
-            row = piece.first;
-            col = piece.second;
-        }
-        return result;
-    }
-
-    EvalType evalColumns(int player, const StateType& state) const
-    {
-        EvalType result = 0;
-        auto pieces = player == 1 ? state.whitePieces : state.blackPieces;
-        std::sort(
-            std::begin(pieces),
-            std::end(pieces),
-            [](const std::pair<int, int>& lhs, const std::pair<int, int>& rhs) {
-                return lhs.second == rhs.second ? lhs.first < rhs.first :
-                                                  lhs.second < rhs.second;
-            });
-        int row = -1, col = -1;
-        int count = 0;
-        for (const auto& piece : pieces)
-        {
-            if (piece.first == row + 1 && piece.second == col)
-                ++count;
-            else
-                count = 0;
-            result += count;
-            row = piece.first;
-            col = piece.second;
-        }
-        return result;
-    }
-
-    EvalType evalDiagonals(int player, const StateType& state) const
-    {
-        EvalType result = 0;
-        auto pieces = player == 1 ? state.whitePieces : state.blackPieces;
-        std::sort(
-            std::begin(pieces),
-            std::end(pieces),
-            [&](const std::pair<int, int>& lhs, const std::pair<int, int>& rhs) {
-                auto lhsDiag =
-                    DynamicConnect4::boardSize + lhs.first - lhs.second;
-                auto rhsDiag =
-                    DynamicConnect4::boardSize + rhs.first - rhs.second;
-                return lhsDiag == rhsDiag ? lhs.first < rhs.first :
-                                            lhsDiag < rhsDiag;
-            });
-        int diag = -1, row = -1;
-        int count = 0;
-        for (const auto& piece : pieces)
-        {
-            if (DynamicConnect4::boardSize + piece.first - piece.second == diag &&
-                piece.first == row + 1)
-                ++count;
-            else
-                count = 0;
-            result += count;
-            diag = DynamicConnect4::boardSize + piece.first - piece.second;
-            row = piece.first;
-        }
-        return result;
-    }
-
-    EvalType evalAntiDiagonals(int player, const StateType& state) const
-    {
-        EvalType result = 0;
-        auto pieces = player == 1 ? state.whitePieces : state.blackPieces;
-        std::sort(
-            std::begin(pieces),
-            std::end(pieces),
-            [](const std::pair<int, int>& lhs, const std::pair<int, int>& rhs) {
-                auto lhsAntiDiag = lhs.first + lhs.second;
-                auto rhsAntiDiag = rhs.first + rhs.second;
-                return lhsAntiDiag == rhsAntiDiag ? lhs.first < rhs.first :
-                                                    lhsAntiDiag < rhsAntiDiag;
-            });
-        int antiDiag = -1, row = -1;
-        int count = 0;
-        for (const auto& piece : pieces)
-        {
-            if (piece.first + piece.second == antiDiag && piece.first == row + 1)
-                ++count;
-            else
-                count = 0;
-            result += count;
-            antiDiag = piece.first + piece.second;
-            row = piece.first;
+            auto x = piece.first;
+            auto y = piece.second;
+            for (int i = 1; board.get(x + i, y - i) == player; ++i)
+                ++result;
+            for (int i = 1; board.get(x + i, y) == player; ++i)
+                ++result;
+            for (int i = 1; board.get(x + i, y + i) == player; ++i)
+                ++result;
+            for (int i = 1; board.get(x, y + i) == player; ++i)
+                ++result;
         }
         return result;
     }
@@ -169,11 +84,11 @@ class Proximity
 public:
     EvalType operator()(const StateType& state)
     {
-        return evalProximity(1, state) - evalProximity(2, state);
+        return eval(1, state) - eval(2, state);
     }
 
 private:
-    EvalType evalProximity(int player, const StateType& state) const
+    EvalType eval(int player, const StateType& state) const
     {
         auto& pieces = player == 1 ? state.whitePieces : state.blackPieces;
         auto maxRow =
@@ -202,16 +117,16 @@ private:
     }
 };
 
-class CentralDomination
+class CentralDominance
 {
 public:
     EvalType operator()(const StateType& state)
     {
-        return evalCenter(1, state) - evalCenter(2, state);
+        return eval(1, state) - eval(2, state);
     }
 
 private:
-    EvalType evalCenter(int player, const StateType& state) const
+    EvalType eval(int player, const StateType& state) const
     {
         EvalType result = 0;
         auto& pieces = player == 1 ? state.whitePieces : state.blackPieces;

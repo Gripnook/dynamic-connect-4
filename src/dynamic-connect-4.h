@@ -45,21 +45,68 @@ public:
     using ActionType = std::tuple<int, int, Direction>;
     using EvalType = double;
 
+    // A small array to use as scratch paper when computing things.
+    class Drawboard
+    {
+    public:
+        Drawboard(const StateType& state) : state{state}
+        {
+            for (const auto& piece : state.whitePieces)
+                drawboard[piece.first][piece.second] = 1;
+            for (const auto& piece : state.blackPieces)
+                drawboard[piece.first][piece.second] = 2;
+        }
+
+        ~Drawboard()
+        {
+            for (const auto& piece : state.whitePieces)
+                drawboard[piece.first][piece.second] = 0;
+            for (const auto& piece : state.blackPieces)
+                drawboard[piece.first][piece.second] = 0;
+            for (const auto& set : sets)
+                drawboard[set.first][set.second] = 0;
+        }
+
+        int get(int x, int y) const
+        {
+            if (x < 0 || x >= boardSize || y < 0 || y >= boardSize)
+                return -1;
+            return drawboard[x][y];
+        }
+
+        void set(int x, int y, int8_t value)
+        {
+            if (x < 0 || x >= boardSize || y < 0 || y >= boardSize)
+                return;
+            if (drawboard[x][y] == 0 && value != 0)
+                sets.emplace_back(x, y);
+            drawboard[x][y] = value;
+        }
+
+    private:
+        static std::array<std::array<int8_t, boardSize>, boardSize> drawboard;
+
+        const StateType& state;
+        std::vector<std::pair<int, int>> sets;
+    };
+
     std::vector<ActionType> getActions(const StateType& state) const
     {
+        Drawboard board{state};
+
         std::vector<ActionType> result;
         auto& pieces = state.player == 1 ? state.whitePieces : state.blackPieces;
         for (const auto& piece : pieces)
         {
             auto x = piece.first;
             auto y = piece.second;
-            if (get(state, x + 1, y) == 0)
+            if (board.get(x + 1, y) == 0)
                 result.emplace_back(x, y, Direction::east);
-            if (get(state, x - 1, y) == 0)
+            if (board.get(x - 1, y) == 0)
                 result.emplace_back(x, y, Direction::west);
-            if (get(state, x, y + 1) == 0)
+            if (board.get(x, y + 1) == 0)
                 result.emplace_back(x, y, Direction::south);
-            if (get(state, x, y - 1) == 0)
+            if (board.get(x, y - 1) == 0)
                 result.emplace_back(x, y, Direction::north);
         }
         return result;
@@ -112,113 +159,32 @@ public:
 private:
     bool isWinner(const StateType& state) const
     {
+        Drawboard board{state};
+
         // If it is the current player's turn, then the other player is the one
         // who may have won.
         auto player = other(state.player);
 
-        return checkRows(player, state) || checkColumns(player, state) ||
-            checkDiagonals(player, state) || checkAntiDiagonals(player, state);
-    }
-
-    bool checkRows(int player, const StateType& state) const
-    {
         auto pieces = player == 1 ? state.whitePieces : state.blackPieces;
         std::sort(std::begin(pieces), std::end(pieces));
-        int row = -1, col = -1;
-        int count = 0;
         for (const auto& piece : pieces)
         {
-            if (piece.first == row && piece.second == col + 1)
-                ++count;
-            else
-                count = 0;
-            if (count >= 3)
+            auto x = piece.first;
+            auto y = piece.second;
+            if (board.get(x + 1, y - 1) == player &&
+                board.get(x + 2, y - 2) == player &&
+                board.get(x + 3, y - 3) == player)
                 return true;
-            row = piece.first;
-            col = piece.second;
-        }
-        return false;
-    }
-
-    bool checkColumns(int player, const StateType& state) const
-    {
-        auto pieces = player == 1 ? state.whitePieces : state.blackPieces;
-        std::sort(
-            std::begin(pieces),
-            std::end(pieces),
-            [](const std::pair<int, int>& lhs, const std::pair<int, int>& rhs) {
-                return lhs.second == rhs.second ? lhs.first < rhs.first :
-                                                  lhs.second < rhs.second;
-            });
-        int row = -1, col = -1;
-        int count = 0;
-        for (const auto& piece : pieces)
-        {
-            if (piece.first == row + 1 && piece.second == col)
-                ++count;
-            else
-                count = 0;
-            if (count >= 3)
+            if (board.get(x + 1, y) == player &&
+                board.get(x + 2, y) == player && board.get(x + 3, y) == player)
                 return true;
-            row = piece.first;
-            col = piece.second;
-        }
-        return false;
-    }
-
-    bool checkDiagonals(int player, const StateType& state) const
-    {
-        auto pieces = player == 1 ? state.whitePieces : state.blackPieces;
-        std::sort(
-            std::begin(pieces),
-            std::end(pieces),
-            [&](const std::pair<int, int>& lhs, const std::pair<int, int>& rhs) {
-                auto lhsDiag = boardSize + lhs.first - lhs.second;
-                auto rhsDiag = boardSize + rhs.first - rhs.second;
-                return lhsDiag == rhsDiag ? lhs.first < rhs.first :
-                                            lhsDiag < rhsDiag;
-            });
-        int diag = -1, row = -1;
-        int count = 0;
-        for (const auto& piece : pieces)
-        {
-            if (boardSize + piece.first - piece.second == diag &&
-                piece.first == row + 1)
-                ++count;
-            else
-                count = 0;
-            if (count >= 3)
+            if (board.get(x + 1, y + 1) == player &&
+                board.get(x + 2, y + 2) == player &&
+                board.get(x + 3, y + 3) == player)
                 return true;
-            diag = boardSize + piece.first - piece.second;
-            row = piece.first;
-        }
-        return false;
-    }
-
-    bool checkAntiDiagonals(int player, const StateType& state) const
-    {
-        auto pieces = player == 1 ? state.whitePieces : state.blackPieces;
-        std::sort(
-            std::begin(pieces),
-            std::end(pieces),
-            [](const std::pair<int, int>& lhs, const std::pair<int, int>& rhs) {
-                auto lhsAntiDiag = lhs.first + lhs.second;
-                auto rhsAntiDiag = rhs.first + rhs.second;
-                return lhsAntiDiag == rhsAntiDiag ? lhs.first < rhs.first :
-                                                    lhsAntiDiag < rhsAntiDiag;
-            });
-        int antiDiag = -1, row = -1;
-        int count = 0;
-        for (const auto& piece : pieces)
-        {
-            if (piece.first + piece.second == antiDiag && piece.first == row + 1)
-                ++count;
-            else
-                count = 0;
-            if (count >= 3)
+            if (board.get(x, y + 1) == player &&
+                board.get(x, y + 2) == player && board.get(x, y + 3) == player)
                 return true;
-            antiDiag = piece.first + piece.second;
-            row = piece.first;
         }
         return false;
     }
@@ -227,21 +193,7 @@ private:
     {
         return player == 1 ? 2 : 1;
     }
-
-    int get(const StateType& state, int x, int y) const
-    {
-        if (x < 0 || x >= boardSize || y < 0 || y >= boardSize)
-            return -1;
-        for (const auto& piece : state.whitePieces)
-        {
-            if (piece.first == x && piece.second == y)
-                return 1;
-        }
-        for (const auto& piece : state.blackPieces)
-        {
-            if (piece.first == x && piece.second == y)
-                return 2;
-        }
-        return 0;
-    }
 };
+
+std::array<std::array<int8_t, DynamicConnect4::boardSize>, DynamicConnect4::boardSize>
+    DynamicConnect4::Drawboard::drawboard{};
