@@ -4,70 +4,69 @@
 #include <string>
 #include <sstream>
 #include <utility>
+#include <algorithm>
 
 #include "dynamic-connect-4.h"
 #include "iterative-alpha-beta.h"
 #include "heuristics.h"
-#include "agent.h"
 
 using Game = DynamicConnect4;
 
-std::pair<int32_t, bool> parse(int argc, char** argv);
-void playGame(int32_t timeLimitInMs);
-void trainAgent(int32_t timeLimitInMs);
+std::pair<int32_t, int32_t> parse(int argc, char** argv);
+void playGame(int32_t timeLimitInMs, int32_t humanPlayer);
+Game::ActionType getPlayerAction(const Game& game, const Game::StateType& state);
 void print(const Game::StateType& state);
 
 int main(int argc, char** argv)
 {
     auto args = parse(argc, argv);
-    if (args.second)
-        trainAgent(args.first);
-    else
-        playGame(args.first);
+    playGame(args.first, args.second);
     return 0;
 }
 
-std::pair<int32_t, bool> parse(int argc, char** argv)
+std::pair<int32_t, int32_t> parse(int argc, char** argv)
 {
-    int32_t defaultTimeLimitInMs = 20000;
-    bool defaultAgentTraining = false;
+    int32_t timeLimitInMs = 20000;
+    int32_t humanPlayer = 0;
     if (argc > 1)
     {
-        int32_t timeLimitInMs;
+        int32_t temp;
         std::stringstream ss{argv[1]};
-        if (ss >> timeLimitInMs)
-            defaultTimeLimitInMs = timeLimitInMs;
+        if (ss >> temp)
+            timeLimitInMs = temp;
     }
     if (argc > 2)
     {
-        bool agentTraining;
-        std::stringstream ss{argv[2]};
-        if (ss >> agentTraining)
-            defaultAgentTraining = agentTraining;
+        if (std::string{argv[2]} == "-h1")
+            humanPlayer = 1;
+        else if (std::string{argv[2]} == "-h2")
+            humanPlayer = 2;
     }
-    return std::make_pair(defaultTimeLimitInMs, defaultAgentTraining);
+    return std::make_pair(timeLimitInMs, humanPlayer);
 }
 
-void playGame(int32_t timeLimitInMs)
+void playGame(int32_t timeLimitInMs, int32_t humanPlayer)
 {
-    auto heuristic =
-        Heuristic<ConsecutiveElements, NearbyElements, Proximity, CentralDomination>{
-            1.0, 1.0, 1.0, 1.0};
     Game game;
     IterativeAlphaBeta<Game> search{game, timeLimitInMs};
     Game::StateType state;
+    auto heuristic =
+        Heuristic<ConsecutiveElements, NearbyElements, Proximity, CentralDomination>{
+            1.0, 1.0, 1.0, 1.0};
     print(state);
     while (!game.isTerminal(state))
     {
         auto t1 = std::chrono::high_resolution_clock::now();
         if (state.player == 1)
         {
-            auto action = search.searchMax(state, heuristic);
+            auto action = humanPlayer == 1 ? getPlayerAction(game, state) :
+                                             search.searchMax(state, heuristic);
             state = game.getResult(state, action);
         }
         else
         {
-            auto action = search.searchMin(state, heuristic);
+            auto action = humanPlayer == 2 ? getPlayerAction(game, state) :
+                                             search.searchMin(state, heuristic);
             state = game.getResult(state, action);
         }
         auto t2 = std::chrono::high_resolution_clock::now();
@@ -81,68 +80,79 @@ void playGame(int32_t timeLimitInMs)
     std::cout << game.getUtility(state) << std::endl;
 }
 
-void trainAgent(int32_t timeLimitInMs)
+Game::ActionType getPlayerAction(const Game& game, const Game::StateType& state)
 {
-    Agent agent;
-    auto heuristic =
-        Heuristic<ConsecutiveElements, NearbyElements, Proximity, CentralDomination>{
-            1.0, 1.0, 1.0, 1.0};
-    int32_t player = 1;
+    char xc, yc, dirc;
+    size_t x, y;
+    Game::Direction dir;
+    auto actions = game.getActions(state);
+    std::cout << "Enter an action > ";
     while (true)
     {
-        agent.startGame(player);
-
-        Game game;
-        IterativeAlphaBeta<Game> search{game, timeLimitInMs};
-        Game::StateType state;
-        int32_t moveCount = 0;
-        while (!game.isTerminal(state))
+        std::cin >> xc >> yc >> dirc;
+        if (!std::cin)
+            goto failure;
+        x = xc - '1';
+        y = yc - '1';
+        switch (dirc)
         {
-            ++moveCount;
-            if (moveCount > 100)
-                goto exit;
-            if (state.player == 1)
-            {
-                auto action = search.searchMax(
-                    state, player == 1 ? agent.getHeuristic() : heuristic);
-                state = game.getResult(state, action);
-            }
-            else
-            {
-                auto action = search.searchMin(
-                    state, player == 2 ? agent.getHeuristic() : heuristic);
-                state = game.getResult(state, action);
-            }
+        case 'E':
+        case 'e':
+            dir = Game::Direction::east;
+            break;
+        case 'W':
+        case 'w':
+            dir = Game::Direction::west;
+            break;
+        case 'S':
+        case 's':
+            dir = Game::Direction::south;
+            break;
+        case 'N':
+        case 'n':
+            dir = Game::Direction::north;
+            break;
+        default:
+            goto failure;
         }
-    exit:
-        agent.endGame(game.getUtility(state), moveCount);
-        player = player == 1 ? 2 : 1;
+
+        if (std::find(
+                std::begin(actions),
+                std::end(actions),
+                std::make_tuple(x, y, dir)) == std::end(actions))
+            goto failure;
+
+        return std::make_tuple(x, y, dir);
+
+    failure:
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cout << "Invalid action. Try again > ";
     }
 }
 
 void print(const Game::StateType& state)
 {
-    std::cout << "---------" << std::endl;
+    std::cout << "  1 2 3 4 5 6 7" << std::endl;
     for (size_t y = 0; y < Game::boardSize; ++y)
     {
-        std::cout << "|";
+        std::cout << (y + 1) << " ";
         for (size_t x = 0; x < Game::boardSize; ++x)
         {
             if (std::find(
                     std::begin(state.whitePieces),
                     std::end(state.whitePieces),
                     std::make_pair(x, y)) != std::end(state.whitePieces))
-                std::cout << "O";
+                std::cout << "O,";
             else if (
                 std::find(
                     std::begin(state.blackPieces),
                     std::end(state.blackPieces),
                     std::make_pair(x, y)) != std::end(state.blackPieces))
-                std::cout << "X";
+                std::cout << "X,";
             else
-                std::cout << " ";
+                std::cout << " ,";
         }
-        std::cout << "|" << std::endl;
+        std::cout << std::endl;
     }
-    std::cout << "---------" << std::endl;
 }
