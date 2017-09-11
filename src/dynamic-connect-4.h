@@ -193,7 +193,7 @@ private:
             if (count >= 3)
                 return true;
             diag = boardSize + piece.first - piece.second;
-            row = piece.second;
+            row = piece.first;
         }
         return false;
     }
@@ -222,7 +222,7 @@ private:
             if (count >= 3)
                 return true;
             antiDiag = piece.first + piece.second;
-            row = piece.second;
+            row = piece.first;
         }
         return false;
     }

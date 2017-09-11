@@ -9,7 +9,7 @@ class Heuristic
 {
 public:
     template <typename... EvalTypes>
-    Heuristic(EvalType weight = 1, EvalTypes... others)
+    Heuristic(EvalType weight, EvalTypes... others)
         : weight(weight), others(others...)
     {
     }
@@ -29,7 +29,7 @@ template <typename T>
 class Heuristic<T>
 {
 public:
-    Heuristic(EvalType weight = 1) : weight(weight)
+    Heuristic(EvalType weight) : weight(weight)
     {
     }
 
@@ -130,7 +130,7 @@ private:
                 count = 0;
             result += count;
             diag = DynamicConnect4::boardSize + piece.first - piece.second;
-            row = piece.second;
+            row = piece.first;
         }
         return result;
     }
@@ -159,7 +159,7 @@ private:
                 count = 0;
             result += count;
             antiDiag = piece.first + piece.second;
-            row = piece.second;
+            row = piece.first;
         }
         return result;
     }
@@ -239,7 +239,7 @@ private:
             if (DynamicConnect4::boardSize + piece.first - piece.second == diag)
                 result += DynamicConnect4::boardSize - 1 - (piece.first - row);
             diag = DynamicConnect4::boardSize + piece.first - piece.second;
-            row = piece.second;
+            row = piece.first;
         }
         return result;
     }
@@ -264,7 +264,7 @@ private:
             if (piece.first + piece.second == antiDiag)
                 result += DynamicConnect4::boardSize - 1 - (piece.first - row);
             antiDiag = piece.first + piece.second;
-            row = piece.second;
+            row = piece.first;
         }
         return result;
     }
