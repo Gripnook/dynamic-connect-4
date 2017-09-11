@@ -1,34 +1,40 @@
 #include <iostream>
+#include <chrono>
 
 #include "tic-tac-toe.h"
+#include "dynamic-connect-4.h"
 #include "minimax.h"
 #include "alpha-beta.h"
 
-void print(const TicTacToe::StateType& state);
-TicTacToe::ActionType getHumanAction(const TicTacToe::StateType& state);
+using Game = DynamicConnect4;
+
+void print(const Game::StateType& state);
 
 int main()
 {
-    TicTacToe game;
-    AlphaBeta<TicTacToe> search{game};
-    TicTacToe::StateType state;
+    Game game{6};
+    AlphaBeta<Game> search{game};
+    Game::StateType state;
     print(state);
     while (!game.isTerminal(state))
     {
+        auto t1 = std::chrono::high_resolution_clock::now();
         auto action = state.player == 1 ? search.searchMax(state) :
                                           search.searchMin(state);
-        std::cout << "(" << action.first << ", " << action.second << ")"
-                  << std::endl;
         state = game.getResult(state, action);
+        auto t2 = std::chrono::high_resolution_clock::now();
+        auto ms =
+            std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count();
         print(state);
+        std::cout << ms / 1000.0 << " seconds" << std::endl;
     }
     std::cout << game.getUtility(state) << std::endl;
     return 0;
 }
 
-void print(const TicTacToe::StateType& state)
+void print(const Game::StateType& state)
 {
-    std::cout << "-----" << std::endl;
+    std::cout << "---------" << std::endl;
     for (const auto& row : state.board)
     {
         std::cout << "|";
@@ -51,20 +57,5 @@ void print(const TicTacToe::StateType& state)
         }
         std::cout << "|" << std::endl;
     }
-    std::cout << "-----" << std::endl;
-}
-
-TicTacToe::ActionType getHumanAction(const TicTacToe::StateType& state)
-{
-    std::cout << "Play > ";
-    size_t x, y;
-    std::cin >> x >> y;
-    while (!std::cin || x >= 3 || y >= 3 || state.board[x][y] != 0)
-    {
-        std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        std::cout << "Try again > ";
-        std::cin >> x >> y;
-    }
-    return std::make_pair(x, y);
+    std::cout << "---------" << std::endl;
 }

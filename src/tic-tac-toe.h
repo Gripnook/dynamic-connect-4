@@ -58,8 +58,8 @@ public:
     {
         // Assume state is terminal.
         if (isWinner(state))
-            return state.player == 1 ? 0 : 1;
-        return 0.5;
+            return state.player == 1 ? -1 : 1;
+        return 0;
     }
 
 private:
