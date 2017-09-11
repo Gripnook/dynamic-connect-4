@@ -19,6 +19,7 @@ using EvalType = Game::EvalType;
 using Direction = Game::Direction;
 
 std::pair<int, int> parse(int argc, char** argv);
+void challenger(int timeLimitInMs);
 void playGame(int timeLimitInMs, int humanPlayer);
 ActionType getPlayerAction(const Game& game, const StateType& state);
 void print(const StateType& state);
@@ -26,7 +27,8 @@ void print(const StateType& state);
 int main(int argc, char** argv)
 {
     auto args = parse(argc, argv);
-    playGame(args.first, args.second);
+    challenger(args.first);
+    // playGame(args.first, args.second);
     return 0;
 }
 
@@ -49,6 +51,89 @@ std::pair<int, int> parse(int argc, char** argv)
             humanPlayer = 2;
     }
     return std::make_pair(timeLimitInMs, humanPlayer);
+}
+
+void challenger(int timeLimitInMs)
+{
+    Game game;
+    IterativeAlphaBeta<Game> search{game, timeLimitInMs};
+
+    double alpha = 1.0, beta = 1.0, gamma = 1.0;
+    double increment = 0.25;
+    auto heuristic =
+        Heuristic<ConsecutiveElements, Proximity, CentralDominance>{alpha,
+                                                                    beta,
+                                                                    gamma};
+
+    for (int i = -2; i <= 2; ++i)
+    {
+        for (int j = -2; j <= 2; ++j)
+        {
+            auto c_heuristic =
+                Heuristic<ConsecutiveElements, Proximity, CentralDominance>{
+                    alpha, beta + i * increment, gamma + j * increment};
+            std::array<int, 2> results{};
+            for (int k = 1; k < 2; ++k)
+            {
+                StateType state;
+                int moveCount = 0;
+                while (!game.isTerminal(state))
+                {
+                    ++moveCount;
+                    if (moveCount > 100)
+                        break;
+                    if (state.player == 1)
+                    {
+                        auto action = search.searchMax(
+                            state, state.player == k ? heuristic : c_heuristic);
+                        state = game.getResult(state, action);
+                    }
+                    else
+                    {
+                        auto action = search.searchMin(
+                            state, state.player == k ? heuristic : c_heuristic);
+                        state = game.getResult(state, action);
+                    }
+                }
+                if (moveCount > 100)
+                {
+                    results[k - 1] = 0;
+                }
+                else if (
+                    (k == 1 && game.getUtility(state) > 0) ||
+                    (k == 2 && game.getUtility(state) < 0))
+                {
+                    results[k - 1] = 1;
+                }
+                else
+                {
+                    results[k - 1] = -1;
+                }
+            }
+
+            auto result = results[0] + results[1];
+            if (result > 0)
+            {
+                std::cout << "challenger " << i << ", " << j
+                          << " defeated with results " << results[0] << " and "
+                          << results[1] << std::endl;
+            }
+            else if (result == 0)
+            {
+                std::cout << "drew with challenger " << i << ", " << j
+                          << " with results " << results[0] << " and "
+                          << results[1] << std::endl;
+            }
+            else
+            {
+                std::cout << "lost to challenger " << i << ", " << j
+                          << " with results " << results[0] << " and "
+                          << results[1] << std::endl;
+                heuristic = c_heuristic;
+            }
+        }
+    }
+    std::cout << "finished" << std::endl;
 }
 
 void playGame(int timeLimitInMs, int humanPlayer)
