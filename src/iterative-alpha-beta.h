@@ -6,6 +6,7 @@
 #include <utility>
 #include <functional>
 #include <chrono>
+#include <cstdint>
 
 template <typename Game>
 class IterativeAlphaBeta
@@ -16,7 +17,7 @@ public:
     using Eval = typename Game::EvalType;
     using Heuristic = std::function<Eval(const State&)>;
 
-    IterativeAlphaBeta(Game& game, size_t timeLimitInMs)
+    IterativeAlphaBeta(Game& game, int32_t timeLimitInMs)
         : game(game), timeLimitInMs(timeLimitInMs)
     {
     }
@@ -59,7 +60,10 @@ public:
                 });
 
             if (values[actions.front()] == std::numeric_limits<Eval>::max())
+            {
+                this->depth = depth;
                 return actions.front();
+            }
         }
     }
 
@@ -101,7 +105,10 @@ public:
                 });
 
             if (values[actions.front()] == std::numeric_limits<Eval>::lowest())
+            {
+                this->depth = depth;
                 return actions.front();
+            }
         }
     }
 
@@ -122,7 +129,7 @@ private:
     size_t depth{0};
     Heuristic heuristic;
 
-    size_t timeLimitInMs;
+    int32_t timeLimitInMs;
     std::chrono::high_resolution_clock::time_point startTime;
 
     Eval maxValue(const State& state, Eval alpha, Eval beta, size_t depth)
@@ -194,6 +201,6 @@ private:
         auto timeInMs = std::chrono::duration_cast<std::chrono::milliseconds>(
                             now - startTime)
                             .count();
-        return static_cast<size_t>(timeInMs) >= timeLimitInMs;
+        return timeInMs >= timeLimitInMs;
     }
 };

@@ -1,5 +1,8 @@
 #include <iostream>
 #include <chrono>
+#include <vector>
+#include <string>
+#include <sstream>
 
 #include "dynamic-connect-4.h"
 #include "iterative-alpha-beta.h"
@@ -7,12 +10,15 @@
 
 using Game = DynamicConnect4;
 
+int32_t parse(int argc, char** argv);
 void print(const Game::StateType& state);
 
-int main()
+int main(int argc, char** argv)
 {
+    auto timeLimitInMs = parse(argc, argv);
+
     Game game;
-    IterativeAlphaBeta<Game> search{game, 20000};
+    IterativeAlphaBeta<Game> search{game, timeLimitInMs};
     Game::StateType state;
     print(state);
     while (!game.isTerminal(state))
@@ -20,14 +26,24 @@ int main()
         auto t1 = std::chrono::high_resolution_clock::now();
         if (state.player == 1)
         {
-            auto action =
-                search.searchMax(state, Heuristic<ConsecutiveElements>{});
+            auto action = search.searchMax(
+                state,
+                Heuristic<
+                    ConsecutiveElements,
+                    NearbyElements,
+                    Proximity,
+                    CentralDomination>{});
             state = game.getResult(state, action);
         }
         else
         {
             auto action = search.searchMin(
-                state, Heuristic<ConsecutiveElements, Proximity>{});
+                state,
+                Heuristic<
+                    ConsecutiveElements,
+                    NearbyElements,
+                    Proximity,
+                    CentralDomination>{});
             state = game.getResult(state, action);
         }
         auto t2 = std::chrono::high_resolution_clock::now();
@@ -40,6 +56,19 @@ int main()
     }
     std::cout << game.getUtility(state) << std::endl;
     return 0;
+}
+
+int32_t parse(int argc, char** argv)
+{
+    static int32_t defaultTimeLimitInMs = 20000;
+    if (argc > 1)
+    {
+        int32_t timeLimitInMs;
+        std::stringstream ss{argv[1]};
+        if (ss >> timeLimitInMs)
+            return timeLimitInMs;
+    }
+    return defaultTimeLimitInMs;
 }
 
 void print(const Game::StateType& state)
