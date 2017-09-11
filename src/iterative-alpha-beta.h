@@ -194,6 +194,6 @@ private:
         auto timeInMs = std::chrono::duration_cast<std::chrono::milliseconds>(
                             now - startTime)
                             .count();
-        return timeInMs >= timeLimitInMs;
+        return static_cast<size_t>(timeInMs) >= timeLimitInMs;
     }
 };

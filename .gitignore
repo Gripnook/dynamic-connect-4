@@ -46,8 +46,9 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-# Build directory
+# Build files
 build
+agent.exe
 
 # Visual Studio
 .vs
