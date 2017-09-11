@@ -16,7 +16,7 @@ public:
     using Eval = typename Game::EvalType;
 
     IterativeAlphaBeta(Game& game, size_t timeLimitInMs)
-        : game{game}, timeLimitInMs{timeLimitInMs}
+        : game(game), timeLimitInMs(timeLimitInMs)
     {
     }
 

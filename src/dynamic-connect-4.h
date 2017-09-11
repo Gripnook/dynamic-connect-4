@@ -47,7 +47,7 @@ public:
     using EvalType = double;
     using Heuristic = std::function<EvalType(const StateType&)>;
 
-    DynamicConnect4(Heuristic heuristic) : heuristic{heuristic}
+    DynamicConnect4(Heuristic heuristic) : heuristic(heuristic)
     {
     }
 
