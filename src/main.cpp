@@ -1,9 +1,9 @@
 #include <iostream>
 #include <chrono>
-#include <vector>
 #include <string>
 #include <sstream>
 #include <utility>
+#include <tuple>
 #include <algorithm>
 
 #include "dynamic-connect-4.h"
@@ -51,8 +51,9 @@ void playGame(int32_t timeLimitInMs, int32_t humanPlayer)
     IterativeAlphaBeta<Game> search{game, timeLimitInMs};
     Game::StateType state;
     auto heuristic =
-        Heuristic<ConsecutiveElements, NearbyElements, Proximity, CentralDomination>{
-            1.0, 1.0, 1.0, 1.0};
+        Heuristic<ConsecutiveElements, Proximity, CentralDomination>{1.0,
+                                                                     1.0,
+                                                                     1.0};
     print(state);
     while (!game.isTerminal(state))
     {
@@ -90,8 +91,13 @@ Game::ActionType getPlayerAction(const Game& game, const Game::StateType& state)
     while (true)
     {
         std::cin >> xc >> yc >> dirc;
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         if (!std::cin)
+        {
+            std::cin.clear();
             goto failure;
+        }
+
         x = xc - '1';
         y = yc - '1';
         switch (dirc)
@@ -125,8 +131,6 @@ Game::ActionType getPlayerAction(const Game& game, const Game::StateType& state)
         return std::make_tuple(x, y, dir);
 
     failure:
-        std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         std::cout << "Invalid action. Try again > ";
     }
 }
