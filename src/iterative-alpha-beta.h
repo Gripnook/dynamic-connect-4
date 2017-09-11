@@ -17,7 +17,7 @@ public:
     using Heuristic = std::function<Eval(const State&)>;
 
     IterativeAlphaBeta(Game& game, int timeLimitInMs)
-        : game{game}, timeLimitInMs{timeLimitInMs}
+        : game(game), timeLimitInMs{timeLimitInMs}
     {
     }
 

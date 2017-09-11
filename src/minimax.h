@@ -14,7 +14,7 @@ public:
     using Eval = typename Game::EvalType;
     using Heuristic = std::function<Eval(const State&)>;
 
-    Minimax(Game& game, int maxDepth) : game{game}, maxDepth{maxDepth}
+    Minimax(Game& game, int maxDepth) : game(game), maxDepth{maxDepth}
     {
     }
 
