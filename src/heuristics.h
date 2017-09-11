@@ -186,21 +186,17 @@ private:
                           std::end(pieces),
                           [](const std::pair<size_t, size_t>& lhs,
                              const std::pair<size_t, size_t>& rhs) {
-                              return lhs.second == rhs.second ?
-                                  lhs.first < rhs.first :
-                                  lhs.second < rhs.second;
+                              return lhs.second < rhs.second;
                           })
-                          ->first;
+                          ->second;
         auto minCol = std::min_element(
                           std::begin(pieces),
                           std::end(pieces),
                           [](const std::pair<size_t, size_t>& lhs,
                              const std::pair<size_t, size_t>& rhs) {
-                              return lhs.second == rhs.second ?
-                                  lhs.first < rhs.first :
-                                  lhs.second < rhs.second;
+                              return lhs.second < rhs.second;
                           })
-                          ->first;
+                          ->second;
 
         return (DynamicConnect4::boardSize * DynamicConnect4::boardSize) -
             ((maxRow - minRow + 1) * (maxCol - minCol + 1));

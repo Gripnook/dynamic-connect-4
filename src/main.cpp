@@ -56,7 +56,7 @@ void playGame(int32_t timeLimitInMs, int32_t humanPlayer)
                                                                      1.0};
     auto heuristic2 =
         Heuristic<ConsecutiveElements, Proximity, CentralDomination>{1.0,
-                                                                     0.20,
+                                                                     0.40,
                                                                      0.70};
     print(state);
     while (!game.isTerminal(state))
