@@ -129,6 +129,9 @@ void challenger(int timeLimitInMs)
                 std::cout << "lost to challenger " << i << ", " << j
                           << " with results " << results[0] << " and "
                           << results[1] << std::endl;
+                std::cout << "new parameters: " << alpha << ", "
+                          << beta + i * increment << ", "
+                          << gamma + j * increment << std::endl;
                 heuristic = c_heuristic;
             }
         }
