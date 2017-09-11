@@ -2,6 +2,7 @@
 
 #include <array>
 #include <iostream>
+#include <fstream>
 
 #include "heuristics.h"
 
@@ -10,6 +11,13 @@ class Agent
 public:
     using HeuristicFunc =
         Heuristic<ConsecutiveElements, NearbyElements, Proximity, CentralDomination>;
+
+    Agent()
+    {
+        std::ifstream in("params.txt");
+        for (int i = 0; i < 4; ++i)
+            in >> weights[i];
+    }
 
     void startGame(int32_t player)
     {
@@ -43,6 +51,10 @@ public:
             {
                 bestMoveCount = moveCount;
                 std::cout << "win in " << moveCount << " moves" << std::endl;
+                std::ofstream out("params.txt");
+                for (int i = 0; i < 4; ++i)
+                    out << weights[i] << " ";
+                out << std::endl;
             }
         }
         else
