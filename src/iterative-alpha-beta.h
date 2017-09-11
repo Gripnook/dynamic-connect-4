@@ -143,7 +143,8 @@ private:
             return heuristic(state);
 
         auto value = std::numeric_limits<Eval>::lowest();
-        auto actions =
+        auto actions = depth == maxDepth ?
+            game.getActions(state) :
             heuristicSort(game.getActions(state), state, std::greater<Eval>{});
         for (const auto& action : actions)
         {
@@ -166,7 +167,8 @@ private:
             return heuristic(state);
 
         auto value = std::numeric_limits<Eval>::max();
-        auto actions =
+        auto actions = depth == maxDepth ?
+            game.getActions(state) :
             heuristicSort(game.getActions(state), state, std::less<Eval>{});
         for (const auto& action : actions)
         {

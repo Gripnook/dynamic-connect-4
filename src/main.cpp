@@ -50,10 +50,14 @@ void playGame(int32_t timeLimitInMs, int32_t humanPlayer)
     Game game;
     IterativeAlphaBeta<Game> search{game, timeLimitInMs};
     Game::StateType state;
-    auto heuristic =
+    auto heuristic1 =
         Heuristic<ConsecutiveElements, Proximity, CentralDomination>{1.0,
-                                                                     0.35,
-                                                                     0.60};
+                                                                     1.0,
+                                                                     1.0};
+    auto heuristic2 =
+        Heuristic<ConsecutiveElements, Proximity, CentralDomination>{1.0,
+                                                                     0.20,
+                                                                     0.70};
     print(state);
     while (!game.isTerminal(state))
     {
@@ -61,13 +65,13 @@ void playGame(int32_t timeLimitInMs, int32_t humanPlayer)
         if (state.player == 1)
         {
             auto action = humanPlayer == 1 ? getPlayerAction(game, state) :
-                                             search.searchMax(state, heuristic);
+                                             search.searchMax(state, heuristic1);
             state = game.getResult(state, action);
         }
         else
         {
             auto action = humanPlayer == 2 ? getPlayerAction(game, state) :
-                                             search.searchMin(state, heuristic);
+                                             search.searchMin(state, heuristic2);
             state = game.getResult(state, action);
         }
         auto t2 = std::chrono::high_resolution_clock::now();
