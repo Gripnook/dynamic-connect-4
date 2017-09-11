@@ -164,7 +164,8 @@ private:
         std::sort(
             std::begin(pieces),
             std::end(pieces),
-            [](const auto& lhs, const auto& rhs) {
+            [](const std::pair<size_t, size_t>& lhs,
+               const std::pair<size_t, size_t>& rhs) {
                 return lhs.second == rhs.second ? lhs.first < rhs.first :
                                                   lhs.second < rhs.second;
             });
@@ -190,7 +191,8 @@ private:
         std::sort(
             std::begin(pieces),
             std::end(pieces),
-            [&](const auto& lhs, const auto& rhs) {
+            [&](const std::pair<size_t, size_t>& lhs,
+                const std::pair<size_t, size_t>& rhs) {
                 auto lhsDiag = boardSize + lhs.first - lhs.second;
                 auto rhsDiag = boardSize + rhs.first - rhs.second;
                 return lhsDiag == rhsDiag ? lhs.first < rhs.first :
@@ -219,7 +221,8 @@ private:
         std::sort(
             std::begin(pieces),
             std::end(pieces),
-            [](const auto& lhs, const auto& rhs) {
+            [](const std::pair<size_t, size_t>& lhs,
+               const std::pair<size_t, size_t>& rhs) {
                 auto lhsAntiDiag = lhs.first + lhs.second;
                 auto rhsAntiDiag = rhs.first + rhs.second;
                 return lhsAntiDiag == rhsAntiDiag ? lhs.first < rhs.first :

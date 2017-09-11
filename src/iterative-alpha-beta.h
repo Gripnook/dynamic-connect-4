@@ -49,7 +49,7 @@ public:
             std::sort(
                 std::begin(actions),
                 std::end(actions),
-                [&](const auto& lhs, const auto& rhs) {
+                [&](const Action& lhs, const Action& rhs) {
                     return values[lhs] > values[rhs];
                 });
 
@@ -87,7 +87,7 @@ public:
             std::sort(
                 std::begin(actions),
                 std::end(actions),
-                [&](const auto& lhs, const auto& rhs) {
+                [&](const Action& lhs, const Action& rhs) {
                     return values[lhs] < values[rhs];
                 });
 
@@ -166,7 +166,7 @@ private:
         std::sort(
             std::begin(actions),
             std::end(actions),
-            [&](const auto& lhs, const auto& rhs) {
+            [&](const Action& lhs, const Action& rhs) {
                 return comp(values[lhs], values[rhs]);
             });
         return actions;

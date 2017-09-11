@@ -31,7 +31,7 @@ private:
                 std::begin(cols), std::end(cols), std::begin(cols));
             size_t count = 0;
             std::for_each(
-                std::begin(cols) + 1, std::end(cols), [&](const auto& col) {
+                std::begin(cols) + 1, std::end(cols), [&](const size_t& col) {
                     if (col == 1)
                         ++count;
                     else
@@ -59,7 +59,7 @@ private:
                 std::begin(rows), std::end(rows), std::begin(rows));
             size_t count = 0;
             std::for_each(
-                std::begin(rows) + 1, std::end(rows), [&](const auto& row) {
+                std::begin(rows) + 1, std::end(rows), [&](const size_t& row) {
                     if (row == 1)
                         ++count;
                     else
@@ -99,7 +99,7 @@ private:
                 std::begin(cols), std::end(cols), std::begin(cols));
             size_t count = 0;
             std::for_each(
-                std::begin(cols) + 1, std::end(cols), [&](const auto& col) {
+                std::begin(cols) + 1, std::end(cols), [&](const size_t& col) {
                     if (col == 1)
                     {
                         ++count;
@@ -132,7 +132,7 @@ private:
                 std::begin(rows), std::end(rows), std::begin(rows));
             size_t count = 0;
             std::for_each(
-                std::begin(rows) + 1, std::end(rows), [&](const auto& row) {
+                std::begin(rows) + 1, std::end(rows), [&](const size_t& row) {
                     if (row == 1)
                     {
                         ++count;
