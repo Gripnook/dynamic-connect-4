@@ -7,6 +7,7 @@
 #include "dynamic-connect-4.h"
 #include "iterative-alpha-beta.h"
 #include "heuristics.h"
+#include "agent.h"
 
 using Game = DynamicConnect4;
 
@@ -17,44 +18,54 @@ int main(int argc, char** argv)
 {
     auto timeLimitInMs = parse(argc, argv);
 
-    Game game;
-    IterativeAlphaBeta<Game> search{game, timeLimitInMs};
-    Game::StateType state;
-    print(state);
-    while (!game.isTerminal(state))
+    Agent agent;
+    auto heuristic =
+        Heuristic<ConsecutiveElements, NearbyElements, Proximity, CentralDomination>{};
+    int32_t player = 1;
+    while (true)
     {
-        auto t1 = std::chrono::high_resolution_clock::now();
-        if (state.player == 1)
+        agent.startGame(player);
+
+        Game game;
+        IterativeAlphaBeta<Game> search{game, timeLimitInMs};
+        Game::StateType state;
+        // print(state);
+        int32_t moveCount = 0;
+        while (!game.isTerminal(state))
         {
-            auto action = search.searchMax(
-                state,
-                Heuristic<
-                    ConsecutiveElements,
-                    NearbyElements,
-                    Proximity,
-                    CentralDomination>{});
-            state = game.getResult(state, action);
+            ++moveCount;
+            if (moveCount > 100)
+                goto exit;
+            // auto t1 = std::chrono::high_resolution_clock::now();
+            if (state.player == 1)
+            {
+                auto action = search.searchMax(
+                    state, player == 1 ? agent.getHeuristic() : heuristic);
+                state = game.getResult(state, action);
+            }
+            else
+            {
+                auto action = search.searchMin(
+                    state, player == 2 ? agent.getHeuristic() : heuristic);
+                state = game.getResult(state, action);
+            }
+            // auto t2 = std::chrono::high_resolution_clock::now();
+            // auto ms =
+            //     std::chrono::duration_cast<std::chrono::milliseconds>(t2 -
+            //     t1)
+            //         .count();
+            // print(state);
+            // std::cout << (ms / 1000.0) << " seconds" << std::endl;
+            // std::cout << search.getLastCount()
+            //          << " nodes searched with max depth "
+            //          << search.getLastDepth() << std::endl;
         }
-        else
-        {
-            auto action = search.searchMin(
-                state,
-                Heuristic<
-                    ConsecutiveElements,
-                    NearbyElements,
-                    Proximity,
-                    CentralDomination>{});
-            state = game.getResult(state, action);
-        }
-        auto t2 = std::chrono::high_resolution_clock::now();
-        auto ms =
-            std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count();
-        print(state);
-        std::cout << (ms / 1000.0) << " seconds" << std::endl;
-        std::cout << search.getLastCount() << " nodes searched with max depth "
-                  << search.getLastDepth() << std::endl;
+        // std::cout << game.getUtility(state) << std::endl;
+
+    exit:
+        agent.endGame(game.getUtility(state), moveCount);
+        player = player == 1 ? 2 : 1;
     }
-    std::cout << game.getUtility(state) << std::endl;
     return 0;
 }
 
