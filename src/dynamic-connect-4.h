@@ -45,16 +45,6 @@ public:
 
     using ActionType = std::tuple<size_t, size_t, Direction>;
     using EvalType = double;
-    using Heuristic = std::function<EvalType(const StateType&)>;
-
-    DynamicConnect4(Heuristic heuristic) : heuristic(heuristic)
-    {
-    }
-
-    void setHeuristic(Heuristic heuristic)
-    {
-        this->heuristic = heuristic;
-    }
 
     std::vector<ActionType> getActions(const StateType& state) const
     {
@@ -120,14 +110,7 @@ public:
                                    std::numeric_limits<EvalType>::max();
     }
 
-    EvalType eval(const StateType& state) const
-    {
-        return heuristic(state);
-    }
-
 private:
-    Heuristic heuristic;
-
     bool isWinner(const StateType& state) const
     {
         // If it is the current player's turn, then the other player is the one

@@ -14,15 +14,17 @@ public:
     using State = typename Game::StateType;
     using Action = typename Game::ActionType;
     using Eval = typename Game::EvalType;
+    using Heuristic = std::function<Eval(const State&)>;
 
     IterativeAlphaBeta(Game& game, size_t timeLimitInMs)
         : game(game), timeLimitInMs(timeLimitInMs)
     {
     }
 
-    Action searchMax(const State& state)
+    Action searchMax(const State& state, Heuristic heuristic)
     {
         count = 0;
+        this->heuristic = heuristic;
         startTime = std::chrono::high_resolution_clock::now();
 
         auto actions = game.getActions(state);
@@ -44,7 +46,10 @@ public:
             }
 
             if (isTimeUp())
+            {
+                this->depth = depth - 1;
                 return actions.front(); // The previous best action.
+            }
 
             std::sort(
                 std::begin(actions),
@@ -58,9 +63,10 @@ public:
         }
     }
 
-    Action searchMin(const State& state)
+    Action searchMin(const State& state, Heuristic heuristic)
     {
         count = 0;
+        this->heuristic = heuristic;
         startTime = std::chrono::high_resolution_clock::now();
 
         auto actions = game.getActions(state);
@@ -82,7 +88,10 @@ public:
             }
 
             if (isTimeUp())
+            {
+                this->depth = depth - 1;
                 return actions.front(); // The previous best action.
+            }
 
             std::sort(
                 std::begin(actions),
@@ -101,10 +110,17 @@ public:
         return count;
     }
 
+    size_t getLastDepth() const
+    {
+        return depth;
+    }
+
 private:
     Game& game;
     size_t maxDepth;
     size_t count{0};
+    size_t depth{0};
+    Heuristic heuristic;
 
     size_t timeLimitInMs;
     std::chrono::high_resolution_clock::time_point startTime;
@@ -115,7 +131,7 @@ private:
         if (game.isTerminal(state))
             return game.getUtility(state);
         else if (depth > maxDepth || isTimeUp())
-            return game.eval(state);
+            return heuristic(state);
 
         auto value = std::numeric_limits<Eval>::lowest();
         auto actions =
@@ -138,7 +154,7 @@ private:
         if (game.isTerminal(state))
             return game.getUtility(state);
         else if (depth > maxDepth || isTimeUp())
-            return game.eval(state);
+            return heuristic(state);
 
         auto value = std::numeric_limits<Eval>::max();
         auto actions =
@@ -162,7 +178,7 @@ private:
     {
         std::map<Action, Eval> values;
         for (const auto& action : actions)
-            values[action] = game.eval(game.getResult(state, action));
+            values[action] = heuristic(game.getResult(state, action));
         std::sort(
             std::begin(actions),
             std::end(actions),
