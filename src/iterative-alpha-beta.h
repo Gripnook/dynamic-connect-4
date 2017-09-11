@@ -59,7 +59,8 @@ public:
                     return values[lhs] > values[rhs];
                 });
 
-            if (values[actions.front()] == std::numeric_limits<Eval>::max())
+            if (values[actions.front()] == std::numeric_limits<Eval>::max() ||
+                values[actions.front()] == std::numeric_limits<Eval>::lowest())
             {
                 this->depth = depth;
                 return actions.front();
@@ -104,7 +105,8 @@ public:
                     return values[lhs] < values[rhs];
                 });
 
-            if (values[actions.front()] == std::numeric_limits<Eval>::lowest())
+            if (values[actions.front()] == std::numeric_limits<Eval>::max() ||
+                values[actions.front()] == std::numeric_limits<Eval>::lowest())
             {
                 this->depth = depth;
                 return actions.front();
