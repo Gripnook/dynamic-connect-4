@@ -2,11 +2,13 @@
 
 #include <vector>
 #include <array>
+#include <set>
 #include <cstdint>
 #include <utility>
 #include <tuple>
 #include <algorithm>
 #include <limits>
+#include <functional>
 
 class DynamicConnect4
 {
@@ -17,7 +19,6 @@ public:
     struct StateType
     {
         int32_t player{1};
-        std::array<std::array<int32_t, boardSize>, boardSize> board{};
         std::array<std::pair<size_t, size_t>, piecesPerPlayer> whitePieces{
             {std::make_pair(0, 2),
              std::make_pair(0, 4),
@@ -32,14 +33,6 @@ public:
              std::make_pair(6, 0),
              std::make_pair(6, 2),
              std::make_pair(6, 4)}};
-
-        StateType()
-        {
-            for (const auto& piece : whitePieces)
-                board[piece.first][piece.second] = 1;
-            for (const auto& piece : blackPieces)
-                board[piece.first][piece.second] = 2;
-        }
     };
 
     enum class Direction
@@ -52,11 +45,15 @@ public:
 
     using ActionType = std::tuple<size_t, size_t, Direction>;
     using EvalType = double;
+    using Heuristic = std::function<EvalType(const StateType&)>;
 
-    const size_t depth;
-
-    DynamicConnect4(size_t depth) : depth{depth}
+    DynamicConnect4(Heuristic heuristic) : heuristic{heuristic}
     {
+    }
+
+    void setHeuristic(Heuristic heuristic)
+    {
+        this->heuristic = heuristic;
     }
 
     std::vector<ActionType> getActions(const StateType& state) const
@@ -89,23 +86,18 @@ public:
         auto it =
             std::find(std::begin(pieces), std::end(pieces), std::make_pair(x, y));
 
-        state.board[x][y] = 0;
         switch (direction)
         {
         case Direction::east:
-            state.board[x + 1][y] = state.player;
             *it = std::make_pair(x + 1, y);
             break;
         case Direction::west:
-            state.board[x - 1][y] = state.player;
             *it = std::make_pair(x - 1, y);
             break;
         case Direction::south:
-            state.board[x][y + 1] = state.player;
             *it = std::make_pair(x, y + 1);
             break;
         case Direction::north:
-            state.board[x][y - 1] = state.player;
             *it = std::make_pair(x, y - 1);
             break;
         default:
@@ -114,23 +106,6 @@ public:
 
         state.player = other(state.player);
         return state;
-    }
-
-    bool cutoffTest(const StateType& state, size_t depth) const
-    {
-        if (depth > this->depth)
-            return true;
-        return isTerminal(state);
-    }
-
-    EvalType eval(const StateType& state) const
-    {
-        // TODO
-        if (isTerminal(state))
-            return getUtility(state);
-
-        return evalRows(1, state) + evalColumns(1, state) - evalRows(2, state) -
-            evalColumns(2, state);
     }
 
     bool isTerminal(const StateType& state) const
@@ -145,130 +120,125 @@ public:
                                    std::numeric_limits<EvalType>::max();
     }
 
+    EvalType eval(const StateType& state) const
+    {
+        return heuristic(state);
+    }
+
 private:
+    Heuristic heuristic;
+
     bool isWinner(const StateType& state) const
     {
         // If it is the current player's turn, then the other player is the one
         // who may have won.
         auto player = other(state.player);
 
-        return checkRows(player, state) || checkColumns(player, state);
+        return checkRows(player, state) || checkColumns(player, state) ||
+            checkDiagonals(player, state) || checkAntiDiagonals(player, state);
     }
 
     bool checkRows(int32_t player, const StateType& state) const
     {
-        auto& pieces = player == 1 ? state.whitePieces : state.blackPieces;
-        for (size_t row = 0; row < boardSize; ++row)
+        auto pieces = player == 1 ? state.whitePieces : state.blackPieces;
+        std::sort(std::begin(pieces), std::end(pieces));
+        size_t row = -1, col = -1;
+        size_t count = 0;
+        for (const auto& piece : pieces)
         {
-            std::vector<size_t> cols;
-            for (const auto& piece : pieces)
-                if (piece.first == row)
-                    cols.push_back(piece.second);
-            if (cols.size() < 4)
-                continue;
-            std::sort(std::begin(cols), std::end(cols));
-            std::adjacent_difference(
-                std::begin(cols), std::end(cols), std::begin(cols));
-            size_t count = 0;
-            std::for_each(
-                std::begin(cols) + 1, std::end(cols), [&](const auto& col) {
-                    if (count >= 3)
-                        return;
-                    if (col == 1)
-                        ++count;
-                    else
-                        count = 0;
-                });
+            if (piece.first == row && piece.second == col + 1)
+                ++count;
+            else
+                count = 0;
             if (count >= 3)
                 return true;
+            row = piece.first;
+            col = piece.second;
         }
         return false;
     }
 
     bool checkColumns(int32_t player, const StateType& state) const
     {
-        auto& pieces = player == 1 ? state.whitePieces : state.blackPieces;
-        for (size_t col = 0; col < boardSize; ++col)
+        auto pieces = player == 1 ? state.whitePieces : state.blackPieces;
+        std::sort(
+            std::begin(pieces),
+            std::end(pieces),
+            [](const auto& lhs, const auto& rhs) {
+                return lhs.second == rhs.second ? lhs.first < rhs.first :
+                                                  lhs.second < rhs.second;
+            });
+        size_t row = -1, col = -1;
+        size_t count = 0;
+        for (const auto& piece : pieces)
         {
-            std::vector<size_t> rows;
-            for (const auto& piece : pieces)
-                if (piece.second == col)
-                    rows.push_back(piece.second);
-            if (rows.size() < 4)
-                continue;
-            std::sort(std::begin(rows), std::end(rows));
-            std::adjacent_difference(
-                std::begin(rows), std::end(rows), std::begin(rows));
-            size_t count = 0;
-            std::for_each(
-                std::begin(rows) + 1, std::end(rows), [&](const auto& row) {
-                    if (count >= 3)
-                        return;
-                    if (row == 1)
-                        ++count;
-                    else
-                        count = 0;
-                });
+            if (piece.first == row + 1 && piece.second == col)
+                ++count;
+            else
+                count = 0;
             if (count >= 3)
                 return true;
+            row = piece.first;
+            col = piece.second;
         }
         return false;
     }
 
-    EvalType evalRows(int32_t player, const StateType& state) const
+    bool checkDiagonals(int32_t player, const StateType& state) const
     {
-        EvalType result = 0;
-        auto& pieces = player == 1 ? state.whitePieces : state.blackPieces;
-        for (size_t row = 0; row < boardSize; ++row)
+        auto pieces = player == 1 ? state.whitePieces : state.blackPieces;
+        std::sort(
+            std::begin(pieces),
+            std::end(pieces),
+            [&](const auto& lhs, const auto& rhs) {
+                auto lhsDiag = boardSize + lhs.first - lhs.second;
+                auto rhsDiag = boardSize + rhs.first - rhs.second;
+                return lhsDiag == rhsDiag ? lhs.first < rhs.first :
+                                            lhsDiag < rhsDiag;
+            });
+        size_t diag = -1, row = -1;
+        size_t count = 0;
+        for (const auto& piece : pieces)
         {
-            std::vector<size_t> cols;
-            for (const auto& piece : pieces)
-                if (piece.first == row)
-                    cols.push_back(piece.second);
-            if (cols.empty())
-                continue;
-            std::sort(std::begin(cols), std::end(cols));
-            std::adjacent_difference(
-                std::begin(cols), std::end(cols), std::begin(cols));
-            size_t count = 0;
-            std::for_each(
-                std::begin(cols) + 1, std::end(cols), [&](const auto& col) {
-                    if (col == 1)
-                        ++count;
-                    else
-                        count = 0;
-                    result += count;
-                });
+            if (boardSize + piece.first - piece.second == diag &&
+                piece.first == row + 1)
+                ++count;
+            else
+                count = 0;
+            if (count >= 3)
+                return true;
+            diag = boardSize + piece.first - piece.second;
+            row = piece.second;
         }
-        return result;
+        return false;
     }
 
-    EvalType evalColumns(int32_t player, const StateType& state) const
+    bool checkAntiDiagonals(int32_t player, const StateType& state) const
     {
-        EvalType result = 0;
-        auto& pieces = player == 1 ? state.whitePieces : state.blackPieces;
-        for (size_t col = 0; col < boardSize; ++col)
+        auto pieces = player == 1 ? state.whitePieces : state.blackPieces;
+        std::sort(
+            std::begin(pieces),
+            std::end(pieces),
+            [](const auto& lhs, const auto& rhs) {
+                auto lhsAntiDiag = lhs.first + lhs.second;
+                auto rhsAntiDiag = rhs.first + rhs.second;
+                return lhsAntiDiag == rhsAntiDiag ? lhs.first < rhs.first :
+                                                    lhsAntiDiag < rhsAntiDiag;
+            });
+        size_t antiDiag = -1, row = -1;
+        size_t count = 0;
+        for (const auto& piece : pieces)
         {
-            std::vector<size_t> rows;
-            for (const auto& piece : pieces)
-                if (piece.second == col)
-                    rows.push_back(piece.second);
-            if (rows.empty())
-                continue;
-            std::sort(std::begin(rows), std::end(rows));
-            std::adjacent_difference(
-                std::begin(rows), std::end(rows), std::begin(rows));
-            size_t count = 0;
-            std::for_each(
-                std::begin(rows) + 1, std::end(rows), [&](const auto& row) {
-                    if (row == 1)
-                        ++count;
-                    else
-                        count = 0;
-                    result += count;
-                });
+            if (piece.first + piece.second == antiDiag && piece.first == row + 1)
+                ++count;
+            else
+                count = 0;
+            if (count >= 3)
+                return true;
+            antiDiag = piece.first + piece.second;
+            row = piece.second;
         }
-        return result;
+        return false;
     }
 
     int32_t other(int32_t player) const
@@ -280,6 +250,16 @@ private:
     {
         if (x >= boardSize || y >= boardSize)
             return -1;
-        return state.board[x][y];
+        for (const auto& piece : state.whitePieces)
+        {
+            if (piece.first == x && piece.second == y)
+                return 1;
+        }
+        for (const auto& piece : state.blackPieces)
+        {
+            if (piece.first == x && piece.second == y)
+                return 2;
+        }
+        return 0;
     }
 };
