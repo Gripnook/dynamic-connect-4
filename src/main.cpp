@@ -52,8 +52,8 @@ void playGame(int32_t timeLimitInMs, int32_t humanPlayer)
     Game::StateType state;
     auto heuristic =
         Heuristic<ConsecutiveElements, Proximity, CentralDomination>{1.0,
-                                                                     1.0,
-                                                                     1.0};
+                                                                     0.35,
+                                                                     0.60};
     print(state);
     while (!game.isTerminal(state))
     {
