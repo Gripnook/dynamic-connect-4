@@ -8,20 +8,39 @@ template <typename T, typename... Args>
 class Heuristic
 {
 public:
+    template <typename... EvalTypes>
+    Heuristic(EvalType weight = 1, EvalTypes... others)
+        : weight(weight), others(others...)
+    {
+    }
+
     EvalType operator()(const StateType& state)
     {
-        return T{}(state) + Heuristic<Args...>{}(state);
+        return weight * first(state) + others(state);
     }
+
+private:
+    T first;
+    EvalType weight;
+    Heuristic<Args...> others;
 };
 
 template <typename T>
 class Heuristic<T>
 {
 public:
+    Heuristic(EvalType weight = 1) : weight(weight)
+    {
+    }
+
     EvalType operator()(const StateType& state)
     {
-        return T{}(state);
+        return weight * heuristic(state);
     }
+
+private:
+    T heuristic;
+    EvalType weight;
 };
 
 class ConsecutiveElements
