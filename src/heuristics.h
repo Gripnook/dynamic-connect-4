@@ -163,29 +163,18 @@ private:
     EvalType eval(int player, const StateType& state) const
     {
         auto& pieces = player == 1 ? state.whitePieces : state.blackPieces;
-        auto maxRow =
-            std::max_element(std::begin(pieces), std::end(pieces))->first;
-        auto minRow =
-            std::min_element(std::begin(pieces), std::end(pieces))->first;
-        auto maxCol = std::max_element(
-                          std::begin(pieces),
-                          std::end(pieces),
-                          [](const std::pair<int, int>& lhs,
-                             const std::pair<int, int>& rhs) {
-                              return lhs.second < rhs.second;
-                          })
-                          ->second;
-        auto minCol = std::min_element(
-                          std::begin(pieces),
-                          std::end(pieces),
-                          [](const std::pair<int, int>& lhs,
-                             const std::pair<int, int>& rhs) {
-                              return lhs.second < rhs.second;
-                          })
-                          ->second;
-
-        return (DynamicConnect4::boardSize * DynamicConnect4::boardSize) -
-            ((maxRow - minRow + 1) * (maxCol - minCol + 1));
+        int maxRow = 0, minRow = DynamicConnect4::boardSize - 1;
+        int maxCol = 0, minCol = DynamicConnect4::boardSize - 1;
+        for (const auto& piece : pieces)
+        {
+            maxRow = std::max(maxRow, piece.first);
+            minRow = std::min(minRow, piece.first);
+            maxCol = std::max(maxCol, piece.second);
+            minCol = std::min(minCol, piece.second);
+        }
+        int area = (maxRow - minRow + 1) * (maxCol - minCol + 1);
+        int boardArea = DynamicConnect4::boardSize * DynamicConnect4::boardSize;
+        return boardArea - area;
     }
 };
 

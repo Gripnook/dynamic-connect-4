@@ -147,26 +147,24 @@ void playGame(int timeLimitInMs, int humanPlayer)
     Game game;
     IterativeAlphaBeta<Game> search{game, timeLimitInMs};
     StateType state;
+    ActionType action;
     auto heuristic1 =
         Heuristic<KillerConsecutiveElements, CentralDominance>{1.0, 1.0};
-    auto heuristic2 =
-        Heuristic<ConsecutiveElements, Proximity, CentralDominance>{1.0,
-                                                                    1.0,
-                                                                    1.0};
+    auto heuristic2 = Heuristic<ConsecutiveElements, CentralDominance>{1.0, 1.0};
     print(state);
     while (!game.isTerminal(state))
     {
         auto t1 = std::chrono::high_resolution_clock::now();
         if (state.player == 1)
         {
-            auto action = humanPlayer == 1 ? getPlayerAction(game, state) :
-                                             search.searchMax(state, heuristic1);
+            action = humanPlayer == 1 ? getPlayerAction(game, state) :
+                                        search.searchMax(state, heuristic1);
             state = game.getResult(state, action);
         }
         else
         {
-            auto action = humanPlayer == 2 ? getPlayerAction(game, state) :
-                                             search.searchMin(state, heuristic2);
+            action = humanPlayer == 2 ? getPlayerAction(game, state) :
+                                        search.searchMin(state, heuristic2);
             state = game.getResult(state, action);
         }
         auto t2 = std::chrono::high_resolution_clock::now();
@@ -176,6 +174,7 @@ void playGame(int timeLimitInMs, int humanPlayer)
         std::cout << (ms / 1000.0) << " seconds" << std::endl;
         std::cout << search.getLastCount() << " nodes searched with max depth "
                   << search.getLastDepth() << std::endl;
+        std::cout << "action: " << to_string(action) << std::endl;
     }
     std::cout << game.getUtility(state) << std::endl;
 }

@@ -8,6 +8,8 @@
 #include <algorithm>
 #include <limits>
 #include <functional>
+#include <string>
+#include <sstream>
 
 class DynamicConnect4
 {
@@ -194,6 +196,29 @@ private:
         return player == 1 ? 2 : 1;
     }
 };
+
+std::string to_string(const DynamicConnect4::ActionType& action)
+{
+    // Assume the position indicators of an action are single-digit.
+    std::stringstream ss;
+    ss << std::get<0>(action) << std::get<1>(action);
+    switch (std::get<2>(action))
+    {
+    case DynamicConnect4::Direction::east:
+        ss << 'E';
+        break;
+    case DynamicConnect4::Direction::west:
+        ss << 'W';
+        break;
+    case DynamicConnect4::Direction::south:
+        ss << 'S';
+        break;
+    case DynamicConnect4::Direction::north:
+        ss << 'N';
+        break;
+    }
+    return ss.str();
+}
 
 std::array<std::array<int8_t, DynamicConnect4::boardSize>, DynamicConnect4::boardSize>
     DynamicConnect4::Drawboard::drawboard{0};
