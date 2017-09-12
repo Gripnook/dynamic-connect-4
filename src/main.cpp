@@ -27,8 +27,8 @@ void print(const StateType& state);
 int main(int argc, char** argv)
 {
     auto args = parse(argc, argv);
-    challenger(args.first);
-    // playGame(args.first, args.second);
+    // challenger(args.first);
+    playGame(args.first, args.second);
     return 0;
 }
 
@@ -145,9 +145,7 @@ void playGame(int timeLimitInMs, int humanPlayer)
     IterativeAlphaBeta<Game> search{game, timeLimitInMs};
     StateType state;
     auto heuristic1 =
-        Heuristic<ConsecutiveElements, Proximity, CentralDominance>{1.0,
-                                                                    1.0,
-                                                                    1.0};
+        Heuristic<KillerConsecutiveElements, CentralDominance>{1.0, 1.0};
     auto heuristic2 =
         Heuristic<ConsecutiveElements, Proximity, CentralDominance>{1.0,
                                                                     1.0,

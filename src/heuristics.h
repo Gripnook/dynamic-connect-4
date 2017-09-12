@@ -1,5 +1,7 @@
 #pragma once
 
+#include <array>
+
 #include "dynamic-connect-4.h"
 
 using StateType = DynamicConnect4::StateType;
@@ -79,6 +81,80 @@ private:
     }
 };
 
+class KillerConsecutiveElements
+{
+public:
+    EvalType operator()(const StateType& state)
+    {
+        Drawboard board{state};
+        return eval(1, state, board) - eval(2, state, board);
+    }
+
+private:
+    EvalType
+        eval(int player, const StateType& state, const Drawboard& board) const
+    {
+        EvalType result = 0;
+        auto pieces = player == 1 ? state.whitePieces : state.blackPieces;
+        std::sort(std::begin(pieces), std::end(pieces));
+        for (const auto& piece : pieces)
+        {
+            auto x = piece.first;
+            auto y = piece.second;
+            int i = 0;
+            for (i = 1; board.get(x + i, y - i) == player; ++i)
+                ++result;
+            if (i == 3)
+            {
+                // Killer move.
+                bool emptyFront = board.get(x - 1, y + 1) == 0;
+                bool emptyBack = board.get(x + i, y - i) == 0;
+                if (emptyFront && emptyBack)
+                    result += 100;
+                else if (emptyFront || emptyBack)
+                    result += 20;
+            }
+            for (i = 1; board.get(x + i, y) == player; ++i)
+                ++result;
+            if (i == 3)
+            {
+                // Killer move.
+                bool emptyFront = board.get(x - 1, y) == 0;
+                bool emptyBack = board.get(x + i, y) == 0;
+                if (emptyFront && emptyBack)
+                    result += 100;
+                else if (emptyFront || emptyBack)
+                    result += 20;
+            }
+            for (i = 1; board.get(x + i, y + i) == player; ++i)
+                ++result;
+            if (i == 3)
+            {
+                // Killer move.
+                bool emptyFront = board.get(x - 1, y - 1) == 0;
+                bool emptyBack = board.get(x + i, y + i) == 0;
+                if (emptyFront && emptyBack)
+                    result += 100;
+                else if (emptyFront || emptyBack)
+                    result += 20;
+            }
+            for (i = 1; board.get(x, y + i) == player; ++i)
+                ++result;
+            if (i == 3)
+            {
+                // Killer move.
+                bool emptyFront = board.get(x, y - 1) == 0;
+                bool emptyBack = board.get(x, y + i) == 0;
+                if (emptyFront && emptyBack)
+                    result += 100;
+                else if (emptyFront || emptyBack)
+                    result += 20;
+            }
+        }
+        return result;
+    }
+};
+
 class Proximity
 {
 public:
@@ -126,17 +202,28 @@ public:
     }
 
 private:
+    static const std::array<
+        std::array<int8_t, DynamicConnect4::boardSize>,
+        DynamicConnect4::boardSize>
+        lookupTable;
+
     EvalType eval(int player, const StateType& state) const
     {
         EvalType result = 0;
         auto& pieces = player == 1 ? state.whitePieces : state.blackPieces;
         for (const auto& piece : pieces)
-        {
-            result += std::min(
-                piece.first, DynamicConnect4::boardSize - 1 - piece.first);
-            result += std::min(
-                piece.second, DynamicConnect4::boardSize - 1 - piece.second);
-        }
+            result += lookupTable[piece.first][piece.second];
         return result;
     }
 };
+
+const std::array<std::array<int8_t, DynamicConnect4::boardSize>, DynamicConnect4::boardSize>
+    CentralDominance::lookupTable{{
+        {0, 1, 1, 1, 1, 1, 0},
+        {1, 2, 2, 3, 2, 2, 1},
+        {1, 2, 3, 4, 3, 2, 1},
+        {1, 3, 4, 5, 4, 3, 1},
+        {1, 2, 3, 4, 3, 2, 1},
+        {1, 2, 2, 3, 2, 2, 1},
+        {0, 1, 1, 1, 1, 1, 0},
+    }};
