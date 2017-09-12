@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <chrono>
 #include <string>
 #include <sstream>
@@ -23,6 +24,8 @@ void challenger(int timeLimitInMs);
 void playGame(int timeLimitInMs, int humanPlayer);
 ActionType getPlayerAction(const Game& game, const StateType& state);
 void print(const StateType& state);
+std::istream& operator>>(std::istream& in, StateType& state);
+StateType getState(const std::string& file);
 
 int main(int argc, char** argv)
 {
@@ -255,4 +258,48 @@ void print(const StateType& state)
         }
         std::cout << std::endl;
     }
+}
+
+std::istream& operator>>(std::istream& in, StateType& state)
+{
+    std::vector<std::pair<int, int>> whitePieces;
+    std::vector<std::pair<int, int>> blackPieces;
+
+    int i = 0, j = 0;
+    for (char ch; in.get(ch);)
+    {
+        if (ch == 'O')
+            whitePieces.emplace_back(i++, j);
+        else if (ch == 'X')
+            blackPieces.emplace_back(i++, j);
+        else if (ch == ' ')
+            ++i;
+        if (ch == '\n')
+        {
+            i = 0;
+            ++j;
+        }
+    }
+
+    std::copy(
+        std::begin(whitePieces),
+        std::end(whitePieces),
+        std::begin(state.whitePieces));
+    std::copy(
+        std::begin(blackPieces),
+        std::end(blackPieces),
+        std::begin(state.blackPieces));
+    state.player = 1;
+
+    return in;
+}
+
+StateType getState(const std::string& file)
+{
+    StateType state;
+    std::ifstream in{file};
+    if (!in)
+        throw std::runtime_error{"file not found"};
+    in >> state;
+    return state;
 }

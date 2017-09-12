@@ -106,49 +106,45 @@ private:
                 ++result;
             if (i == 3)
             {
-                // Killer move.
                 bool emptyFront = board.get(x - 1, y + 1) == 0;
                 bool emptyBack = board.get(x + i, y - i) == 0;
                 if (emptyFront && emptyBack)
-                    result += 100;
+                    result += 5;
                 else if (emptyFront || emptyBack)
-                    result += 20;
+                    result += 2;
             }
             for (i = 1; board.get(x + i, y) == player; ++i)
                 ++result;
             if (i == 3)
             {
-                // Killer move.
                 bool emptyFront = board.get(x - 1, y) == 0;
                 bool emptyBack = board.get(x + i, y) == 0;
                 if (emptyFront && emptyBack)
-                    result += 100;
+                    result += 5;
                 else if (emptyFront || emptyBack)
-                    result += 20;
+                    result += 2;
             }
             for (i = 1; board.get(x + i, y + i) == player; ++i)
                 ++result;
             if (i == 3)
             {
-                // Killer move.
                 bool emptyFront = board.get(x - 1, y - 1) == 0;
                 bool emptyBack = board.get(x + i, y + i) == 0;
                 if (emptyFront && emptyBack)
-                    result += 100;
+                    result += 5;
                 else if (emptyFront || emptyBack)
-                    result += 20;
+                    result += 2;
             }
             for (i = 1; board.get(x, y + i) == player; ++i)
                 ++result;
             if (i == 3)
             {
-                // Killer move.
                 bool emptyFront = board.get(x, y - 1) == 0;
                 bool emptyBack = board.get(x, y + i) == 0;
                 if (emptyFront && emptyBack)
-                    result += 100;
+                    result += 5;
                 else if (emptyFront || emptyBack)
-                    result += 20;
+                    result += 2;
             }
         }
         return result;
