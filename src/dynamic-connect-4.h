@@ -216,6 +216,8 @@ std::string to_string(const DynamicConnect4::ActionType& action)
     case DynamicConnect4::Direction::north:
         ss << 'N';
         break;
+    default:
+        throw std::logic_error("impossible");
     }
     return ss.str();
 }
