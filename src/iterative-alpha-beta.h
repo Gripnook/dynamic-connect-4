@@ -41,6 +41,12 @@ public:
             {
                 auto value =
                     minValue(game.getResult(state, action), alpha, beta, 1);
+                if (value == std::numeric_limits<Eval>::max())
+                {
+                    // We won.
+                    this->depth = depth;
+                    return action;
+                }
                 values[action] = value;
                 alpha = std::max(alpha, value);
             }
@@ -58,9 +64,9 @@ public:
                     return values[lhs] > values[rhs];
                 });
 
-            if (values[actions.front()] == std::numeric_limits<Eval>::max() ||
-                values[actions.front()] == std::numeric_limits<Eval>::lowest())
+            if (values[actions.front()] == std::numeric_limits<Eval>::lowest())
             {
+                // Accept defeat.
                 this->depth = depth;
                 return actions.front();
             }
@@ -87,6 +93,12 @@ public:
             {
                 auto value =
                     maxValue(game.getResult(state, action), alpha, beta, 1);
+                if (value == std::numeric_limits<Eval>::lowest())
+                {
+                    // We won.
+                    this->depth = depth;
+                    return action;
+                }
                 values[action] = value;
                 beta = std::min(beta, value);
             }
@@ -104,9 +116,9 @@ public:
                     return values[lhs] < values[rhs];
                 });
 
-            if (values[actions.front()] == std::numeric_limits<Eval>::max() ||
-                values[actions.front()] == std::numeric_limits<Eval>::lowest())
+            if (values[actions.front()] == std::numeric_limits<Eval>::max())
             {
+                // Accept defeat.
                 this->depth = depth;
                 return actions.front();
             }
