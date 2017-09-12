@@ -30,7 +30,7 @@ public:
         auto actions = game.getActions(state);
         std::map<Action, Eval> values;
 
-        for (int depth = 1;; ++depth)
+        for (int depth = 2;; depth += 2)
         {
             maxDepth = depth;
 
@@ -53,7 +53,7 @@ public:
 
             if (isTimeUp())
             {
-                this->depth = depth - 1;
+                this->depth = depth - 2;
                 return actions.front(); // The previous best action.
             }
 
@@ -82,7 +82,7 @@ public:
         auto actions = game.getActions(state);
         std::map<Action, Eval> values;
 
-        for (int depth = 1;; ++depth)
+        for (int depth = 2;; depth += 2)
         {
             maxDepth = depth;
 
@@ -105,7 +105,7 @@ public:
 
             if (isTimeUp())
             {
-                this->depth = depth - 1;
+                this->depth = depth - 2;
                 return actions.front(); // The previous best action.
             }
 
@@ -150,11 +150,11 @@ private:
         ++count;
         if (game.isTerminal(state))
             return game.getUtility(state);
-        else if (depth > maxDepth || isTimeUp())
+        else if (depth >= maxDepth || isTimeUp())
             return heuristic(state);
 
         auto value = std::numeric_limits<Eval>::lowest();
-        auto actions = depth == maxDepth ?
+        auto actions = depth + 1 == maxDepth ?
             game.getActions(state) :
             heuristicSort(game.getActions(state), state, std::greater<Eval>{});
         for (const auto& action : actions)
@@ -174,11 +174,11 @@ private:
         ++count;
         if (game.isTerminal(state))
             return game.getUtility(state);
-        else if (depth > maxDepth || isTimeUp())
+        else if (depth >= maxDepth || isTimeUp())
             return heuristic(state);
 
         auto value = std::numeric_limits<Eval>::max();
-        auto actions = depth == maxDepth ?
+        auto actions = depth + 1 == maxDepth ?
             game.getActions(state) :
             heuristicSort(game.getActions(state), state, std::less<Eval>{});
         for (const auto& action : actions)

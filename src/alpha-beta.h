@@ -68,7 +68,7 @@ public:
         ++count;
         if (game.isTerminal(state))
             return game.getUtility(state);
-        else if (depth > maxDepth)
+        else if (depth >= maxDepth)
             return heuristic(state);
 
         auto value = std::numeric_limits<Eval>::lowest();
@@ -91,7 +91,7 @@ public:
         ++count;
         if (game.isTerminal(state))
             return game.getUtility(state);
-        else if (depth > maxDepth)
+        else if (depth >= maxDepth)
             return heuristic(state);
 
         auto value = std::numeric_limits<Eval>::max();
