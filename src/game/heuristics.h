@@ -88,76 +88,45 @@ private:
     }
 };
 
-// class KillerConsecutiveElements
-// {
-// public:
-//     EvalType operator()(const StateType& state) const
-//     {
-//         Drawboard board{state};
-//         return eval(1, state, board) - eval(2, state, board);
-//     }
+// A measure of how connected the pieces of each player are.
+// This heuristic awards D*N*(N-1)/2 for each connected set of
+// N pieces in a row, column, diagonal, or antidiagonal,
+// where D is a scaling factor for diagonals, which are more important.
+class ConnectedElements
+{
+public:
+    EvalType operator()(const StateType& state) const
+    {
+        Drawboard board{state};
+        return eval(1, state, board) - eval(2, state, board);
+    }
 
-// private:
-//     EvalType
-//         eval(int player, const StateType& state, const Drawboard& board)
-//         const
-//     {
-//         EvalType result = 0;
-//         auto pieces = player == 1 ? state.whitePieces : state.blackPieces;
-//         std::sort(std::begin(pieces), std::end(pieces));
-//         for (const auto& piece : pieces)
-//         {
-//             auto x = piece.x();
-//             auto y = piece.y();
-//             int i = 0;
-//             for (i = 1; board.get(x + i, y - i) == player; ++i)
-//                 ++result;
-//             if (i == 3)
-//             {
-//                 bool emptyFront = board.get(x - 1, y + 1) == 0;
-//                 bool emptyBack = board.get(x + i, y - i) == 0;
-//                 if (emptyFront && emptyBack)
-//                     result += 5;
-//                 else if (emptyFront || emptyBack)
-//                     result += 2;
-//             }
-//             for (i = 1; board.get(x + i, y) == player; ++i)
-//                 ++result;
-//             if (i == 3)
-//             {
-//                 bool emptyFront = board.get(x - 1, y) == 0;
-//                 bool emptyBack = board.get(x + i, y) == 0;
-//                 if (emptyFront && emptyBack)
-//                     result += 5;
-//                 else if (emptyFront || emptyBack)
-//                     result += 2;
-//             }
-//             for (i = 1; board.get(x + i, y + i) == player; ++i)
-//                 ++result;
-//             if (i == 3)
-//             {
-//                 bool emptyFront = board.get(x - 1, y - 1) == 0;
-//                 bool emptyBack = board.get(x + i, y + i) == 0;
-//                 if (emptyFront && emptyBack)
-//                     result += 5;
-//                 else if (emptyFront || emptyBack)
-//                     result += 2;
-//             }
-//             for (i = 1; board.get(x, y + i) == player; ++i)
-//                 ++result;
-//             if (i == 3)
-//             {
-//                 bool emptyFront = board.get(x, y - 1) == 0;
-//                 bool emptyBack = board.get(x, y + i) == 0;
-//                 if (emptyFront && emptyBack)
-//                     result += 5;
-//                 else if (emptyFront || emptyBack)
-//                     result += 2;
-//             }
-//         }
-//         return result;
-//     }
-// };
+private:
+    EvalType
+        eval(int player, const StateType& state, const Drawboard& board) const
+    {
+        static const EvalType diagonalFactor = 1.2f;
+
+        EvalType result = 0;
+        // Since the pieces are sorted, we only need to look forward in the row,
+        // column, diagonal, and antidiagonal for each piece.
+        auto& pieces = player == 1 ? state.whitePieces : state.blackPieces;
+        for (const auto& piece : pieces)
+        {
+            auto x = piece.x();
+            auto y = piece.y();
+            for (int i = 1; board.get(x + i, y - i) == player; ++i)
+                result += diagonalFactor;
+            for (int i = 1; board.get(x + i, y) == player; ++i)
+                ++result;
+            for (int i = 1; board.get(x + i, y + i) == player; ++i)
+                result += diagonalFactor;
+            for (int i = 1; board.get(x, y + i) == player; ++i)
+                ++result;
+        }
+        return result;
+    }
+};
 
 // A measure of how close the pieces of each player are to each other.
 // This heuristic awards a score of BOARD_AREA - AREA, where AREA is
@@ -215,12 +184,57 @@ private:
 
 const std::array<std::array<int8_t, boardSize>, boardSize>
     CentralDominance::lookupTable{{
-        {0, 1, 1, 1, 1, 1, 0},
+        {1, 1, 1, 1, 1, 1, 1},
         {1, 3, 3, 3, 3, 3, 1},
         {1, 3, 4, 4, 4, 3, 1},
         {1, 3, 4, 4, 4, 3, 1},
         {1, 3, 4, 4, 4, 3, 1},
         {1, 3, 3, 3, 3, 3, 1},
-        {0, 1, 1, 1, 1, 1, 0},
+        {1, 1, 1, 1, 1, 1, 1},
+    }};
+
+// A measure of a player's domination of the center of the board.
+// This heuristic awards a score to each piece based on a lookup table,
+// with central positions being worth more points.
+// This version is designed for early game play, where getting your pieces to
+// the center of the board matters a lot more.
+class EarlyCentralDominance
+{
+public:
+    EvalType operator()(const StateType& state) const
+    {
+        return eval(1, state) - eval(2, state);
+    }
+
+private:
+    static const std::array<std::array<int8_t, boardSize>, boardSize> lookupTable;
+
+    EvalType eval(int player, const StateType& state) const
+    {
+        EvalType result = 0;
+        int count = 0;
+        auto& pieces = player == 1 ? state.whitePieces : state.blackPieces;
+        for (const auto& piece : pieces)
+        {
+            auto value = lookupTable[piece.x()][piece.y()];
+            result += value;
+            if (value > 0)
+                ++count;
+        }
+        if (count >= 4)
+            result *= 2;
+        return result;
+    }
+};
+
+const std::array<std::array<int8_t, boardSize>, boardSize>
+    EarlyCentralDominance::lookupTable{{
+        {0, 0, 0, 0, 0, 0, 0},
+        {0, 1, 1, 2, 1, 1, 0},
+        {0, 1, 4, 5, 4, 1, 0},
+        {0, 2, 5, 6, 5, 2, 0},
+        {0, 1, 4, 5, 4, 1, 0},
+        {0, 1, 1, 2, 1, 1, 0},
+        {0, 0, 0, 0, 0, 0, 0},
     }};
 }

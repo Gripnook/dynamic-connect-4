@@ -60,11 +60,13 @@ struct hash<DynamicConnect4::State>
         // representation 64 bits at a time. This is more efficient than the
         // loop approach, which helps the search run deeper.
 
-        static_assert(sizeof(state) == 13, "cannot hash state");
+        static_assert(
+            sizeof(state) == 13 * sizeof(uint8_t),
+            "cannot hash state");
 
-        const void* ptr = &state;
-        auto firstPart = *static_cast<const uint64_t*>(ptr);
-        auto secondPart = *static_cast<const uint64_t*>(ptr + 5);
+        auto ptr = reinterpret_cast<const uint8_t*>(&state);
+        auto firstPart = *reinterpret_cast<const uint64_t*>(ptr);
+        auto secondPart = *reinterpret_cast<const uint64_t*>(ptr + 5);
 
         size_t seed = 0;
         Util::hash_combine(seed, firstPart, secondPart);

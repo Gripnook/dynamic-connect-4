@@ -58,34 +58,65 @@ std::pair<int, int> parse(int argc, char** argv)
 void playGame(int timeLimitInMs, int humanPlayer)
 {
     Game game;
-    IterativeAlphaBeta<Game> search{game, timeLimitInMs};
+    IterativeAlphaBeta<Game> playerOneSearch{game, timeLimitInMs};
+    IterativeAlphaBeta<Game> playerTwoSearch{game, timeLimitInMs};
     int playerOneWins = 0, playerTwoWins = 0, draws = 0;
     while (true)
     {
         StateType state;
         ActionType action;
-        auto playerOneHeuristic =
+
+        auto genericHeuristic =
             Heuristic<ConsecutiveElements, CentralDominance>{1.0f, 1.0f};
-        auto playerTwoHeuristic =
-            Heuristic<ConsecutiveElements, CentralDominance>{1.0f, 1.0f};
+
+        auto earlyGameHeuristic = Heuristic<EarlyCentralDominance>{1.0f};
+        auto endGameHeuristic =
+            Heuristic<ConnectedElements, CentralDominance>{1.0f, 1.0f};
+
         print(state);
         std::array<StateType, 5> previousStates;
+        int move = 0;
         while (!game.isTerminal(state))
         {
+            ++move;
             auto t1 = std::chrono::high_resolution_clock::now();
             if (state.isPlayerOne)
             {
-                action = humanPlayer == 1 ?
-                    getPlayerAction(game, state) :
-                    search.search(state, playerOneHeuristic, true);
+                if (move <= 16)
+                {
+                    action = humanPlayer == 1 ?
+                        getPlayerAction(game, state) :
+                        playerOneSearch.search(state, earlyGameHeuristic, true);
+                }
+                else
+                {
+                    action = humanPlayer == 1 ?
+                        getPlayerAction(game, state) :
+                        playerOneSearch.search(state, endGameHeuristic, true);
+                }
                 state = game.getResult(state, action);
+                std::cout << playerOneSearch.getLastCount()
+                          << " nodes searched with max depth "
+                          << playerOneSearch.getLastDepth() << std::endl;
             }
             else
             {
-                action = humanPlayer == 2 ?
-                    getPlayerAction(game, state) :
-                    search.search(state, playerTwoHeuristic, false);
+                if (move <= 16)
+                {
+                    action = humanPlayer == 2 ?
+                        getPlayerAction(game, state) :
+                        playerTwoSearch.search(state, genericHeuristic, false);
+                }
+                else
+                {
+                    action = humanPlayer == 2 ?
+                        getPlayerAction(game, state) :
+                        playerTwoSearch.search(state, genericHeuristic, false);
+                }
                 state = game.getResult(state, action);
+                std::cout << playerTwoSearch.getLastCount()
+                          << " nodes searched with max depth "
+                          << playerTwoSearch.getLastDepth() << std::endl;
             }
             auto t2 = std::chrono::high_resolution_clock::now();
             auto ms =
@@ -94,9 +125,6 @@ void playGame(int timeLimitInMs, int humanPlayer)
             print(state);
             std::cout << "turn took " << (ms / 1000.0) << " seconds"
                       << std::endl;
-            std::cout << search.getLastCount()
-                      << " nodes searched with max depth "
-                      << search.getLastDepth() << std::endl;
             std::cout << "action: " << to_string(action) << std::endl;
 
             std::copy(
