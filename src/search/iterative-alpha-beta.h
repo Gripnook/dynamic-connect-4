@@ -45,7 +45,7 @@ public:
         else
             comp = std::less<EvalType>{};
 
-        for (int depth = 1;; ++depth)
+        for (int depth = 2;; depth += 2)
         {
             maxDepth = depth;
             cache.reset();
@@ -78,7 +78,7 @@ public:
             if (isTimeUp())
             {
                 // We ran out of time, so return the previous best action.
-                this->depth = depth - 1;
+                this->depth = depth - 2;
                 return actions.front();
             }
 
