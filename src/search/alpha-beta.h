@@ -92,17 +92,15 @@ private:
             if (isMax)
             {
                 bestValue = std::max(bestValue, value);
-                if (bestValue >= beta)
-                    break;
                 alpha = std::max(alpha, bestValue);
             }
             else
             {
                 bestValue = std::min(bestValue, value);
-                if (bestValue <= alpha)
-                    break;
                 beta = std::min(beta, bestValue);
             }
+            if (alpha >= beta)
+                break;
         }
         return bestValue;
     }

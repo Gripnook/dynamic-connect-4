@@ -85,9 +85,12 @@ public:
             // Sort the actions so the best ones are first.
             actions = heuristicSort(actions, comp, values);
 
-            if (values[actions.front()] == lossIndicator)
+            // If either the best action is a loss, or the second best
+            // action is a loss, we can safely pick the best action since it is
+            // guaranteed that there is none that is better.
+            if (values[actions.front()] == lossIndicator ||
+                (actions.size() == 1 || values[actions[1]] == lossIndicator))
             {
-                // Accept defeat.
                 this->depth = depth;
                 return actions.front();
             }
@@ -157,17 +160,15 @@ private:
             if (isMax)
             {
                 bestValue = std::max(bestValue, value);
-                if (bestValue >= beta)
-                    break;
                 alpha = std::max(alpha, bestValue);
             }
             else
             {
                 bestValue = std::min(bestValue, value);
-                if (bestValue <= alpha)
-                    break;
                 beta = std::min(beta, bestValue);
             }
+            if (alpha >= beta)
+                break;
         }
         cache.set(state, bestValue);
         return bestValue;
