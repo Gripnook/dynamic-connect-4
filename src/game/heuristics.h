@@ -184,13 +184,13 @@ private:
 
 const std::array<std::array<int8_t, boardSize>, boardSize>
     CentralDominance::lookupTable{{
-        {1, 1, 1, 1, 1, 1, 1},
+        {0, 1, 1, 1, 1, 1, 0},
         {1, 3, 3, 3, 3, 3, 1},
         {1, 3, 4, 4, 4, 3, 1},
         {1, 3, 4, 4, 4, 3, 1},
         {1, 3, 4, 4, 4, 3, 1},
         {1, 3, 3, 3, 3, 3, 1},
-        {1, 1, 1, 1, 1, 1, 1},
+        {0, 1, 1, 1, 1, 1, 0},
     }};
 
 // A measure of a player's domination of the center of the board.
