@@ -62,6 +62,11 @@ public:
     }
 
 private:
+    Game& game;
+    int maxDepth;
+    int count{0};
+    Heuristic heuristic;
+
     EvalType alphaBeta(
         const StateType& state,
         EvalType alpha,
@@ -101,10 +106,5 @@ private:
         }
         return bestValue;
     }
-
-    Game& game;
-    int maxDepth;
-    int count{0};
-    Heuristic heuristic;
 };
 }

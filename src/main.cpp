@@ -236,10 +236,12 @@ std::istream& operator>>(std::istream& in, StateType& state)
         }
     }
 
+    std::sort(std::begin(whitePieces), std::end(whitePieces));
     std::copy(
         std::begin(whitePieces),
         std::end(whitePieces),
         std::begin(state.whitePieces));
+    std::sort(std::begin(blackPieces), std::end(blackPieces));
     std::copy(
         std::begin(blackPieces),
         std::end(blackPieces),

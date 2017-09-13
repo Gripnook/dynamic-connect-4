@@ -1,9 +1,11 @@
 #pragma once
 
 #include <array>
+#include <functional>
 
 #include "game/definition.h"
 #include "game/point.h"
+#include "util/hash.h"
 
 namespace DynamicConnect4 {
 
@@ -46,4 +48,27 @@ bool operator<(const State& lhs, const State& rhs)
         return lhs.whitePieces < rhs.whitePieces;
     return lhs.blackPieces < rhs.blackPieces;
 }
+}
+
+namespace std {
+template <>
+struct hash<DynamicConnect4::State>
+{
+    size_t operator()(const DynamicConnect4::State& state) const
+    {
+        // We reinterpret the pointer to the state to unpack the bits of the
+        // representation 64 bits at a time. This is more efficient than the
+        // loop approach, which helps the search run deeper.
+
+        static_assert(sizeof(state) == 13, "cannot hash state");
+
+        const void* ptr = &state;
+        auto firstPart = *static_cast<const uint64_t*>(ptr);
+        auto secondPart = *static_cast<const uint64_t*>(ptr + 5);
+
+        size_t seed = 0;
+        Util::hash_combine(seed, firstPart, secondPart);
+        return seed;
+    }
+};
 }

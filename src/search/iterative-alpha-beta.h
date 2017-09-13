@@ -7,7 +7,7 @@
 #include <functional>
 #include <chrono>
 
-#include "state-cache.h"
+#include "search/state-cache.h"
 
 namespace Search {
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <map>
+#include <unordered_map>
 #include <utility>
 #include <functional>
 
@@ -10,13 +10,15 @@ namespace Search {
 // local layer acts as the main store and can be reset between searches to
 // avoid overusing memory. The global layer is persistent and can be used to
 // store special states, as given by the StorageCriteria.
-// Game::StateType must be comparable (== and <).
+// Game::StateType must be hashable (std::hash) and comparable (==).
 template <typename Game>
 class StateCache
 {
 public:
     using StateType = typename Game::StateType;
     using EvalType = typename Game::EvalType;
+
+    using MapType = std::unordered_map<StateType, EvalType>;
 
     using StorageCriteria = std::function<bool(const StateType&, EvalType)>;
 
@@ -26,7 +28,7 @@ public:
 
     void reset()
     {
-        localCache = std::map<StateType, EvalType>{};
+        localCache = MapType{};
         cachedEntry = std::pair<StateType, EvalType>{};
     }
 
@@ -67,8 +69,8 @@ public:
     }
 
 private:
-    std::map<StateType, EvalType> globalCache;
-    std::map<StateType, EvalType> localCache;
+    MapType globalCache;
+    MapType localCache;
 
     StorageCriteria criteria;
 

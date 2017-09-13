@@ -56,6 +56,11 @@ public:
     }
 
 private:
+    Game& game;
+    int maxDepth;
+    int count{0};
+    Heuristic heuristic;
+
     EvalType minimax(const StateType& state, int depth, bool isMax)
     {
         ++count;
@@ -82,10 +87,5 @@ private:
         }
         return bestValue;
     }
-
-    Game& game;
-    int maxDepth;
-    int count{0};
-    Heuristic heuristic;
 };
 }

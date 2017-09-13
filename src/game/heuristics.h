@@ -2,7 +2,7 @@
 
 #include <array>
 
-#include "game.h"
+#include "game/game.h"
 
 namespace DynamicConnect4 {
 
@@ -216,11 +216,11 @@ private:
 const std::array<std::array<int8_t, boardSize>, boardSize>
     CentralDominance::lookupTable{{
         {0, 1, 1, 1, 1, 1, 0},
-        {1, 2, 2, 3, 2, 2, 1},
-        {1, 2, 3, 4, 3, 2, 1},
-        {1, 3, 4, 5, 4, 3, 1},
-        {1, 2, 3, 4, 3, 2, 1},
-        {1, 2, 2, 3, 2, 2, 1},
+        {1, 3, 3, 3, 3, 3, 1},
+        {1, 3, 4, 4, 4, 3, 1},
+        {1, 3, 4, 4, 4, 3, 1},
+        {1, 3, 4, 4, 4, 3, 1},
+        {1, 3, 3, 3, 3, 3, 1},
         {0, 1, 1, 1, 1, 1, 0},
     }};
 }
