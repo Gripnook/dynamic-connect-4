@@ -1,6 +1,6 @@
 #include "catch.hpp"
 
-#include "minimax.h"
+#include "search/minimax.h"
 #include "tic-tac-toe.h"
 
 using Game = TicTacToe;

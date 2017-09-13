@@ -17,7 +17,7 @@ TEST_TARGET := tests.exe
 CXXFLAGS := -std=c++1y -Wall -Wextra -pedantic -Isrc -Itest
 LIBFLAGS := 
 SRCS := main.cpp
-TEST_SRCS := catch.cpp minimax-test.cpp
+TEST_SRCS := catch.cpp point-test.cpp
 
 
 CXX_RELEASE := g++

@@ -4,23 +4,22 @@
 #include <string>
 #include <sstream>
 #include <utility>
-#include <tuple>
 #include <algorithm>
 
-#include "dynamic-connect-4.h"
-#include "heuristics.h"
-#include "minimax.h"
-#include "alpha-beta.h"
-#include "iterative-alpha-beta.h"
+#include "game/game.h"
+#include "game/heuristics.h"
+#include "search/minimax.h"
+#include "search/alpha-beta.h"
+#include "search/iterative-alpha-beta.h"
 
-using Game = DynamicConnect4;
+using namespace DynamicConnect4;
+using namespace Search;
+
 using StateType = Game::StateType;
 using ActionType = Game::ActionType;
 using EvalType = Game::EvalType;
-using Direction = Game::Direction;
 
 std::pair<int, int> parse(int argc, char** argv);
-void challenger(int timeLimitInMs);
 void playGame(int timeLimitInMs, int humanPlayer);
 ActionType getPlayerAction(const Game& game, const StateType& state);
 void print(const StateType& state);
@@ -30,11 +29,11 @@ StateType getState(const std::string& file);
 int main(int argc, char** argv)
 {
     auto args = parse(argc, argv);
-    // challenger(args.first);
     playGame(args.first, args.second);
     return 0;
 }
 
+// TODO
 std::pair<int, int> parse(int argc, char** argv)
 {
     int timeLimitInMs = 20000;
@@ -56,127 +55,84 @@ std::pair<int, int> parse(int argc, char** argv)
     return std::make_pair(timeLimitInMs, humanPlayer);
 }
 
-void challenger(int timeLimitInMs)
-{
-    Game game;
-    IterativeAlphaBeta<Game> search{game, timeLimitInMs};
-
-    double alpha = 1.0, beta = 1.0, gamma = 1.0;
-    double increment = 0.25;
-    auto heuristic =
-        Heuristic<ConsecutiveElements, Proximity, CentralDominance>{alpha,
-                                                                    beta,
-                                                                    gamma};
-
-    for (int i = -2; i <= 2; ++i)
-    {
-        for (int j = -2; j <= 2; ++j)
-        {
-            auto c_heuristic =
-                Heuristic<ConsecutiveElements, Proximity, CentralDominance>{
-                    alpha, beta + i * increment, gamma + j * increment};
-            std::array<int, 2> results{0};
-            for (int k = 1; k <= 2; ++k)
-            {
-                StateType state;
-                int moveCount = 0;
-                while (!game.isTerminal(state))
-                {
-                    ++moveCount;
-                    if (moveCount > 100)
-                        break;
-                    if (state.player == 1)
-                    {
-                        auto action = search.searchMax(
-                            state, state.player == k ? heuristic : c_heuristic);
-                        state = game.getResult(state, action);
-                    }
-                    else
-                    {
-                        auto action = search.searchMin(
-                            state, state.player == k ? heuristic : c_heuristic);
-                        state = game.getResult(state, action);
-                    }
-                }
-                if (moveCount > 100)
-                {
-                    results[k - 1] = 0;
-                }
-                else if (
-                    (k == 1 && game.getUtility(state) > 0) ||
-                    (k == 2 && game.getUtility(state) < 0))
-                {
-                    results[k - 1] = 1;
-                }
-                else
-                {
-                    results[k - 1] = -1;
-                }
-            }
-
-            auto result = results[0] + results[1];
-            if (result > 0)
-            {
-                std::cout << "challenger " << i << ", " << j
-                          << " defeated with results " << results[0] << " and "
-                          << results[1] << std::endl;
-            }
-            else if (result == 0)
-            {
-                std::cout << "drew with challenger " << i << ", " << j
-                          << " with results " << results[0] << " and "
-                          << results[1] << std::endl;
-            }
-            else
-            {
-                std::cout << "lost to challenger " << i << ", " << j
-                          << " with results " << results[0] << " and "
-                          << results[1] << std::endl;
-                std::cout << "new parameters: " << alpha << ", "
-                          << beta + i * increment << ", "
-                          << gamma + j * increment << std::endl;
-                heuristic = c_heuristic;
-            }
-        }
-    }
-    std::cout << "finished" << std::endl;
-}
-
 void playGame(int timeLimitInMs, int humanPlayer)
 {
     Game game;
     IterativeAlphaBeta<Game> search{game, timeLimitInMs};
-    StateType state;
-    ActionType action;
-    auto heuristic1 =
-        Heuristic<KillerConsecutiveElements, CentralDominance>{1.0, 1.0};
-    auto heuristic2 = Heuristic<ConsecutiveElements, CentralDominance>{1.0, 1.0};
-    print(state);
-    while (!game.isTerminal(state))
+    int playerOneWins = 0, playerTwoWins = 0, draws = 0;
+    while (true)
     {
-        auto t1 = std::chrono::high_resolution_clock::now();
-        if (state.player == 1)
-        {
-            action = humanPlayer == 1 ? getPlayerAction(game, state) :
-                                        search.searchMax(state, heuristic1);
-            state = game.getResult(state, action);
-        }
-        else
-        {
-            action = humanPlayer == 2 ? getPlayerAction(game, state) :
-                                        search.searchMin(state, heuristic2);
-            state = game.getResult(state, action);
-        }
-        auto t2 = std::chrono::high_resolution_clock::now();
-        auto ms =
-            std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count();
+        StateType state;
+        ActionType action;
+        auto playerOneHeuristic =
+            Heuristic<ConsecutiveElements, CentralDominance>{1.0f, 1.0f};
+        auto playerTwoHeuristic =
+            Heuristic<ConsecutiveElements, CentralDominance>{1.0f, 1.0f};
         print(state);
-        std::cout << (ms / 1000.0) << " seconds" << std::endl;
-        std::cout << search.getLastCount() << " nodes searched with max depth "
-                  << search.getLastDepth() << std::endl;
-        std::cout << "action: " << to_string(action) << std::endl;
+        std::array<StateType, 5> previousStates;
+        while (!game.isTerminal(state))
+        {
+            auto t1 = std::chrono::high_resolution_clock::now();
+            if (state.isPlayerOne)
+            {
+                action = humanPlayer == 1 ?
+                    getPlayerAction(game, state) :
+                    search.search(state, playerOneHeuristic, true);
+                state = game.getResult(state, action);
+            }
+            else
+            {
+                action = humanPlayer == 2 ?
+                    getPlayerAction(game, state) :
+                    search.search(state, playerTwoHeuristic, false);
+                state = game.getResult(state, action);
+            }
+            auto t2 = std::chrono::high_resolution_clock::now();
+            auto ms =
+                std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1)
+                    .count();
+            print(state);
+            std::cout << "turn took " << (ms / 1000.0) << " seconds"
+                      << std::endl;
+            std::cout << search.getLastCount()
+                      << " nodes searched with max depth "
+                      << search.getLastDepth() << std::endl;
+            std::cout << "action: " << to_string(action) << std::endl;
+
+            std::copy(
+                std::begin(previousStates) + 1,
+                std::end(previousStates),
+                std::begin(previousStates));
+            previousStates.back() = state;
+            if (previousStates.front() == previousStates.back())
+                break;
+        }
+
+        if (previousStates.front() == previousStates.back())
+        {
+            std::cout << "draw!" << std::endl;
+            ++draws;
+        }
+        else if (game.getUtility(state) == std::numeric_limits<EvalType>::max())
+        {
+            std::cout << "player 1 wins!" << std::endl;
+            ++playerOneWins;
+        }
+        else if (game.getUtility(state) == std::numeric_limits<EvalType>::lowest())
+        {
+            std::cout << "player 2 wins!" << std::endl;
+            ++playerTwoWins;
+        }
+
+        std::cout
+            << "============================================================"
+            << std::endl;
+        std::cout << "Current score : " << playerOneWins << "-" << draws << "-"
+                  << playerTwoWins << std::endl;
+        std::cout
+            << "============================================================"
+            << std::endl;
     }
-    std::cout << game.getUtility(state) << std::endl;
 }
 
 ActionType getPlayerAction(const Game& game, const StateType& state)
@@ -223,10 +179,10 @@ ActionType getPlayerAction(const Game& game, const StateType& state)
         if (std::find(
                 std::begin(actions),
                 std::end(actions),
-                std::make_tuple(x, y, dir)) == std::end(actions))
+                std::make_pair(Point{x, y}, dir)) == std::end(actions))
             goto failure;
 
-        return std::make_tuple(x, y, dir);
+        return std::make_pair(Point{x, y}, dir);
 
     failure:
         std::cout << "Invalid action. Try again > ";
@@ -236,21 +192,21 @@ ActionType getPlayerAction(const Game& game, const StateType& state)
 void print(const StateType& state)
 {
     std::cout << "  1 2 3 4 5 6 7" << std::endl;
-    for (int y = 0; y < Game::boardSize; ++y)
+    for (int y = 0; y < boardSize; ++y)
     {
         std::cout << (y + 1) << " ";
-        for (int x = 0; x < Game::boardSize; ++x)
+        for (int x = 0; x < boardSize; ++x)
         {
             if (std::find(
                     std::begin(state.whitePieces),
                     std::end(state.whitePieces),
-                    std::make_pair(x, y)) != std::end(state.whitePieces))
+                    Point{x, y}) != std::end(state.whitePieces))
                 std::cout << "O,";
             else if (
                 std::find(
                     std::begin(state.blackPieces),
                     std::end(state.blackPieces),
-                    std::make_pair(x, y)) != std::end(state.blackPieces))
+                    Point{x, y}) != std::end(state.blackPieces))
                 std::cout << "X,";
             else
                 std::cout << " ,";
@@ -261,8 +217,8 @@ void print(const StateType& state)
 
 std::istream& operator>>(std::istream& in, StateType& state)
 {
-    std::vector<std::pair<int, int>> whitePieces;
-    std::vector<std::pair<int, int>> blackPieces;
+    std::vector<Point> whitePieces;
+    std::vector<Point> blackPieces;
 
     int i = 0, j = 0;
     for (char ch; in.get(ch);)
@@ -288,7 +244,7 @@ std::istream& operator>>(std::istream& in, StateType& state)
         std::begin(blackPieces),
         std::end(blackPieces),
         std::begin(state.blackPieces));
-    state.player = 1;
+    state.isPlayerOne = true;
 
     return in;
 }
