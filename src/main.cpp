@@ -75,7 +75,14 @@ void playGame(int timeLimitInMs, int humanPlayer)
             Heuristic<ConnectedElements, EarlyCentralDominance>{1.0f, 1.0f};
 
         print(state);
+        std::cout << "EarlyGame Evaluation: " << earlyGameHeuristic(state)
+                  << std::endl;
+        std::cout << "EndGame Evaluation: " << endGameHeuristic(state)
+                  << std::endl;
+        std::cout << "Generic Evaluation: " << genericHeuristic(state)
+                  << std::endl;
         std::cout << std::endl;
+
         std::array<StateType, 5> previousStates;
         int move = 0;
         while (!game.isTerminal(state))
