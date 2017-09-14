@@ -45,7 +45,7 @@ public:
         else
             comp = std::less<EvalType>{};
 
-        for (int depth = 2;; depth += 2)
+        for (int depth = 1;; ++depth)
         {
             maxDepth = depth;
             cache.reset();
@@ -78,11 +78,13 @@ public:
             if (isTimeUp())
             {
                 // We ran out of time, so return the previous best action.
-                this->depth = depth - 2;
+                this->depth = depth - 1;
                 return actions.front();
             }
 
             // Sort the actions so the best ones are first.
+            // Given a stable sort, this will also ensure that better actions at
+            // a lower depth will be ahead of now equal valued actions.
             actions = heuristicSort(actions, comp, values);
 
             // If either the best action is a loss, or the second best
