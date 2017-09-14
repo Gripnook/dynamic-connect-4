@@ -98,6 +98,7 @@ void playGame(int timeLimitInMs, int humanPlayer)
                 }
                 state = game.getResult(state, action);
                 print(state);
+                std::cout << "move #" << move << std::endl;
                 std::cout << playerOneSearch.getLastCount()
                           << " nodes searched with max depth "
                           << playerOneSearch.getLastDepth() << std::endl;
@@ -118,6 +119,7 @@ void playGame(int timeLimitInMs, int humanPlayer)
                 }
                 state = game.getResult(state, action);
                 print(state);
+                std::cout << "move #" << move << std::endl;
                 std::cout << playerTwoSearch.getLastCount()
                           << " nodes searched with max depth "
                           << playerTwoSearch.getLastDepth() << std::endl;
