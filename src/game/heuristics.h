@@ -209,7 +209,7 @@ public:
     }
 
 private:
-    static const std::array<std::array<int8_t, boardSize>, boardSize> lookupTable;
+    static const std::array<std::array<EvalType, boardSize>, boardSize> lookupTable;
 
     EvalType eval(int player, const StateType& state) const
     {
@@ -234,15 +234,15 @@ private:
     }
 };
 
-const std::array<std::array<int8_t, boardSize>, boardSize>
+const std::array<std::array<EvalType, boardSize>, boardSize>
     EarlyCentralDominance::lookupTable{{
-        {0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 1, 1, 1, 0, 0},
-        {0, 1, 2, 2, 2, 1, 0},
-        {0, 1, 2, 2, 2, 1, 0},
-        {0, 1, 2, 2, 2, 1, 0},
-        {0, 0, 1, 1, 1, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0},
+        {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f},
+        {0.0f, 0.8f, 1.0f, 1.2f, 1.0f, 0.8f, 0.0f},
+        {0.0f, 1.0f, 2.0f, 2.2f, 2.0f, 1.0f, 0.0f},
+        {0.0f, 1.2f, 2.2f, 2.4f, 2.2f, 1.2f, 0.0f},
+        {0.0f, 1.0f, 2.0f, 2.2f, 2.0f, 1.0f, 0.0f},
+        {0.0f, 0.8f, 1.0f, 1.2f, 1.0f, 0.8f, 0.0f},
+        {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f},
     }};
 
 // A measure of how blocked a player's pieces are in the early game.

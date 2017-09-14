@@ -70,10 +70,10 @@ public:
                     beta = std::min(beta, value);
             }
 
-            std::cout << "searched " << count << " nodes so far at depth "
-                      << depth << ", with " << cache.localCacheSize()
-                      << " nodes cached locally and " << cache.globalCacheSize()
-                      << " nodes cached globally" << std::endl;
+            // std::cout << "searched " << count << " nodes so far at depth "
+            //           << depth << ", with " << cache.localCacheSize()
+            //           << " nodes cached locally and " << cache.globalCacheSize()
+            //           << " nodes cached globally" << std::endl;
 
             if (isTimeUp())
             {
