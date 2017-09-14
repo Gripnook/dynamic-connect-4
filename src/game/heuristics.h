@@ -306,8 +306,8 @@ template <int Player>
 const EvalType EarlyBlocking<Player>::forwardBlockingFactor = 1.0f;
 
 template <int Player>
-const EvalType EarlyBlocking<Player>::strongDiagonalBlockingFactor = 0.6f;
+const EvalType EarlyBlocking<Player>::strongDiagonalBlockingFactor = 0.8f;
 
 template <int Player>
-const EvalType EarlyBlocking<Player>::weakDiagonalBlockingFactor = 0.5f;
+const EvalType EarlyBlocking<Player>::weakDiagonalBlockingFactor = 0.6f;
 }

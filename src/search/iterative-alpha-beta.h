@@ -45,6 +45,7 @@ public:
         else
             comp = std::less<EvalType>{};
 
+        std::cout << "========== Actions ==========" << std::endl;
         for (int depth = 2;; depth += 2)
         {
             maxDepth = depth;
@@ -70,10 +71,10 @@ public:
                     beta = std::min(beta, value);
             }
 
-            // std::cout << "searched " << count << " nodes so far at depth "
-            //           << depth << ", with " << cache.localCacheSize()
-            //           << " nodes cached locally and " << cache.globalCacheSize()
-            //           << " nodes cached globally" << std::endl;
+            std::cout << "searched " << count << " nodes so far at depth "
+                      << depth << ", with " << cache.localCacheSize()
+                      << " nodes cached locally and " << cache.globalCacheSize()
+                      << " nodes cached globally" << std::endl;
 
             if (isTimeUp())
             {
@@ -84,6 +85,12 @@ public:
 
             // Sort the actions so the best ones are first.
             actions = heuristicSort(actions, comp, values);
+
+            std::cout << "Depth " << depth << " => ";
+            for (const auto& action : actions)
+                std::cout << to_string(action) << ": " << values[action]
+                          << "; ";
+            std::cout << std::endl;
 
             // If either the best action is a loss, or the second best
             // action is a loss, we can safely pick the best action since it is
