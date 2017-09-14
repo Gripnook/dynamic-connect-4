@@ -197,7 +197,7 @@ private:
         std::function<bool(EvalType, EvalType)> comp,
         const std::map<ActionType, EvalType>& values) const
     {
-        std::sort(
+        std::stable_sort(
             std::begin(actions),
             std::end(actions),
             [&](const ActionType& lhs, const ActionType& rhs) {
