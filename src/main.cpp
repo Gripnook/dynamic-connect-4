@@ -69,9 +69,10 @@ void playGame(int timeLimitInMs, int humanPlayer)
         auto genericHeuristic =
             Heuristic<ConsecutiveElements, CentralDominance>{1.0f, 1.0f};
 
-        auto earlyGameHeuristic = Heuristic<EarlyCentralDominance>{1.0f};
+        auto earlyGameHeuristic =
+            Heuristic<EarlyCentralDominance, EarlyBlocking<2>>{1.0f, 1.0f};
         auto endGameHeuristic =
-            Heuristic<ConnectedElements, CentralDominance>{1.0f, 1.0f};
+            Heuristic<ConnectedElements, EarlyCentralDominance>{1.0f, 1.0f};
 
         print(state);
         std::array<StateType, 5> previousStates;
@@ -86,13 +87,13 @@ void playGame(int timeLimitInMs, int humanPlayer)
                 {
                     action = humanPlayer == 1 ?
                         getPlayerAction(game, state) :
-                        playerOneSearch.search(state, earlyGameHeuristic, true);
+                        playerOneSearch.search(state, genericHeuristic, true);
                 }
                 else
                 {
                     action = humanPlayer == 1 ?
                         getPlayerAction(game, state) :
-                        playerOneSearch.search(state, endGameHeuristic, true);
+                        playerOneSearch.search(state, genericHeuristic, true);
                 }
                 state = game.getResult(state, action);
                 std::cout << playerOneSearch.getLastCount()
@@ -105,13 +106,13 @@ void playGame(int timeLimitInMs, int humanPlayer)
                 {
                     action = humanPlayer == 2 ?
                         getPlayerAction(game, state) :
-                        playerTwoSearch.search(state, genericHeuristic, false);
+                        playerTwoSearch.search(state, earlyGameHeuristic, false);
                 }
                 else
                 {
                     action = humanPlayer == 2 ?
                         getPlayerAction(game, state) :
-                        playerTwoSearch.search(state, genericHeuristic, false);
+                        playerTwoSearch.search(state, endGameHeuristic, false);
                 }
                 state = game.getResult(state, action);
                 std::cout << playerTwoSearch.getLastCount()
