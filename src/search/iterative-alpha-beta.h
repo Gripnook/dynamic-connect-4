@@ -45,6 +45,7 @@ public:
         else
             comp = std::less<EvalType>{};
 
+        std::cout << "========== Actions ==========" << std::endl;
         for (int depth = 1;; ++depth)
         {
             maxDepth = depth;
@@ -86,6 +87,12 @@ public:
             // Given a stable sort, this will also ensure that better actions at
             // a lower depth will be ahead of now equal valued actions.
             actions = heuristicSort(actions, comp, values);
+
+            std::cout << "Depth " << depth << " => ";
+            for (const auto& action : actions)
+                std::cout << to_string(action) << ": " << values[action]
+                          << "; ";
+            std::cout << std::endl;
 
             // If either the best action is a loss, or the second best
             // action is a loss, we can safely pick the best action since it is
@@ -192,7 +199,7 @@ private:
         std::function<bool(EvalType, EvalType)> comp,
         const std::map<ActionType, EvalType>& values) const
     {
-        std::sort(
+        std::stable_sort(
             std::begin(actions),
             std::end(actions),
             [&](const ActionType& lhs, const ActionType& rhs) {

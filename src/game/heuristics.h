@@ -102,11 +102,11 @@ public:
     }
 
 private:
+    static const EvalType diagonalFactor;
+
     EvalType
         eval(int player, const StateType& state, const Drawboard& board) const
     {
-        static const EvalType diagonalFactor = 1.2f;
-
         EvalType result = 0;
         // Since the pieces are sorted, we only need to look forward in the row,
         // column, diagonal, and antidiagonal for each piece.
@@ -127,6 +127,8 @@ private:
         return result;
     }
 };
+
+const EvalType ConnectedElements::diagonalFactor = 1.2f;
 
 // A measure of how close the pieces of each player are to each other.
 // This heuristic awards a score of BOARD_AREA - AREA, where AREA is
@@ -207,7 +209,7 @@ public:
     }
 
 private:
-    static const std::array<std::array<int8_t, boardSize>, boardSize> lookupTable;
+    static const std::array<std::array<EvalType, boardSize>, boardSize> lookupTable;
 
     EvalType eval(int player, const StateType& state) const
     {
@@ -221,20 +223,91 @@ private:
             if (value > 0)
                 ++count;
         }
-        if (count >= 4)
-            result *= 2;
+        // Give a bonus to a high density of central pieces.
+        if (count == 3)
+            result *= 1.1f;
+        if (count == 4)
+            result *= 1.25f;
+        if (count > 4)
+            result *= 1.2f;
         return result;
     }
 };
 
-const std::array<std::array<int8_t, boardSize>, boardSize>
+const std::array<std::array<EvalType, boardSize>, boardSize>
     EarlyCentralDominance::lookupTable{{
-        {0, 0, 0, 0, 0, 0, 0},
-        {0, 1, 1, 2, 1, 1, 0},
-        {0, 1, 4, 5, 4, 1, 0},
-        {0, 2, 5, 6, 5, 2, 0},
-        {0, 1, 4, 5, 4, 1, 0},
-        {0, 1, 1, 2, 1, 1, 0},
-        {0, 0, 0, 0, 0, 0, 0},
+        {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f},
+        {0.0f, 0.8f, 1.0f, 1.2f, 1.0f, 0.8f, 0.0f},
+        {0.0f, 1.0f, 2.0f, 2.2f, 2.0f, 1.0f, 0.0f},
+        {0.0f, 1.2f, 2.2f, 2.4f, 2.2f, 1.2f, 0.0f},
+        {0.0f, 1.0f, 2.0f, 2.2f, 2.0f, 1.0f, 0.0f},
+        {0.0f, 0.8f, 1.0f, 1.2f, 1.0f, 0.8f, 0.0f},
+        {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f},
     }};
+
+// A measure of how blocked a player's pieces are in the early game.
+// This heuristic decreases the score of any piece that is blocked when
+// considering moves that go towards the center of the board.
+// The player that is using the heuristic has a higher weight associated with
+// these penalties, ensuring that they will try to unblock themselves before
+// trying to block the opponent.
+template <int Player>
+class EarlyBlocking
+{
+public:
+    EvalType operator()(const StateType& state) const
+    {
+        Drawboard board{state};
+        if (Player == 1)
+            return eval(1, state, board) - 0.5f * eval(2, state, board);
+        else
+            return 0.5f * eval(1, state, board) - eval(2, state, board);
+    }
+
+private:
+    static const EvalType forwardBlockingFactor;
+    static const EvalType strongDiagonalBlockingFactor;
+    static const EvalType weakDiagonalBlockingFactor;
+
+    EvalType
+        eval(int player, const StateType& state, const Drawboard& board) const
+    {
+        EvalType result = 0;
+        auto& pieces = player == 1 ? state.whitePieces : state.blackPieces;
+        int otherPlayer = player == 1 ? 2 : 1;
+        for (const auto& piece : pieces)
+        {
+            auto x = piece.x();
+            auto y = piece.y();
+
+            if (2 * x + 1 == boardSize)
+                continue;
+            auto xForward = (2 * x + 1 < boardSize) ? x + 1 : x - 1;
+
+            auto upperDiagonalFactor = (2 * y + 1 > boardSize) ?
+                strongDiagonalBlockingFactor :
+                weakDiagonalBlockingFactor;
+            auto lowerDiagonalFactor = (2 * y + 1 < boardSize) ?
+                strongDiagonalBlockingFactor :
+                weakDiagonalBlockingFactor;
+
+            if (board.get(xForward, y) == otherPlayer)
+                result -= forwardBlockingFactor;
+            if (board.get(xForward, y - 1) == otherPlayer)
+                result -= upperDiagonalFactor;
+            if (board.get(xForward, y + 1) == otherPlayer)
+                result -= lowerDiagonalFactor;
+        }
+        return result;
+    }
+};
+
+template <int Player>
+const EvalType EarlyBlocking<Player>::forwardBlockingFactor = 1.0f;
+
+template <int Player>
+const EvalType EarlyBlocking<Player>::strongDiagonalBlockingFactor = 0.8f;
+
+template <int Player>
+const EvalType EarlyBlocking<Player>::weakDiagonalBlockingFactor = 0.6f;
 }
