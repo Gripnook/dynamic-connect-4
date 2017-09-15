@@ -18,7 +18,7 @@ public:
     using StateType = typename Game::StateType;
     using EvalType = typename Game::EvalType;
 
-    using MapType = std::unordered_map<StateType, EvalType>;
+    using MapType = std::unordered_map<StateType, std::pair<EvalType, int>>;
 
     using StorageCriteria = std::function<bool(const StateType&, EvalType)>;
 
@@ -28,29 +28,31 @@ public:
 
     void reset()
     {
-        localCache = MapType{};
-        cachedEntry = std::pair<StateType, EvalType>{};
+        localCache.clear();
     }
 
-    bool contains(const StateType& state) const
+    bool contains(const StateType& state, int depth) const
     {
-        return find(state);
+        return find(state, depth).first;
     }
 
-    EvalType get(const StateType& state) const
+    EvalType get(const StateType& state, int depth) const
     {
-        if (state == cachedEntry.first || find(state))
-            return cachedEntry.second;
-        throw std::runtime_error("entry not found");
+        auto result = find(state, depth);
+        if (!result.first)
+            throw std::runtime_error("entry not found");
+        return result.second;
     }
 
-    void set(const StateType& state, EvalType value)
+    void set(const StateType& state, EvalType value, int depth)
     {
-        if (criteria(state, value))
-            globalCache[state] = value;
-        else
-            localCache[state] = value;
-        cachedEntry = std::pair<StateType, EvalType>{};
+        if (!contains(state, depth))
+        {
+            if (criteria(state, value))
+                globalCache[state] = std::make_pair(value, depth);
+            else
+                localCache[state] = std::make_pair(value, depth);
+        }
     }
 
     size_t size() const
@@ -74,26 +76,17 @@ private:
 
     StorageCriteria criteria;
 
-    mutable std::pair<StateType, EvalType> cachedEntry;
-
-    // Looks up the entry and caches it if it finds it.
-    // The caching is useful since we usually check if an entry is present
-    // then get it in different calls.
-    bool find(const StateType& state) const
+    std::pair<bool, EvalType> find(const StateType& state, int depth) const
     {
-        auto entry = localCache.find(state);
-        if (entry != std::end(localCache))
-        {
-            cachedEntry = *entry;
-            return true;
-        }
-        entry = globalCache.find(state);
+        // Entries in the global cache are valid regardless of depth.
+        auto entry = globalCache.find(state);
         if (entry != std::end(globalCache))
-        {
-            cachedEntry = *entry;
-            return true;
-        }
-        return false;
+            return std::make_pair(true, entry->second.first);
+        // Entries in the local cache must be depth checked.
+        entry = localCache.find(state);
+        if (entry != std::end(localCache) && entry->second.second < depth)
+            return std::make_pair(true, entry->second.first);
+        return std::make_pair(false, 0);
     }
 };
 }
