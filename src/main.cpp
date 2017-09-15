@@ -129,7 +129,6 @@ void playGame(int humanPlayer, int timeLimitInMs)
             auto t1 = std::chrono::high_resolution_clock::now();
             if (state.isPlayerOne)
             {
-
                 action = humanPlayer == 1 ?
                     getPlayerAction(game, state) :
                     playerOneSearch.search(state, playerOneHeuristic, true);

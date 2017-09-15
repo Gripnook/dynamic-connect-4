@@ -146,8 +146,9 @@ private:
         else if (depth >= maxDepth || isTimeUp())
             return heuristic(state);
 
-        if (cache.contains(state, depth))
-            return cache.get(state, depth);
+        auto entry = cache.find(state, depth);
+        if (entry.first)
+            return entry.second;
 
         auto init = isMax ? std::numeric_limits<EvalType>::lowest() :
                             std::numeric_limits<EvalType>::max();

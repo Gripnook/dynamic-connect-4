@@ -31,27 +31,33 @@ public:
         localCache.clear();
     }
 
-    bool contains(const StateType& state, int depth) const
+    std::pair<bool, EvalType> find(const StateType& state, int depth) const
     {
-        return find(state, depth).first;
-    }
-
-    EvalType get(const StateType& state, int depth) const
-    {
-        auto result = find(state, depth);
-        if (!result.first)
-            throw std::runtime_error("entry not found");
-        return result.second;
+        // Entries in the global cache are valid regardless of depth.
+        auto entry = globalCache.find(state);
+        if (entry != std::end(globalCache))
+            return std::make_pair(true, entry->second.first);
+        // Entries in the local cache must be depth checked.
+        entry = localCache.find(state);
+        if (entry != std::end(localCache) && entry->second.second < depth)
+            return std::make_pair(true, entry->second.first);
+        return std::make_pair(false, 0);
     }
 
     void set(const StateType& state, EvalType value, int depth)
     {
-        if (!contains(state, depth))
+        if (criteria(state, value))
         {
-            if (criteria(state, value))
-                globalCache[state] = std::make_pair(value, depth);
-            else
-                localCache[state] = std::make_pair(value, depth);
+            globalCache[state] = std::make_pair(value, depth);
+        }
+        else
+        {
+            auto& entry = localCache[state];
+            if (entry.second == 0 || entry.second >= depth)
+            {
+                entry.first = value;
+                entry.second = depth;
+            }
         }
     }
 
@@ -75,18 +81,5 @@ private:
     MapType localCache;
 
     StorageCriteria criteria;
-
-    std::pair<bool, EvalType> find(const StateType& state, int depth) const
-    {
-        // Entries in the global cache are valid regardless of depth.
-        auto entry = globalCache.find(state);
-        if (entry != std::end(globalCache))
-            return std::make_pair(true, entry->second.first);
-        // Entries in the local cache must be depth checked.
-        entry = localCache.find(state);
-        if (entry != std::end(localCache) && entry->second.second < depth)
-            return std::make_pair(true, entry->second.first);
-        return std::make_pair(false, 0);
-    }
 };
 }
