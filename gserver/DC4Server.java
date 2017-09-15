@@ -17,7 +17,7 @@ public class DC4Server {
         try {
             logger.addHandler(new FileHandler("DC4Server.log"));
         
-            int timeout = 10000;
+            int timeout = 20000;
             int port = 12345;
             if (args.length > 0) {
                 timeout = Integer.parseInt(args[0]);

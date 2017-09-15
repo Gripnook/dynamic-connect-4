@@ -53,3 +53,10 @@ agent.exe
 # Visual Studio
 .vs
 .vscode
+
+# Game logs
+logs
+
+# Server build files and logs
+gserver/DC4Server.jar
+gserver/DC4Server.log*

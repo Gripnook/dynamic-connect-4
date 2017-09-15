@@ -12,6 +12,8 @@
 #include "search/alpha-beta.h"
 #include "search/iterative-alpha-beta.h"
 
+#include "gclient.h"
+
 using namespace DynamicConnect4;
 using namespace Search;
 
@@ -19,40 +21,81 @@ using StateType = Game::StateType;
 using ActionType = Game::ActionType;
 using EvalType = Game::EvalType;
 
-std::pair<int, int> parse(int argc, char** argv);
+struct Args
+{
+    bool server{false};
+    int timeLimitInMs{18000};
+    int player{0};
+};
+
+Args parse(int argc, char** argv);
+
 void playGame(int timeLimitInMs, int humanPlayer);
 ActionType getPlayerAction(const Game& game, const StateType& state);
 void print(const StateType& state);
+
 std::istream& operator>>(std::istream& in, StateType& state);
 StateType getState(const std::string& file);
 
 int main(int argc, char** argv)
 {
     auto args = parse(argc, argv);
-    playGame(args.first, args.second);
+    if (args.server)
+    {
+        TelnetClient client{args.player, args.timeLimitInMs};
+        client.play();
+    }
+    else
+    {
+        playGame(args.player, args.timeLimitInMs);
+    };
     return 0;
 }
 
-// TODO
-std::pair<int, int> parse(int argc, char** argv)
+Args parse(int argc, char** argv)
 {
-    int timeLimitInMs = 20000;
-    int humanPlayer = 0;
-    if (argc > 1)
+    Args args;
+    for (int i = 0; i < argc; ++i)
     {
-        int temp;
-        std::stringstream ss{argv[1]};
-        if (ss >> temp)
-            timeLimitInMs = temp;
+        std::string arg{argv[i]};
+        if (arg.length() >= 2 && arg[0] == '-')
+            switch (arg[1])
+            {
+            case 's':
+            {
+                args.server = true;
+                break;
+            }
+            case 'p':
+            case 'h':
+            {
+                int player;
+                std::stringstream ss{arg.substr(2)};
+                ss >> player;
+                if (!ss)
+                    throw std::runtime_error("invalid argument");
+                args.player = player;
+                break;
+            }
+            case 't':
+            {
+                int timeLimitInMs;
+                std::stringstream ss{arg.substr(2)};
+                ss >> timeLimitInMs;
+                if (!ss)
+                    throw std::runtime_error("invalid argument");
+                args.timeLimitInMs = timeLimitInMs;
+                break;
+            }
+            }
     }
-    if (argc > 2)
-    {
-        if (std::string{argv[2]} == "-h1")
-            humanPlayer = 1;
-        else if (std::string{argv[2]} == "-h2")
-            humanPlayer = 2;
-    }
-    return std::make_pair(timeLimitInMs, humanPlayer);
+    if (args.player != 0 && args.player != 1 && args.player != 2)
+        throw std::runtime_error("invalid player");
+    if (args.server && args.player == 0)
+        throw std::runtime_error("invalid player");
+    if (args.timeLimitInMs < 0)
+        throw std::runtime_error("cannot play with negative time");
+    return args;
 }
 
 void playGame(int timeLimitInMs, int humanPlayer)
