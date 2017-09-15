@@ -54,7 +54,7 @@ private:
 // A measure of how connected the pieces of each player are.
 // This heuristic awards N*(N-1)/2 for each connected set of
 // N pieces in a row, column, diagonal, or antidiagonal.
-class ConsecutiveElements
+class ConnectedPiecesV1
 {
 public:
     EvalType operator()(const StateType& state) const
@@ -92,7 +92,7 @@ private:
 // This heuristic awards D*N*(N-1)/2 for each connected set of
 // N pieces in a row, column, diagonal, or antidiagonal,
 // where D is a scaling factor for diagonals, which are more important.
-class ConnectedElements
+class ConnectedPiecesV2
 {
 public:
     EvalType operator()(const StateType& state) const
@@ -128,7 +128,59 @@ private:
     }
 };
 
-const EvalType ConnectedElements::diagonalFactor = 1.2f;
+const EvalType ConnectedPiecesV2::diagonalFactor = 1.21875f;
+
+// A measure of how connected the pieces of each player are.
+// This heuristic awards N*(N-1)/2 for each connected set of
+// N pieces in a row, column, diagonal, or antidiagonal.
+// In addition, it awards points for almost connected pieces,
+// which are pieces separated by a single empty space.
+class ConnectedPiecesV3
+{
+public:
+    EvalType operator()(const StateType& state) const
+    {
+        Drawboard board{state};
+        return eval(1, state, board) - eval(2, state, board);
+    }
+
+private:
+    EvalType
+        eval(int player, const StateType& state, const Drawboard& board) const
+    {
+        EvalType result = 0;
+        auto& pieces = player == 1 ? state.whitePieces : state.blackPieces;
+        for (auto it1 = std::begin(pieces); it1 != std::end(pieces); ++it1)
+        {
+            for (auto it2 = it1 + 1; it2 != std::end(pieces); ++it2)
+            {
+                auto dx = std::abs(it2->x() - it1->x());
+                auto dy = std::abs(it2->y() - it1->y());
+                auto maxDistance = std::max(dx, dy);
+                if (maxDistance == 1)
+                {
+                    result += 1.0f;
+                }
+                else if (maxDistance == 2 && (dx % 2 == 0) && (dy % 2 == 0))
+                {
+                    auto mx = (it2->x() + it1->x()) / 2;
+                    auto my = (it2->y() + it1->y()) / 2;
+                    auto value = board.get(mx, my);
+                    if (value == player)
+                        result += 1.0f;
+                    else if (value == 0)
+                    {
+                        if (dx == 0 || dy == 0)
+                            result += 0.40625f;
+                        else
+                            result += 0.09375f;
+                    }
+                }
+            }
+        }
+        return result;
+    }
+};
 
 // A measure of how close the pieces of each player are to each other.
 // This heuristic awards a score of BOARD_AREA - AREA, where AREA is
@@ -163,7 +215,7 @@ private:
 // A measure of a player's domination of the center of the board.
 // This heuristic awards a score to each piece based on a lookup table,
 // with central positions being worth more points.
-class CentralDominance
+class CentralDominanceV1
 {
 public:
     EvalType operator()(const StateType& state) const
@@ -185,14 +237,14 @@ private:
 };
 
 const std::array<std::array<EvalType, boardSize>, boardSize>
-    CentralDominance::lookupTable{{
-        {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f},
-        {0.0f, 0.8f, 1.0f, 1.2f, 1.0f, 0.8f, 0.0f},
-        {0.0f, 1.0f, 2.0f, 2.2f, 2.0f, 1.0f, 0.0f},
-        {0.0f, 1.2f, 2.2f, 2.4f, 2.2f, 1.2f, 0.0f},
-        {0.0f, 1.0f, 2.0f, 2.2f, 2.0f, 1.0f, 0.0f},
-        {0.0f, 0.8f, 1.0f, 1.2f, 1.0f, 0.8f, 0.0f},
-        {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f},
+    CentralDominanceV1::lookupTable{{
+        {0.0000f, 0.0000f, 0.0000f, 0.0000f, 0.0000f, 0.0000f, 0.0000f},
+        {0.0000f, 0.8125f, 1.0000f, 1.1875f, 1.0000f, 0.8125f, 0.0000f},
+        {0.0000f, 1.0000f, 2.0000f, 2.1875f, 2.0000f, 1.0000f, 0.0000f},
+        {0.0000f, 1.1875f, 2.1875f, 2.3750f, 2.1875f, 1.1875f, 0.0000f},
+        {0.0000f, 1.0000f, 2.0000f, 2.1875f, 2.0000f, 1.0000f, 0.0000f},
+        {0.0000f, 0.8125f, 1.0000f, 1.1875f, 1.0000f, 0.8125f, 0.0000f},
+        {0.0000f, 0.0000f, 0.0000f, 0.0000f, 0.0000f, 0.0000f, 0.0000f},
     }};
 
 // A measure of a player's domination of the center of the board.
@@ -200,7 +252,7 @@ const std::array<std::array<EvalType, boardSize>, boardSize>
 // with central positions being worth more points.
 // This version awards bonuses when a player has at least 3 pieces
 // in the center of the board.
-class BoostedCentralDominance
+class CentralDominanceV2
 {
 public:
     EvalType operator()(const StateType& state) const
@@ -225,24 +277,24 @@ private:
         }
         // Give a bonus to a high density of central pieces.
         if (count == 3)
-            result *= 1.1f;
+            result *= 1.09375f;
         if (count == 4)
             result *= 1.25f;
         if (count > 4)
-            result *= 1.2f;
+            result *= 1.21875f;
         return result;
     }
 };
 
 const std::array<std::array<EvalType, boardSize>, boardSize>
-    BoostedCentralDominance::lookupTable{{
-        {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f},
-        {0.0f, 0.8f, 1.0f, 1.2f, 1.0f, 0.8f, 0.0f},
-        {0.0f, 1.0f, 2.0f, 2.2f, 2.0f, 1.0f, 0.0f},
-        {0.0f, 1.2f, 2.2f, 2.4f, 2.2f, 1.2f, 0.0f},
-        {0.0f, 1.0f, 2.0f, 2.2f, 2.0f, 1.0f, 0.0f},
-        {0.0f, 0.8f, 1.0f, 1.2f, 1.0f, 0.8f, 0.0f},
-        {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f},
+    CentralDominanceV2::lookupTable{{
+        {0.0000f, 0.0000f, 0.0000f, 0.0000f, 0.0000f, 0.0000f, 0.0000f},
+        {0.0000f, 0.8125f, 1.0000f, 1.1875f, 1.0000f, 0.8125f, 0.0000f},
+        {0.0000f, 1.0000f, 2.0000f, 2.1875f, 2.0000f, 1.0000f, 0.0000f},
+        {0.0000f, 1.1875f, 2.1875f, 2.3750f, 2.1875f, 1.1875f, 0.0000f},
+        {0.0000f, 1.0000f, 2.0000f, 2.1875f, 2.0000f, 1.0000f, 0.0000f},
+        {0.0000f, 0.8125f, 1.0000f, 1.1875f, 1.0000f, 0.8125f, 0.0000f},
+        {0.0000f, 0.0000f, 0.0000f, 0.0000f, 0.0000f, 0.0000f, 0.0000f},
     }};
 
 // A measure of how blocked a player's pieces are in the early game.
@@ -306,8 +358,8 @@ template <int Player>
 const EvalType EarlyBlocking<Player>::forwardBlockingFactor = 1.0f;
 
 template <int Player>
-const EvalType EarlyBlocking<Player>::strongDiagonalBlockingFactor = 0.8f;
+const EvalType EarlyBlocking<Player>::strongDiagonalBlockingFactor = 0.8125f;
 
 template <int Player>
-const EvalType EarlyBlocking<Player>::weakDiagonalBlockingFactor = 0.6f;
+const EvalType EarlyBlocking<Player>::weakDiagonalBlockingFactor = 0.59375f;
 }
