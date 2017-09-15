@@ -76,7 +76,7 @@ private:
     IterativeAlphaBeta<Game> search;
     StateType state;
     ActionType action;
-    Heuristic<ConnectedElements, CentralDominance> heuristic{1.0f, 1.0f};
+    Heuristic<ConnectedPiecesV3, CentralDominanceV2> heuristic{1.0f, 1.0f};
 
     std::string response;
 
