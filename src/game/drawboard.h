@@ -1,6 +1,5 @@
 #pragma once
 
-#include <vector>
 #include <array>
 
 #include "game/definition.h"
@@ -29,8 +28,6 @@ public:
             drawboard[piece.x()][piece.y()] = 0;
         for (const auto& piece : state.blackPieces)
             drawboard[piece.x()][piece.y()] = 0;
-        for (const auto& set : sets)
-            drawboard[set.x()][set.y()] = 0;
     }
 
     int8_t get(int x, int y) const
@@ -40,20 +37,10 @@ public:
         return drawboard[x][y];
     }
 
-    void set(int x, int y, int8_t value)
-    {
-        if (x < 0 || x >= boardSize || y < 0 || y >= boardSize)
-            return;
-        if (drawboard[x][y] == 0 && value != 0)
-            sets.emplace_back(x, y);
-        drawboard[x][y] = value;
-    }
-
 private:
     static std::array<std::array<int8_t, boardSize>, boardSize> drawboard;
 
     State state;
-    std::vector<Point> sets;
 };
 
 std::array<std::array<int8_t, boardSize>, boardSize> Drawboard::drawboard{0};
