@@ -26,6 +26,7 @@ public:
     {
         std::string login =
             "game.ai " + std::string(player == 1 ? "white" : "black");
+        std::cerr << "Sending: " << login << std::endl;
         std::cout << login << std::endl;
 
         do
@@ -82,8 +83,10 @@ private:
 
     void send()
     {
+        std::cerr << "Sending: " << to_string(action) << std::endl;
         std::cout << to_string(action) << std::endl;
         std::getline(std::cin, response);
+        std::cerr << "Response: " << response << std::endl;
         assert(response == to_string(action));
     }
 
