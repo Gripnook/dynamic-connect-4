@@ -172,7 +172,7 @@ public:
     }
 
 private:
-    static const std::array<std::array<int8_t, boardSize>, boardSize> lookupTable;
+    static const std::array<std::array<EvalType, boardSize>, boardSize> lookupTable;
 
     EvalType eval(int player, const StateType& state) const
     {
@@ -184,23 +184,23 @@ private:
     }
 };
 
-const std::array<std::array<int8_t, boardSize>, boardSize>
+const std::array<std::array<EvalType, boardSize>, boardSize>
     CentralDominance::lookupTable{{
-        {0, 1, 1, 1, 1, 1, 0},
-        {1, 3, 3, 3, 3, 3, 1},
-        {1, 3, 4, 4, 4, 3, 1},
-        {1, 3, 4, 4, 4, 3, 1},
-        {1, 3, 4, 4, 4, 3, 1},
-        {1, 3, 3, 3, 3, 3, 1},
-        {0, 1, 1, 1, 1, 1, 0},
+        {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f},
+        {0.0f, 0.8f, 1.0f, 1.2f, 1.0f, 0.8f, 0.0f},
+        {0.0f, 1.0f, 2.0f, 2.2f, 2.0f, 1.0f, 0.0f},
+        {0.0f, 1.2f, 2.2f, 2.4f, 2.2f, 1.2f, 0.0f},
+        {0.0f, 1.0f, 2.0f, 2.2f, 2.0f, 1.0f, 0.0f},
+        {0.0f, 0.8f, 1.0f, 1.2f, 1.0f, 0.8f, 0.0f},
+        {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f},
     }};
 
 // A measure of a player's domination of the center of the board.
 // This heuristic awards a score to each piece based on a lookup table,
 // with central positions being worth more points.
-// This version is designed for early game play, where getting your pieces to
-// the center of the board matters a lot more.
-class EarlyCentralDominance
+// This version awards bonuses when a player has at least 3 pieces
+// in the center of the board.
+class BoostedCentralDominance
 {
 public:
     EvalType operator()(const StateType& state) const
@@ -235,7 +235,7 @@ private:
 };
 
 const std::array<std::array<EvalType, boardSize>, boardSize>
-    EarlyCentralDominance::lookupTable{{
+    BoostedCentralDominance::lookupTable{{
         {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f},
         {0.0f, 0.8f, 1.0f, 1.2f, 1.0f, 0.8f, 0.0f},
         {0.0f, 1.0f, 2.0f, 2.2f, 2.0f, 1.0f, 0.0f},

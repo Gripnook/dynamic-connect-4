@@ -30,7 +30,7 @@ struct Args
 
 Args parse(int argc, char** argv);
 
-void playGame(int timeLimitInMs, int humanPlayer);
+void playGame(int humanPlayer, int timeLimitInMs);
 ActionType getPlayerAction(const Game& game, const StateType& state);
 void print(const StateType& state);
 
@@ -98,7 +98,7 @@ Args parse(int argc, char** argv)
     return args;
 }
 
-void playGame(int timeLimitInMs, int humanPlayer)
+void playGame(int humanPlayer, int timeLimitInMs)
 {
     Game game;
     IterativeAlphaBeta<Game> playerOneSearch{game, timeLimitInMs};
@@ -109,43 +109,30 @@ void playGame(int timeLimitInMs, int humanPlayer)
         StateType state;
         ActionType action;
 
-        auto genericHeuristic =
+        auto playerOneHeuristic =
             Heuristic<ConsecutiveElements, CentralDominance>{1.0f, 1.0f};
-
-        auto earlyGameHeuristic =
-            Heuristic<EarlyCentralDominance, EarlyBlocking<1>>{1.0f, 1.0f};
-        auto endGameHeuristic =
-            Heuristic<ConnectedElements, EarlyCentralDominance>{1.0f, 1.0f};
+        auto playerTwoHeuristic =
+            Heuristic<ConnectedElements, BoostedCentralDominance>{1.0f, 1.0f};
 
         print(state);
-        std::cout << "EarlyGame Evaluation: " << earlyGameHeuristic(state)
+        std::cout << "Player one evaluation: " << playerOneHeuristic(state)
                   << std::endl;
-        std::cout << "EndGame Evaluation: " << endGameHeuristic(state)
-                  << std::endl;
-        std::cout << "Generic Evaluation: " << genericHeuristic(state)
+        std::cout << "Player two evaluation: " << playerTwoHeuristic(state)
                   << std::endl;
         std::cout << std::endl;
 
-        std::array<StateType, 5> previousStates;
         int move = 0;
+        std::array<StateType, 5> previousStates;
         while (!game.isTerminal(state))
         {
             ++move;
             auto t1 = std::chrono::high_resolution_clock::now();
             if (state.isPlayerOne)
             {
-                if (move <= 16)
-                {
-                    action = humanPlayer == 1 ?
-                        getPlayerAction(game, state) :
-                        playerOneSearch.search(state, earlyGameHeuristic, true);
-                }
-                else
-                {
-                    action = humanPlayer == 1 ?
-                        getPlayerAction(game, state) :
-                        playerOneSearch.search(state, endGameHeuristic, true);
-                }
+
+                action = humanPlayer == 1 ?
+                    getPlayerAction(game, state) :
+                    playerOneSearch.search(state, playerOneHeuristic, true);
                 state = game.getResult(state, action);
                 print(state);
                 std::cout << "move #" << move << std::endl;
@@ -155,18 +142,9 @@ void playGame(int timeLimitInMs, int humanPlayer)
             }
             else
             {
-                if (move <= 16)
-                {
-                    action = humanPlayer == 2 ?
-                        getPlayerAction(game, state) :
-                        playerTwoSearch.search(state, genericHeuristic, false);
-                }
-                else
-                {
-                    action = humanPlayer == 2 ?
-                        getPlayerAction(game, state) :
-                        playerTwoSearch.search(state, genericHeuristic, false);
-                }
+                action = humanPlayer == 2 ?
+                    getPlayerAction(game, state) :
+                    playerTwoSearch.search(state, playerTwoHeuristic, false);
                 state = game.getResult(state, action);
                 print(state);
                 std::cout << "move #" << move << std::endl;
@@ -182,11 +160,9 @@ void playGame(int timeLimitInMs, int humanPlayer)
                       << std::endl;
             std::cout << "action: " << to_string(action) << std::endl;
 
-            std::cout << "EarlyGame Evaluation: " << earlyGameHeuristic(state)
+            std::cout << "Player one evaluation: " << playerOneHeuristic(state)
                       << std::endl;
-            std::cout << "EndGame Evaluation: " << endGameHeuristic(state)
-                      << std::endl;
-            std::cout << "Generic Evaluation: " << genericHeuristic(state)
+            std::cout << "Player two evaluation: " << playerTwoHeuristic(state)
                       << std::endl;
             std::cout << std::endl;
 
