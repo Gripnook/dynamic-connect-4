@@ -15,7 +15,7 @@
 TARGET := agent.exe
 CXXFLAGS := -std=c++1y -Wall -Wextra -pedantic -Isrc
 LIBFLAGS := 
-SRCS := main.cpp
+SRCS := main.cpp game.cpp state.cpp drawboard.cpp
 
 
 CXX_RELEASE := g++

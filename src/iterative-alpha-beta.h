@@ -7,7 +7,7 @@
 #include <functional>
 #include <chrono>
 
-#include "search/state-cache.h"
+#include "state-cache.h"
 
 namespace Search {
 
@@ -21,8 +21,8 @@ public:
 
     using Heuristic = std::function<EvalType(const StateType&)>;
 
-    IterativeAlphaBeta(Game& game, int timeLimitInMs)
-        : game(game), timeLimitInMs{timeLimitInMs}
+    IterativeAlphaBeta(Game& game, int timeLimitInMs, bool debug = false)
+        : game(game), timeLimitInMs{timeLimitInMs}, debug{debug}
     {
     }
 
@@ -45,7 +45,11 @@ public:
         else
             comp = std::less<EvalType>{};
 
-        // std::cerr << "========== Actions ==========" << std::endl;
+        if (debug)
+        {
+            std::cerr << "========== actions ==========" << std::endl;
+        }
+
         for (int depth = 1;; ++depth)
         {
             maxDepth = depth;
@@ -71,11 +75,14 @@ public:
                     beta = std::min(beta, value);
             }
 
-            // std::cerr << "searched " << count << " nodes so far at depth "
-            //           << depth << ", with " << cache.localCacheSize()
-            //           << " nodes cached locally and " <<
-            //           cache.globalCacheSize()
-            //           << " nodes cached globally" << std::endl;
+            if (debug)
+            {
+                std::cerr << "searched " << count << " nodes so far at depth "
+                          << depth << ", with " << cache.localCacheSize()
+                          << " nodes cached locally and "
+                          << cache.globalCacheSize() << " nodes cached globally"
+                          << std::endl;
+            }
 
             if (isTimeUp())
             {
@@ -89,11 +96,13 @@ public:
             // a lower depth will be ahead of now equal valued actions.
             actions = heuristicSort(actions, comp, values);
 
-            // std::cerr << "Depth " << depth << " => ";
-            // for (const auto& action : actions)
-            //     std::cerr << to_string(action) << ": " << values[action]
-            //               << "; ";
-            // std::cerr << std::endl;
+            if (debug)
+            {
+                std::cerr << "depth " << depth << " => ";
+                for (const auto& action : actions)
+                    std::cerr << action << ": " << values[action] << "; ";
+                std::cerr << std::endl;
+            }
 
             // If either the best action is a loss, or the second best
             // action is a loss, we can safely pick the best action since it is
@@ -132,6 +141,8 @@ private:
 
     int timeLimitInMs;
     std::chrono::high_resolution_clock::time_point startTime;
+
+    bool debug;
 
     EvalType alphaBeta(
         const StateType& state,

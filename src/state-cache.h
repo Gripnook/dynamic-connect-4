@@ -39,7 +39,7 @@ public:
             return std::make_pair(true, entry->second.first);
         // Entries in the local cache must be depth checked.
         entry = localCache.find(state);
-        if (entry != std::end(localCache) && entry->second.second < depth)
+        if (entry != std::end(localCache) && entry->second.second <= depth)
             return std::make_pair(true, entry->second.first);
         return std::make_pair(false, 0);
     }
@@ -52,11 +52,12 @@ public:
         }
         else
         {
-            auto& entry = localCache[state];
-            if (entry.second == 0 || entry.second >= depth)
+            auto entry = localCache.emplace(state, std::make_pair(value, depth));
+            if (!entry.second)
             {
-                entry.first = value;
-                entry.second = depth;
+                int entryDepth = entry.first->second.second;
+                if (entryDepth > depth)
+                    entry.first->second = std::make_pair(value, depth);
             }
         }
     }

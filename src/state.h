@@ -1,11 +1,13 @@
 #pragma once
 
 #include <array>
+#include <iosfwd>
 #include <functional>
+#include <cstdint>
 
-#include "game/definition.h"
-#include "game/point.h"
-#include "util/hash.h"
+#include "definition.h"
+#include "point.h"
+#include "hash.h"
 
 namespace DynamicConnect4 {
 
@@ -28,26 +30,11 @@ struct State
                                                     Point{6, 4}}};
 };
 
-bool operator==(const State& lhs, const State& rhs)
-{
-    return lhs.isPlayerOne == rhs.isPlayerOne &&
-        lhs.whitePieces == rhs.whitePieces && lhs.blackPieces == rhs.blackPieces;
-}
+bool operator==(const State& lhs, const State& rhs);
+bool operator!=(const State& lhs, const State& rhs);
 
-bool operator!=(const State& lhs, const State& rhs)
-{
-    return !(lhs == rhs);
-}
-
-bool operator<(const State& lhs, const State& rhs)
-{
-
-    if (lhs.isPlayerOne != rhs.isPlayerOne)
-        return lhs.isPlayerOne < rhs.isPlayerOne;
-    if (lhs.whitePieces != rhs.whitePieces)
-        return lhs.whitePieces < rhs.whitePieces;
-    return lhs.blackPieces < rhs.blackPieces;
-}
+std::istream& operator>>(std::istream& in, State& state);
+std::ostream& operator<<(std::ostream& out, const State& state);
 }
 
 namespace std {
@@ -61,8 +48,7 @@ struct hash<DynamicConnect4::State>
         // loop approach, which helps the search run deeper.
 
         static_assert(
-            sizeof(state) == 13 * sizeof(uint8_t),
-            "cannot hash state");
+            sizeof(state) == 13 * sizeof(uint8_t), "cannot hash state");
 
         auto ptr = reinterpret_cast<const uint8_t*>(&state);
         auto firstPart = *reinterpret_cast<const uint64_t*>(ptr);

@@ -1,10 +1,11 @@
 #pragma once
 
 #include <array>
+#include <cstdint>
 
-#include "game/definition.h"
-#include "game/point.h"
-#include "game/state.h"
+#include "definition.h"
+#include "point.h"
+#include "state.h"
 
 namespace DynamicConnect4 {
 
@@ -42,6 +43,4 @@ private:
 
     State state;
 };
-
-std::array<std::array<int8_t, boardSize>, boardSize> Drawboard::drawboard{0};
 }

@@ -3,14 +3,13 @@
 #include <chrono>
 #include <string>
 #include <sstream>
-#include <utility>
 #include <algorithm>
 
-#include "game/game.h"
-#include "game/heuristics.h"
-#include "search/minimax.h"
-#include "search/alpha-beta.h"
-#include "search/iterative-alpha-beta.h"
+#include "game.h"
+#include "heuristics.h"
+#include "minimax.h"
+#include "alpha-beta.h"
+#include "iterative-alpha-beta.h"
 
 #include "gclient.h"
 
@@ -26,15 +25,17 @@ struct Args
     bool server{false};
     int timeLimitInMs{18000};
     int player{0};
+    StateType initialState;
+    bool debug{false};
 };
 
 Args parse(int argc, char** argv);
 
-void playGame(int humanPlayer, int timeLimitInMs);
+void playGame(
+    int humanPlayer, int timeLimitInMs, const StateType& initialState, bool debug);
 ActionType getPlayerAction(const Game& game, const StateType& state);
 void print(const StateType& state);
 
-std::istream& operator>>(std::istream& in, StateType& state);
 StateType getState(const std::string& file);
 
 int main(int argc, char** argv)
@@ -42,12 +43,12 @@ int main(int argc, char** argv)
     auto args = parse(argc, argv);
     if (args.server)
     {
-        TelnetClient client{args.player, args.timeLimitInMs};
+        TelnetClient client{args.player, args.timeLimitInMs, args.debug};
         client.play();
     }
     else
     {
-        playGame(args.player, args.timeLimitInMs);
+        playGame(args.player, args.timeLimitInMs, args.initialState, args.debug);
     };
     return 0;
 }
@@ -73,7 +74,7 @@ Args parse(int argc, char** argv)
                 std::stringstream ss{arg.substr(2)};
                 ss >> player;
                 if (!ss)
-                    throw std::runtime_error("invalid argument");
+                    throw std::runtime_error{"invalid argument"};
                 args.player = player;
                 break;
             }
@@ -83,30 +84,42 @@ Args parse(int argc, char** argv)
                 std::stringstream ss{arg.substr(2)};
                 ss >> timeLimitInMs;
                 if (!ss)
-                    throw std::runtime_error("invalid argument");
+                    throw std::runtime_error{"invalid argument"};
                 args.timeLimitInMs = timeLimitInMs;
+                break;
+            }
+            case 'f':
+            {
+                std::string filename = arg.substr(2);
+                args.initialState = getState(filename);
+                break;
+            }
+            case 'd':
+            {
+                args.debug = true;
                 break;
             }
             }
     }
     if (args.player != 0 && args.player != 1 && args.player != 2)
-        throw std::runtime_error("invalid player");
+        throw std::runtime_error{"invalid player"};
     if (args.server && args.player == 0)
-        throw std::runtime_error("invalid player");
+        throw std::runtime_error{"invalid player"};
     if (args.timeLimitInMs < 0)
-        throw std::runtime_error("cannot play with negative time");
+        throw std::runtime_error{"cannot play with negative time"};
     return args;
 }
 
-void playGame(int humanPlayer, int timeLimitInMs)
+void playGame(
+    int humanPlayer, int timeLimitInMs, const StateType& initialState, bool debug)
 {
     Game game;
-    IterativeAlphaBeta<Game> playerOneSearch{game, timeLimitInMs};
-    IterativeAlphaBeta<Game> playerTwoSearch{game, timeLimitInMs};
+    IterativeAlphaBeta<Game> playerOneSearch{game, timeLimitInMs, debug};
+    IterativeAlphaBeta<Game> playerTwoSearch{game, timeLimitInMs, debug};
     int playerOneWins = 0, playerTwoWins = 0, draws = 0;
     while (true)
     {
-        StateType state;
+        StateType state = initialState;
         ActionType action;
 
         auto playerOneHeuristic =
@@ -115,9 +128,9 @@ void playGame(int humanPlayer, int timeLimitInMs)
             Heuristic<ConnectedPiecesV3, CentralDominanceV2>{1.0f, 1.0f};
 
         print(state);
-        std::cout << "Player one evaluation: " << playerOneHeuristic(state)
+        std::cout << "player one evaluation: " << playerOneHeuristic(state)
                   << std::endl;
-        std::cout << "Player two evaluation: " << playerTwoHeuristic(state)
+        std::cout << "player two evaluation: " << playerTwoHeuristic(state)
                   << std::endl;
         std::cout << std::endl;
 
@@ -157,11 +170,11 @@ void playGame(int humanPlayer, int timeLimitInMs)
                     .count();
             std::cout << "turn took " << (ms / 1000.0) << " seconds"
                       << std::endl;
-            std::cout << "action: " << to_string(action) << std::endl;
+            std::cout << "action: " << action << std::endl;
 
-            std::cout << "Player one evaluation: " << playerOneHeuristic(state)
+            std::cout << "player one evaluation: " << playerOneHeuristic(state)
                       << std::endl;
-            std::cout << "Player two evaluation: " << playerTwoHeuristic(state)
+            std::cout << "player two evaluation: " << playerTwoHeuristic(state)
                       << std::endl;
             std::cout << std::endl;
 
@@ -193,7 +206,7 @@ void playGame(int humanPlayer, int timeLimitInMs)
         std::cout
             << "============================================================"
             << std::endl;
-        std::cout << "Current score : " << playerOneWins << "-" << draws << "-"
+        std::cout << "current score : " << playerOneWins << "-" << draws << "-"
                   << playerTwoWins << std::endl;
         std::cout
             << "============================================================"
@@ -203,118 +216,32 @@ void playGame(int humanPlayer, int timeLimitInMs)
 
 ActionType getPlayerAction(const Game& game, const StateType& state)
 {
-    char xc, yc, dirc;
-    int x, y;
-    Direction dir;
+    ActionType action;
     auto actions = game.getActions(state);
-    std::cout << "Enter an action > ";
+    std::cout << "enter an action > ";
     while (true)
     {
-        std::cin >> xc >> yc >> dirc;
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cin >> action;
         if (!std::cin)
-        {
-            std::cin.clear();
-            goto failure;
-        }
-
-        x = xc - '1';
-        y = yc - '1';
-        switch (dirc)
-        {
-        case 'E':
-        case 'e':
-            dir = Direction::east;
-            break;
-        case 'W':
-        case 'w':
-            dir = Direction::west;
-            break;
-        case 'S':
-        case 's':
-            dir = Direction::south;
-            break;
-        case 'N':
-        case 'n':
-            dir = Direction::north;
-            break;
-        default:
-            goto failure;
-        }
-
-        if (std::find(
-                std::begin(actions),
-                std::end(actions),
-                std::make_pair(Point{x, y}, dir)) == std::end(actions))
             goto failure;
 
-        return std::make_pair(Point{x, y}, dir);
+        if (std::find(std::begin(actions), std::end(actions), action) ==
+            std::end(actions))
+            goto failure;
+
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        return action;
 
     failure:
-        std::cout << "Invalid action. Try again > ";
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cout << "invalid action. try again > ";
     }
 }
 
 void print(const StateType& state)
 {
-    std::cout << "  1 2 3 4 5 6 7" << std::endl;
-    for (int y = 0; y < boardSize; ++y)
-    {
-        std::cout << (y + 1) << " ";
-        for (int x = 0; x < boardSize; ++x)
-        {
-            if (std::find(
-                    std::begin(state.whitePieces),
-                    std::end(state.whitePieces),
-                    Point{x, y}) != std::end(state.whitePieces))
-                std::cout << "O,";
-            else if (
-                std::find(
-                    std::begin(state.blackPieces),
-                    std::end(state.blackPieces),
-                    Point{x, y}) != std::end(state.blackPieces))
-                std::cout << "X,";
-            else
-                std::cout << " ,";
-        }
-        std::cout << std::endl;
-    }
-}
-
-std::istream& operator>>(std::istream& in, StateType& state)
-{
-    std::vector<Point> whitePieces;
-    std::vector<Point> blackPieces;
-
-    int i = 0, j = 0;
-    for (char ch; in.get(ch);)
-    {
-        if (ch == 'O')
-            whitePieces.emplace_back(i++, j);
-        else if (ch == 'X')
-            blackPieces.emplace_back(i++, j);
-        else if (ch == ' ')
-            ++i;
-        if (ch == '\n')
-        {
-            i = 0;
-            ++j;
-        }
-    }
-
-    std::sort(std::begin(whitePieces), std::end(whitePieces));
-    std::copy(
-        std::begin(whitePieces),
-        std::end(whitePieces),
-        std::begin(state.whitePieces));
-    std::sort(std::begin(blackPieces), std::end(blackPieces));
-    std::copy(
-        std::begin(blackPieces),
-        std::end(blackPieces),
-        std::begin(state.blackPieces));
-    state.isPlayerOne = true;
-
-    return in;
+    std::cout << state;
 }
 
 StateType getState(const std::string& file)
@@ -324,5 +251,7 @@ StateType getState(const std::string& file)
     if (!in)
         throw std::runtime_error{"file not found"};
     in >> state;
+    if (!in && !in.eof())
+        throw std::runtime_error{"invalid state"};
     return state;
 }
