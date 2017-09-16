@@ -28,11 +28,6 @@ public:
 
         auto init = isMax ? std::numeric_limits<EvalType>::lowest() :
                             std::numeric_limits<EvalType>::max();
-        std::function<bool(EvalType, EvalType)> comp;
-        if (isMax)
-            comp = std::greater<EvalType>{};
-        else
-            comp = std::less<EvalType>{};
 
         auto alpha = std::numeric_limits<EvalType>::lowest();
         auto beta = std::numeric_limits<EvalType>::max();
@@ -43,10 +38,20 @@ public:
         {
             auto value =
                 alphaBeta(game.getResult(state, action), alpha, beta, 1, !isMax);
-            if (comp(value, alpha))
-                alpha = value;
-            if (comp(value, bestAction.second))
-                bestAction = std::make_pair(action, value);
+            if (isMax)
+            {
+                alpha = std::max(alpha, value);
+                if (value > bestAction.second)
+                    bestAction = std::make_pair(action, value);
+            }
+            else
+            {
+                beta = std::min(beta, value);
+                if (value < bestAction.second)
+                    bestAction = std::make_pair(action, value);
+            }
+            if (alpha >= beta)
+                break;
         }
         return bestAction.first;
     }

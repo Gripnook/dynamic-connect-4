@@ -134,11 +134,12 @@ private:
     int depth{0};
     Heuristic heuristic;
 
-    StateCache<Game> cache{[](const StateType& /*state*/, const EvalType& value) {
-        // We cache winning and losing positions globally.
-        return value == std::numeric_limits<EvalType>::max() ||
-            value == std::numeric_limits<EvalType>::lowest();
-    }};
+    StateCache<Game> cache{
+        [](const StateType& /*state*/, EvalType value, Flag /*flag*/) {
+            // We cache winning and losing positions globally.
+            return value == std::numeric_limits<EvalType>::max() ||
+                value == std::numeric_limits<EvalType>::lowest();
+        }};
 
     int timeLimitInMs;
     std::chrono::high_resolution_clock::time_point startTime;
@@ -158,9 +159,22 @@ private:
         else if (depth >= maxDepth || isTimeUp())
             return heuristic(state);
 
-        auto entry = cache.find(state, depth);
-        if (entry.first)
-            return entry.second;
+        auto savedAlpha = alpha, savedBeta = beta;
+        auto entry = cache.find(state);
+        if (entry.first && entry.second.depth <= depth)
+        {
+            auto value = entry.second.value;
+            auto flag = entry.second.flag;
+            if (flag == Flag::exact)
+                return value;
+            else if (flag == Flag::lowerBound)
+                alpha = std::max(alpha, value);
+            else if (flag == Flag::upperBound)
+                beta = std::min(beta, value);
+
+            if (alpha >= beta)
+                return value;
+        }
 
         auto init = isMax ? std::numeric_limits<EvalType>::lowest() :
                             std::numeric_limits<EvalType>::max();
@@ -193,7 +207,14 @@ private:
             if (alpha >= beta)
                 break;
         }
-        cache.set(state, bestValue, depth);
+
+        if (bestValue <= savedAlpha)
+            cache.set(state, bestValue, depth, Flag::upperBound);
+        else if (bestValue >= savedBeta)
+            cache.set(state, bestValue, depth, Flag::lowerBound);
+        else
+            cache.set(state, bestValue, depth, Flag::exact);
+
         return bestValue;
     }
 
