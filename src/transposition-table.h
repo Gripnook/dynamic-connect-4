@@ -3,7 +3,6 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <utility>
-#include <functional>
 
 namespace Search {
 
@@ -35,52 +34,30 @@ public:
     };
 
     using MapType = std::unordered_map<StateType, ValueType>;
-    using SetType = std::unordered_set<StateType>;
 
-    void reset()
-    {
-        table.clear();
-    }
+    static const size_t maxSize = 8 * 1024 * 1024;
 
     std::pair<bool, ValueType> find(const StateType& state) const
     {
         auto entry = table.find(state);
         if (entry != std::end(table))
             return std::make_pair(true, entry->second);
-
-        if (playerOneWins.count(state) > 0)
-            return std::make_pair(
-                true,
-                ValueType{std::numeric_limits<EvalType>::max(), 0, Flag::exact});
-
-        if (playerTwoWins.count(state) > 0)
-            return std::make_pair(
-                true,
-                ValueType{std::numeric_limits<EvalType>::lowest(),
-                          0,
-                          Flag::exact});
-
         return std::make_pair(false, ValueType{});
     }
 
     void set(const StateType& state, EvalType value, int depth, Flag flag)
     {
-        if (value == std::numeric_limits<EvalType>::max())
-            playerOneWins.insert(state);
-        else if (value == std::numeric_limits<EvalType>::lowest())
-            playerTwoWins.insert(state);
-        else
-            table[state] = ValueType{value, depth, flag};
+        table[state] = ValueType{value, depth, flag};
+        if (table.size() > maxSize)
+            table.erase(std::begin(table));
     }
 
     size_t size() const
     {
-        return table.size() + playerOneWins.size() + playerTwoWins.size();
+        return table.size();
     }
 
 private:
     MapType table;
-    SetType playerOneWins;
-    SetType playerTwoWins;
 };
 }

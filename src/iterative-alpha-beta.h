@@ -53,16 +53,13 @@ public:
 
         for (int depth = 1;; ++depth)
         {
-            maxDepth = depth;
-            transpositionTable.reset();
-
             auto alpha = std::numeric_limits<EvalType>::lowest();
             auto beta = std::numeric_limits<EvalType>::max();
 
             for (const auto& action : actions)
             {
                 auto value = alphaBeta(
-                    game.getResult(state, action), alpha, beta, 1, !isMax);
+                    game.getResult(state, action), alpha, beta, depth - 1, !isMax);
                 if (value == winIndicator)
                 {
                     // We found our goal, so we can stop searching.
@@ -127,7 +124,6 @@ public:
 
 private:
     Game& game;
-    int maxDepth{};
     int count{0};
     int depth{0};
     Heuristic heuristic;
@@ -149,12 +145,12 @@ private:
         ++count;
         if (game.isTerminal(state))
             return game.getUtility(state);
-        else if (depth >= maxDepth || isTimeUp())
+        else if (depth == 0 || isTimeUp())
             return heuristic(state);
 
         auto savedAlpha = alpha, savedBeta = beta;
         auto entry = transpositionTable.find(state);
-        if (entry.first && entry.second.depth <= depth)
+        if (entry.first && entry.second.depth >= depth)
         {
             auto value = entry.second.value;
             auto flag = entry.second.flag;
@@ -181,12 +177,12 @@ private:
         auto actions = game.getActions(state);
         // Sorting the actions using the heuristic helps us consider
         // the best actions first.
-        if (depth + 1 < maxDepth)
+        if (depth > 1)
             actions = heuristicSort(actions, state, comp);
         for (const auto& action : actions)
         {
             auto value = alphaBeta(
-                game.getResult(state, action), alpha, beta, depth + 1, !isMax);
+                game.getResult(state, action), alpha, beta, depth - 1, !isMax);
             if (isMax)
             {
                 bestValue = std::max(bestValue, value);
