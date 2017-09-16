@@ -47,6 +47,6 @@ public:
     }
 
 private:
-    uint8_t position;
+    uint8_t position{};
 };
 }

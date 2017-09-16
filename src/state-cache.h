@@ -27,9 +27,15 @@ public:
 
     struct ValueType
     {
-        EvalType value;
-        int depth;
-        Flag flag;
+        EvalType value{};
+        int depth{};
+        Flag flag{};
+
+        ValueType() = default;
+        ValueType(EvalType value, int depth, Flag flag)
+            : value{value}, depth{depth}, flag{flag}
+        {
+        }
     };
 
     using MapType = std::unordered_map<StateType, ValueType>;

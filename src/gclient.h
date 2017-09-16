@@ -83,15 +83,15 @@ public:
     }
 
 private:
-    int player;
+    int player{};
 
     Game game;
     IterativeAlphaBeta<Game> search;
     StateType state;
     ActionType action;
     int move{0};
-    bool isOurTurn;
-    int timeInMs;
+    bool isOurTurn{};
+    int timeInMs{};
 
     Heuristic<ConnectedPiecesV4, CentralDominanceV2> heuristic{1.0f, 1.0f};
 

@@ -57,7 +57,7 @@ public:
 
 private:
     Game& game;
-    int maxDepth;
+    int maxDepth{};
     int count{0};
     Heuristic heuristic;
 

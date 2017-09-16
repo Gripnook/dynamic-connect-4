@@ -129,7 +129,7 @@ public:
 
 private:
     Game& game;
-    int maxDepth;
+    int maxDepth{};
     int count{0};
     int depth{0};
     Heuristic heuristic;
@@ -141,10 +141,10 @@ private:
                 value == std::numeric_limits<EvalType>::lowest();
         }};
 
-    int timeLimitInMs;
+    int timeLimitInMs{};
     std::chrono::high_resolution_clock::time_point startTime;
 
-    bool debug;
+    bool debug{};
 
     EvalType alphaBeta(
         const StateType& state,
