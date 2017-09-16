@@ -251,7 +251,7 @@ StateType getState(const std::string& file)
     if (!in)
         throw std::runtime_error{"file not found"};
     in >> state;
-    if (!in && !in.eof())
+    if (!in)
         throw std::runtime_error{"invalid state"};
     return state;
 }

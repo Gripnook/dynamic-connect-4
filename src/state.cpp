@@ -23,7 +23,7 @@ std::istream& operator>>(std::istream& in, State& state)
     std::vector<Point> blackPieces;
 
     int i = 0, j = 0;
-    for (char ch; in.get(ch) && j < boardSize;)
+    for (char ch; j < boardSize && in.get(ch);)
     {
         if (ch == 'O')
         {

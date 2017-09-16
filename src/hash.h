@@ -1,5 +1,7 @@
 #pragma once
 
+#include <functional>
+
 namespace Util {
 
 inline void hash_combine(size_t& /*seed*/)
