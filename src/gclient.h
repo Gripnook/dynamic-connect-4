@@ -93,7 +93,7 @@ private:
     bool isOurTurn;
     int timeInMs;
 
-    Heuristic<ConnectedPiecesV3, CentralDominanceV2> heuristic{1.0f, 1.0f};
+    Heuristic<ConnectedPiecesV4, CentralDominanceV2> heuristic{1.0f, 1.0f};
 
     std::string response;
 

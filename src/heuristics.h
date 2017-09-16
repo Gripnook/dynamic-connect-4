@@ -183,6 +183,49 @@ private:
     }
 };
 
+// A measure of how connected the pieces of each player are.
+// This heuristic awards (N-1)^2 for each connected set of
+// N pieces in a row, column, diagonal, or antidiagonal.
+class ConnectedPiecesV4
+{
+public:
+    EvalType operator()(const StateType& state) const
+    {
+        Drawboard board{state};
+        return eval(1, state, board) - eval(2, state, board);
+    }
+
+private:
+    EvalType
+        eval(int player, const StateType& state, const Drawboard& board) const
+    {
+        EvalType result = 0;
+        auto& pieces = player == 1 ? state.whitePieces : state.blackPieces;
+        for (auto it1 = std::begin(pieces); it1 != std::end(pieces); ++it1)
+        {
+            for (auto it2 = it1 + 1; it2 != std::end(pieces); ++it2)
+            {
+                auto dx = std::abs(it2->x() - it1->x());
+                auto dy = std::abs(it2->y() - it1->y());
+                auto maxDistance = std::max(dx, dy);
+                if (maxDistance == 1)
+                {
+                    result += 1.0f;
+                }
+                else if (maxDistance == 2 && (dx % 2 == 0) && (dy % 2 == 0))
+                {
+                    auto mx = (it2->x() + it1->x()) / 2;
+                    auto my = (it2->y() + it1->y()) / 2;
+                    auto value = board.get(mx, my);
+                    if (value == player)
+                        result += 2.0f;
+                }
+            }
+        }
+        return result;
+    }
+};
+
 // A measure of how close the pieces of each player are to each other.
 // This heuristic awards a score of BOARD_AREA - AREA, where AREA is
 // the area of the smallest rectangle enclosing all of the player's pieces.

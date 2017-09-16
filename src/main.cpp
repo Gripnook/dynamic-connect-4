@@ -123,9 +123,9 @@ void playGame(
         ActionType action;
 
         auto playerOneHeuristic =
-            Heuristic<ConnectedPiecesV3, CentralDominanceV1>{1.0f, 1.0f};
+            Heuristic<ConnectedPiecesV1, CentralDominanceV2>{1.0f, 1.0f};
         auto playerTwoHeuristic =
-            Heuristic<ConnectedPiecesV3, CentralDominanceV2>{1.0f, 1.0f};
+            Heuristic<ConnectedPiecesV4, CentralDominanceV2>{1.0f, 1.0f};
 
         print(state);
         std::cout << "player one evaluation: " << playerOneHeuristic(state)
