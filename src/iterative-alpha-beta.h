@@ -8,7 +8,7 @@
 #include <chrono>
 #include <iostream>
 
-#include "state-cache.h"
+#include "transposition-table.h"
 
 namespace Search {
 
@@ -54,7 +54,7 @@ public:
         for (int depth = 1;; ++depth)
         {
             maxDepth = depth;
-            cache.reset();
+            transpositionTable.reset();
 
             auto alpha = std::numeric_limits<EvalType>::lowest();
             auto beta = std::numeric_limits<EvalType>::max();
@@ -79,10 +79,8 @@ public:
             if (debug)
             {
                 std::cerr << "searched " << count << " nodes so far at depth "
-                          << depth << ", with " << cache.localCacheSize()
-                          << " nodes cached locally and "
-                          << cache.globalCacheSize() << " nodes cached globally"
-                          << std::endl;
+                          << depth << ", with " << transpositionTable.size()
+                          << " nodes cached" << std::endl;
             }
 
             if (isTimeUp())
@@ -134,12 +132,7 @@ private:
     int depth{0};
     Heuristic heuristic;
 
-    StateCache<Game> cache{
-        [](const StateType& /*state*/, EvalType value, Flag /*flag*/) {
-            // We cache winning and losing positions globally.
-            return value == std::numeric_limits<EvalType>::max() ||
-                value == std::numeric_limits<EvalType>::lowest();
-        }};
+    TranspositionTable<Game> transpositionTable;
 
     int timeLimitInMs{};
     std::chrono::high_resolution_clock::time_point startTime;
@@ -160,7 +153,7 @@ private:
             return heuristic(state);
 
         auto savedAlpha = alpha, savedBeta = beta;
-        auto entry = cache.find(state);
+        auto entry = transpositionTable.find(state);
         if (entry.first && entry.second.depth <= depth)
         {
             auto value = entry.second.value;
@@ -209,11 +202,11 @@ private:
         }
 
         if (bestValue <= savedAlpha)
-            cache.set(state, bestValue, depth, Flag::upperBound);
+            transpositionTable.set(state, bestValue, depth, Flag::upperBound);
         else if (bestValue >= savedBeta)
-            cache.set(state, bestValue, depth, Flag::lowerBound);
+            transpositionTable.set(state, bestValue, depth, Flag::lowerBound);
         else
-            cache.set(state, bestValue, depth, Flag::exact);
+            transpositionTable.set(state, bestValue, depth, Flag::exact);
 
         return bestValue;
     }
