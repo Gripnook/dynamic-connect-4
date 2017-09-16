@@ -25,7 +25,7 @@ public:
         : player{player}, search{game, timeLimitInMs, debug}
     {
         std::string login =
-            "game.ai " + std::string(player == 1 ? "white" : "black");
+            "game.ai " + std::string{player == 1 ? "white" : "black"};
         std::cerr << "Sending: " << login << std::endl;
         std::cout << login << std::endl;
 
