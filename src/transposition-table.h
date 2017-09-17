@@ -51,7 +51,7 @@ public:
         return std::make_pair(false, ValueType{});
     }
 
-    void set(const StateType& state, EvalType value, int depth, Flag flag)
+    void emplace(const StateType& state, EvalType value, int depth, Flag flag)
     {
         auto entry = table.find(state);
         if (entry != std::end(table))
@@ -69,6 +69,12 @@ public:
                 lru.pop_back();
             }
         }
+    }
+
+    void clear()
+    {
+        table.clear();
+        lru.clear();
     }
 
     size_t size() const

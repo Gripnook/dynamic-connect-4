@@ -67,13 +67,18 @@ public:
                     return action;
                 }
                 values[action] = value;
+                if (isMax)
+                    alpha = std::max(alpha, value);
+                else
+                    beta = std::min(beta, value);
             }
 
             if (debug)
             {
                 std::cerr << "searched " << count << " nodes so far at depth "
                           << depth << " with " << transpositionTable.size()
-                          << " nodes cached" << std::endl;
+                          << " nodes cached and a hit rate of "
+                          << transpositionTable.getHitRate() << std::endl;
             }
 
             if (isTimeUp())
@@ -96,12 +101,14 @@ public:
                 std::cerr << std::endl;
             }
 
-            // If either the best action is a loss, or the second best
-            // action is a loss, we can safely pick the best action since it is
-            // guaranteed that there is none that is better.
-            if (values[actions.front()] == lossIndicator ||
-                (actions.size() == 1 || values[actions[1]] == lossIndicator))
+            if (values[actions.front()] == lossIndicator)
             {
+                // If we are guaranteed to lose, it is better to return now and
+                // clear the transposition table. This is because we want to
+                // recompute the path to the most distant loss in the next move
+                // in case we are playing against a non-optimal player or an
+                // optimal player with restricted search depth.
+                transpositionTable.clear();
                 this->depth = depth;
                 return actions.front();
             }
@@ -116,11 +123,6 @@ public:
     int getLastDepth() const
     {
         return depth;
-    }
-
-    double getCacheHitRate() const
-    {
-        return transpositionTable.getHitRate();
     }
 
 private:
@@ -199,11 +201,11 @@ private:
         }
 
         if (bestValue <= savedAlpha)
-            transpositionTable.set(state, bestValue, depth, Flag::upperBound);
+            transpositionTable.emplace(state, bestValue, depth, Flag::upperBound);
         else if (bestValue >= savedBeta)
-            transpositionTable.set(state, bestValue, depth, Flag::lowerBound);
+            transpositionTable.emplace(state, bestValue, depth, Flag::lowerBound);
         else
-            transpositionTable.set(state, bestValue, depth, Flag::exact);
+            transpositionTable.emplace(state, bestValue, depth, Flag::exact);
 
         return bestValue;
     }

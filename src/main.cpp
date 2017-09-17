@@ -150,8 +150,7 @@ void playGame(
                 std::cout << "move #" << move << std::endl;
                 std::cout << playerOneSearch.getLastCount()
                           << " nodes searched with max depth "
-                          << playerOneSearch.getLastDepth() << " and hit rate "
-                          << playerOneSearch.getCacheHitRate() << std::endl;
+                          << playerOneSearch.getLastDepth() << std::endl;
             }
             else
             {
@@ -163,8 +162,7 @@ void playGame(
                 std::cout << "move #" << move << std::endl;
                 std::cout << playerTwoSearch.getLastCount()
                           << " nodes searched with max depth "
-                          << playerTwoSearch.getLastDepth() << " and hit rate "
-                          << playerTwoSearch.getCacheHitRate() << std::endl;
+                          << playerTwoSearch.getLastDepth() << std::endl;
             }
             auto t2 = std::chrono::high_resolution_clock::now();
             auto ms =
