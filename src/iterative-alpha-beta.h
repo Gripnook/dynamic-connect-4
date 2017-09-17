@@ -67,16 +67,12 @@ public:
                     return action;
                 }
                 values[action] = value;
-                if (isMax)
-                    alpha = std::max(alpha, value);
-                else
-                    beta = std::min(beta, value);
             }
 
             if (debug)
             {
                 std::cerr << "searched " << count << " nodes so far at depth "
-                          << depth << ", with " << transpositionTable.size()
+                          << depth << " with " << transpositionTable.size()
                           << " nodes cached" << std::endl;
             }
 
@@ -120,6 +116,11 @@ public:
     int getLastDepth() const
     {
         return depth;
+    }
+
+    double getCacheHitRate() const
+    {
+        return transpositionTable.getHitRate();
     }
 
 private:
