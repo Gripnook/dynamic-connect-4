@@ -65,7 +65,7 @@ public:
             table[state] = std::begin(lru);
             while (size() > maxSize)
             {
-                table.erase(std::rbegin(lru)->first);
+                table.erase(lru.back().first);
                 lru.pop_back();
             }
         }
