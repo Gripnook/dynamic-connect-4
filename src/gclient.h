@@ -3,6 +3,7 @@
 #include <iostream>
 #include <chrono>
 #include <string>
+#include <sstream>
 #include <algorithm>
 
 #include "game.h"
