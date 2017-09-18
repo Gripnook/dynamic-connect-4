@@ -200,12 +200,19 @@ private:
                 break;
         }
 
-        if (bestValue <= savedAlpha)
-            transpositionTable.emplace(state, bestValue, depth, Flag::upperBound);
-        else if (bestValue >= savedBeta)
-            transpositionTable.emplace(state, bestValue, depth, Flag::lowerBound);
-        else
-            transpositionTable.emplace(state, bestValue, depth, Flag::exact);
+        // We only save the result if we didn't run out of time,
+        // since it means we were able to search the full depth.
+        if (!isTimeUp())
+        {
+            if (bestValue <= savedAlpha)
+                transpositionTable.emplace(
+                    state, bestValue, depth, Flag::upperBound);
+            else if (bestValue >= savedBeta)
+                transpositionTable.emplace(
+                    state, bestValue, depth, Flag::lowerBound);
+            else
+                transpositionTable.emplace(state, bestValue, depth, Flag::exact);
+        }
 
         return bestValue;
     }
