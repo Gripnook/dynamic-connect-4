@@ -109,17 +109,24 @@ private:
     {
         ActionType action;
         auto actions = game.getActions(state);
-        std::cin >> action;
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::getline(std::cin, response);
         if (!std::cin)
         {
             std::cin.clear();
             throw std::runtime_error{"invalid input"};
         }
+        std::stringstream in{response};
+        in >> action;
+        if (!in)
+            throw std::runtime_error{"invalid input: " + response};
 
         if (std::find(std::begin(actions), std::end(actions), action) ==
             std::end(actions))
-            throw std::runtime_error{"invalid move"};
+        {
+            std::stringstream ss;
+            ss << action;
+            throw std::runtime_error{"invalid move: " + ss.str()};
+        }
 
         return action;
     }
