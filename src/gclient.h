@@ -145,7 +145,8 @@ private:
 
     void printWinner()
     {
-        if (game.getUtility(state) > 0 && player == 1)
+        if ((game.getUtility(state) > 0 && player == 1) ||
+            (game.getUtility(state) < 0 && player == 2))
             std::cerr << "we won!" << std::endl;
         else
             std::cerr << "we lost!" << std::endl;
