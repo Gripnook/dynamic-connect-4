@@ -1,11 +1,32 @@
 #!/bin/bash
 
-if [[ -z "$1" || -z "$2" ]]; then
+if [[ -z "$1" || -z "$2" || -z "$3" || -z "$4" ]]; then
+    echo "Error: invalid argument"
+    printUsage()
     exit 1
 fi
 
-gameId="$1"
-player="$2"
+server="$1"
+port="$2"
+if ! echo exit | telnet "$server" "$port"; then
+    echo "Error: server not found"
+    printUsage()
+    exit 2
+fi
+
+gameId="$3"
+if [[ "$gameId" ~= ".*[[:space:]]+.*" ]]; then
+    echo "Error: gameId must not contain whitespace"
+    printUsage()
+    exit 3
+fi
+
+player="$4"
+if [[ "$player" != "1" && "$player" != "2" ]]; then
+    echo "Error: invalid player"
+    printUsage()
+    exit 4
+fi
 
 pipe="pipe$player"
 logfile="logs/$gameId.$player.`date +%Y-%m-%dT%H:%M:%S%z`.log"
@@ -13,8 +34,13 @@ logfile="logs/$gameId.$player.`date +%Y-%m-%dT%H:%M:%S%z`.log"
 mkdir -p logs
 rm -f --interactive=never "$pipe"
 if mkfifo "$pipe"; then
-    (./agent.exe -n -i$gameId -p$player -t19500 <"$pipe" \
-        | tee >(telnet localhost 12345 >"$pipe"))        \
+    (./agent.exe -n -i"$gameId" -p"$player" -t19500 <"$pipe" \
+        | tee >(telnet "$server" "$port" >"$pipe"))          \
         &> >(tee -a "$logfile")
     rm --interactive=never "$pipe"
 fi
+
+function printUsage()
+{
+    echo "Usage: $0 <server> <port> <gameId> <player>"
+}
