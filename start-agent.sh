@@ -1,7 +1,9 @@
 #!/bin/bash
 
+progname=`basename "$0"`
+
 printUsage () {
-    echo "Usage: $0 <server> <port> <gameId> <player>"
+    echo "Usage: $progname <server> <port> <gameId> <player>"
 }
 
 if [[ -z "$1" || -z "$2" || -z "$3" || -z "$4" ]]; then
