@@ -21,7 +21,7 @@ if ! echo exit | telnet "$server" "$port"; then
 fi
 
 gameId="$3"
-if [[ "$gameId" =~ ".*[[:space:]]+.*" ]]; then
+if [[ "$gameId" =~ .*[[:space:]]+.* ]]; then
     echo "Error: gameId must not contain whitespace"
     printUsage
     exit 3
