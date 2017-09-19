@@ -22,11 +22,14 @@ using EvalType = Game::EvalType;
 class TelnetClient
 {
 public:
-    TelnetClient(int player, int timeLimitInMs, bool debug = false)
+    TelnetClient(
+        const std::string& gameId,
+        int player,
+        int timeLimitInMs,
+        bool debug = false)
         : player{player}, search{game, timeLimitInMs, debug}
     {
-        std::string login =
-            "game.ai " + std::string{player == 1 ? "white" : "black"};
+        std::string login = gameId + " " + (player == 1 ? "white" : "black");
         std::cerr << "Sending: " << login << std::endl;
         std::cout << login << std::endl;
 

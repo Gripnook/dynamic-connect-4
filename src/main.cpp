@@ -1,9 +1,9 @@
 #include <iostream>
-#include <fstream>
 #include <chrono>
 #include <string>
-#include <sstream>
 #include <algorithm>
+
+#include "args.h"
 
 #include "game.h"
 #include "heuristics.h"
@@ -13,6 +13,7 @@
 
 #include "gclient.h"
 
+using namespace Args;
 using namespace DynamicConnect4;
 using namespace Search;
 
@@ -20,94 +21,46 @@ using StateType = Game::StateType;
 using ActionType = Game::ActionType;
 using EvalType = Game::EvalType;
 
-struct Args
-{
-    bool server{false};
-    int timeLimitInMs{18000};
-    int player{0};
-    StateType initialState;
-    bool debug{false};
-};
-
-Args parse(int argc, char** argv);
-
 void playGame(
     int humanPlayer, int timeLimitInMs, const StateType& initialState, bool debug);
 ActionType getPlayerAction(const Game& game, const StateType& state);
 void print(const StateType& state);
 
-StateType getState(const std::string& file);
-
 int main(int argc, char** argv)
 {
-    auto args = parse(argc, argv);
-    if (args.server)
+    try
     {
-        TelnetClient client{args.player, args.timeLimitInMs, args.debug};
-        client.play();
+        auto args = parse<Game>(argc, argv);
+        if (args.telnet)
+        {
+            TelnetClient client{args.gameId,
+                                args.player,
+                                args.timeLimitInMs,
+                                args.debug};
+            client.play();
+        }
+        else
+        {
+            playGame(
+                args.player, args.timeLimitInMs, args.initialState, args.debug);
+        };
+        return 0;
     }
-    else
+    catch (ArgsError& e)
     {
-        playGame(args.player, args.timeLimitInMs, args.initialState, args.debug);
-    };
-    return 0;
-}
-
-Args parse(int argc, char** argv)
-{
-    Args args;
-    for (int i = 0; i < argc; ++i)
-    {
-        std::string arg{argv[i]};
-        if (arg.length() >= 2 && arg[0] == '-')
-            switch (arg[1])
-            {
-            case 's':
-            {
-                args.server = true;
-                break;
-            }
-            case 'p':
-            case 'h':
-            {
-                int player;
-                std::stringstream ss{arg.substr(2)};
-                ss >> player;
-                if (!ss)
-                    throw std::runtime_error{"invalid argument"};
-                args.player = player;
-                break;
-            }
-            case 't':
-            {
-                int timeLimitInMs;
-                std::stringstream ss{arg.substr(2)};
-                ss >> timeLimitInMs;
-                if (!ss)
-                    throw std::runtime_error{"invalid argument"};
-                args.timeLimitInMs = timeLimitInMs;
-                break;
-            }
-            case 'f':
-            {
-                std::string filename = arg.substr(2);
-                args.initialState = getState(filename);
-                break;
-            }
-            case 'd':
-            {
-                args.debug = true;
-                break;
-            }
-            }
+        std::cerr << "Error: " << e.what() << std::endl;
+        printUsage<Game>(argv[0]);
+        return 1;
     }
-    if (args.player != 0 && args.player != 1 && args.player != 2)
-        throw std::runtime_error{"invalid player"};
-    if (args.server && args.player == 0)
-        throw std::runtime_error{"invalid player"};
-    if (args.timeLimitInMs < 0)
-        throw std::runtime_error{"cannot play with negative time"};
-    return args;
+    catch (std::exception& e)
+    {
+        std::cerr << "Error: " << e.what() << std::endl;
+        return 2;
+    }
+    catch (...)
+    {
+        return 3;
+    }
 }
 
 void playGame(
@@ -148,9 +101,10 @@ void playGame(
                 state = game.getResult(state, action);
                 print(state);
                 std::cout << "move #" << move << std::endl;
-                std::cout << playerOneSearch.getLastCount()
-                          << " nodes searched with max depth "
-                          << playerOneSearch.getLastDepth() << std::endl;
+                if (humanPlayer != 1)
+                    std::cout << playerOneSearch.getLastCount()
+                              << " nodes searched with max depth "
+                              << playerOneSearch.getLastDepth() << std::endl;
             }
             else
             {
@@ -160,9 +114,10 @@ void playGame(
                 state = game.getResult(state, action);
                 print(state);
                 std::cout << "move #" << move << std::endl;
-                std::cout << playerTwoSearch.getLastCount()
-                          << " nodes searched with max depth "
-                          << playerTwoSearch.getLastDepth() << std::endl;
+                if (humanPlayer != 2)
+                    std::cout << playerTwoSearch.getLastCount()
+                              << " nodes searched with max depth "
+                              << playerTwoSearch.getLastDepth() << std::endl;
             }
             auto t2 = std::chrono::high_resolution_clock::now();
             auto ms =
@@ -242,16 +197,4 @@ ActionType getPlayerAction(const Game& game, const StateType& state)
 void print(const StateType& state)
 {
     std::cout << state;
-}
-
-StateType getState(const std::string& file)
-{
-    StateType state;
-    std::ifstream in{file};
-    if (!in)
-        throw std::runtime_error{"file not found"};
-    in >> state;
-    if (!in)
-        throw std::runtime_error{"invalid state"};
-    return state;
 }
