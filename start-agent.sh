@@ -1,8 +1,12 @@
 #!/bin/bash
 
+printUsage () {
+    echo "Usage: $0 <server> <port> <gameId> <player>"
+}
+
 if [[ -z "$1" || -z "$2" || -z "$3" || -z "$4" ]]; then
     echo "Error: invalid argument"
-    printUsage()
+    printUsage
     exit 1
 fi
 
@@ -10,21 +14,21 @@ server="$1"
 port="$2"
 if ! echo exit | telnet "$server" "$port"; then
     echo "Error: server not found"
-    printUsage()
+    printUsage
     exit 2
 fi
 
 gameId="$3"
 if [[ "$gameId" =~ ".*[[:space:]]+.*" ]]; then
     echo "Error: gameId must not contain whitespace"
-    printUsage()
+    printUsage
     exit 3
 fi
 
 player="$4"
 if [[ "$player" != "1" && "$player" != "2" ]]; then
     echo "Error: invalid player"
-    printUsage()
+    printUsage
     exit 4
 fi
 
@@ -39,8 +43,3 @@ if mkfifo "$pipe"; then
         &> >(tee -a "$logfile")
     rm --interactive=never "$pipe"
 fi
-
-function printUsage()
-{
-    echo "Usage: $0 <server> <port> <gameId> <player>"
-}
