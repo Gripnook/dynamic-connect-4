@@ -36,9 +36,9 @@ public:
         do
         {
             std::getline(std::cin, response);
-            std::cerr << "Response: " << response << std::endl;
             if (response == "")
-                throw std::runtime_error{"could not connect to game " + gameId};
+                throw std::runtime_error{"could not connect to game: " + gameId};
+            std::cerr << "Response: " << response << std::endl;
         } while (response != login);
     }
 
