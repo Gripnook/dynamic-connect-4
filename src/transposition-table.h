@@ -173,7 +173,7 @@ private:
         auto it2 = ++std::begin(depthIterators);
         while (it2 != std::end(depthIterators))
         {
-            it2->second = it1->second;
+            it1->second = it2->second;
             ++it1;
             ++it2;
         }
