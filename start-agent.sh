@@ -14,7 +14,7 @@ fi
 
 server="$1"
 port="$2"
-if ! echo exit | telnet "$server" "$port"; then
+if ! echo q | telnet -eq "$server" "$port"; then
     echo "Error: server not found"
     printUsage
     exit 2
