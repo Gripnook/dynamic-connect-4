@@ -33,6 +33,8 @@ public:
         this->heuristic = heuristic;
         startTime = std::chrono::high_resolution_clock::now();
 
+        transpositionTable.expire();
+
         auto actions = game.getActions(state);
         std::map<ActionType, EvalType> values;
 
