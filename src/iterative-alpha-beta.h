@@ -7,6 +7,7 @@
 #include <functional>
 #include <chrono>
 #include <iostream>
+#include <atomic>
 
 #include "transposition-table.h"
 
@@ -25,6 +26,16 @@ public:
     IterativeAlphaBeta(Game& game, int timeLimitInMs, bool debug = false)
         : game(game), timeLimitInMs{timeLimitInMs}, debug{debug}
     {
+    }
+
+    int stop()
+    {
+        return timeLimitInMs.exchange(0);
+    }
+
+    void reset(int timeLimitInMs)
+    {
+        this->timeLimitInMs = timeLimitInMs;
     }
 
     ActionType search(const StateType& state, Heuristic heuristic, bool isMax)
@@ -133,7 +144,7 @@ private:
 
     TranspositionTable<Game> transpositionTable;
 
-    int timeLimitInMs{};
+    std::atomic<int> timeLimitInMs{};
     std::chrono::high_resolution_clock::time_point startTime;
 
     bool debug{};

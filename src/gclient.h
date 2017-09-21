@@ -5,6 +5,7 @@
 #include <string>
 #include <sstream>
 #include <algorithm>
+#include <thread>
 
 #include "game.h"
 #include "heuristics.h"
@@ -49,34 +50,8 @@ public:
         {
             ++move;
             auto t1 = std::chrono::high_resolution_clock::now();
-            if (state.isPlayerOne)
-            {
-                if (player == 1)
-                {
-                    isOurTurn = true;
-                    action = search.search(state, heuristic, true);
-                    send();
-                }
-                else
-                {
-                    isOurTurn = false;
-                    action = receive();
-                }
-            }
-            else
-            {
-                if (player == 2)
-                {
-                    isOurTurn = true;
-                    action = search.search(state, heuristic, false);
-                    send();
-                }
-                else
-                {
-                    isOurTurn = false;
-                    action = receive();
-                }
-            }
+            isOurTurn = state.isPlayerOne ? (player == 1) : (player == 2);
+            getAction();
             state = game.getResult(state, action);
             auto t2 = std::chrono::high_resolution_clock::now();
             timeInMs =
@@ -102,6 +77,32 @@ private:
     Heuristic<ConnectedPiecesV1, CentralDominanceV2> heuristic{1.0f, 1.0f};
 
     std::string response;
+
+    void getAction()
+    {
+        if (isOurTurn)
+        {
+            // This reduces our memory footprint by ensuring the search
+            // transposition table is only used by other threads.
+            std::thread compute{[&]() {
+                action =
+                    search.search(state, heuristic, player == 1 ? true : false);
+            }};
+            compute.join();
+            send();
+        }
+        else
+        {
+            std::thread compute{[&]() {
+                search.search(state, heuristic, player == 1 ? false : true);
+            }};
+            action = receive();
+            auto timeLimitInMs = search.stop();
+            if (compute.joinable())
+                compute.join();
+            search.reset(timeLimitInMs);
+        }
+    }
 
     void send()
     {
