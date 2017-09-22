@@ -8,6 +8,7 @@ inline void hash_combine(size_t& /*seed*/)
 {
 }
 
+// A template for combining different hashes.
 template <typename T, typename... Rest>
 inline void hash_combine(size_t& seed, const T& v, Rest... rest)
 {
