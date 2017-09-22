@@ -16,6 +16,7 @@ struct Args
     int timeLimitInMs{20000};
     typename Game::StateType initialState;
     bool debug{false};
+    bool help{false};
 };
 
 class ArgsError : public std::exception
@@ -95,6 +96,11 @@ Args<Game> parse(int argc, char** argv)
                 args.debug = true;
                 break;
             }
+            case 'H':
+            {
+                args.help = true;
+                break;
+            }
             default:
             {
                 throw ArgsError{"invalid argument: " + arg};
@@ -153,9 +159,9 @@ void printUsage(const std::string& progname)
     Args<Game> args;
     std::cerr
         << std::boolalpha << "Usage: " << progname
-        << " [-n -i<id> -p<player>] [-t<ms>] [-d]" << std::endl
-        << "       " << progname << " [-h<player>] [-f<filename>] [-t<ms>] [-d]"
-        << std::endl
+        << " [-n -i<id> -p<player>] [-t<ms>] [-d] [-H]" << std::endl
+        << "       " << progname
+        << " [-h<player>] [-f<filename>] [-t<ms>] [-d] [-H]" << std::endl
         << std::endl
         << "    -n:           "
            "Play the game using the telnet protocol through stdin "
@@ -186,6 +192,9 @@ void printUsage(const std::string& progname)
         << args.timeLimitInMs << " ms." << std::endl
         << "    -d:           "
            "Play with additional debug information. Defaults to "
-        << args.debug << "." << std::endl;
+        << args.debug << "." << std::endl
+        << "    -H:           "
+           "Print usage information."
+        << std::endl;
 }
 }

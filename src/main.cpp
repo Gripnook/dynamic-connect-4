@@ -31,7 +31,11 @@ int main(int argc, char** argv)
     try
     {
         auto args = parse<Game>(argc, argv);
-        if (args.telnet)
+        if (args.help)
+        {
+            printUsage<Game>(argv[0]);
+        }
+        else if (args.telnet)
         {
             TelnetClient client{args.gameId,
                                 args.player,
