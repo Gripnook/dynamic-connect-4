@@ -10,6 +10,7 @@
 #include "game/heuristics.h"
 #include "search/minimax.h"
 #include "search/alpha-beta.h"
+#include "search/ordered-alpha-beta.h"
 #include "search/iterative-alpha-beta.h"
 
 using namespace Args;
