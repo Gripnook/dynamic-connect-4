@@ -13,6 +13,16 @@ enum class Flag
     upperBound
 };
 
+// A class implementing a transposition table for a game of type Game.
+// This table takes the form of a fixed size, LRU replacement hash table which
+// is used to store states, their values, the depths at which their values were
+// computed, and the types of values stored (EXACT, LOWER_BOUND, UPPER_BOUND).
+//
+// Game must define:
+//      StateType - The type of the state representation for a position.
+//          This type must be hashable using std::hash<StateType> and
+//          comparable for equality using the == operator.
+//      EvalType - The type of a numerical position evaluation.
 template <typename Game>
 class TranspositionTable
 {
@@ -33,10 +43,9 @@ public:
         }
     };
 
-    using ListType = std::list<std::pair<StateType, ValueType>>;
-    using MapType = std::unordered_map<StateType, typename ListType::iterator>;
-
-    static const size_t maxSize = 4 * 1024 * 1024;
+    TranspositionTable(size_t maxSize) : maxSize{maxSize}
+    {
+    }
 
     std::pair<bool, ValueType> find(const StateType& state)
     {
@@ -63,7 +72,7 @@ public:
         {
             lru.emplace_front(state, ValueType{value, depth, flag});
             table[state] = std::begin(lru);
-            while (size() > maxSize)
+            while (table.size() > maxSize)
             {
                 table.erase(lru.back().first);
                 lru.pop_back();
@@ -89,8 +98,13 @@ public:
     }
 
 private:
+    using ListType = std::list<std::pair<StateType, ValueType>>;
+    using MapType = std::unordered_map<StateType, typename ListType::iterator>;
+
     MapType table;
     ListType lru;
+
+    size_t maxSize{};
 
     mutable int accesses{0};
     mutable int misses{0};

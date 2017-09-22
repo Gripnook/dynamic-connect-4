@@ -24,7 +24,7 @@ public:
     using Heuristic = std::function<EvalType(const StateType&)>;
 
     IterativeAlphaBeta(Game& game, bool debug = false)
-        : game(game), debug{debug}
+        : game(game), transpositionTable{4 * 1024 * 1024}, debug{debug}
     {
     }
 
