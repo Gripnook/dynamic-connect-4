@@ -9,7 +9,7 @@
 #include <iostream>
 #include <atomic>
 
-#include "transposition-table.h"
+#include "search/transposition-table.h"
 
 namespace Search {
 
@@ -23,25 +23,17 @@ public:
 
     using Heuristic = std::function<EvalType(const StateType&)>;
 
-    IterativeAlphaBeta(Game& game, int timeLimitInMs, bool debug = false)
-        : game(game), timeLimitInMs{timeLimitInMs}, debug{debug}
+    IterativeAlphaBeta(Game& game, bool debug = false)
+        : game(game), debug{debug}
     {
     }
 
-    int stop()
-    {
-        return timeLimitInMs.exchange(0);
-    }
-
-    void reset(int timeLimitInMs)
-    {
-        this->timeLimitInMs = timeLimitInMs;
-    }
-
-    ActionType search(const StateType& state, Heuristic heuristic, bool isMax)
+    ActionType search(
+        const StateType& state, Heuristic heuristic, int timeLimitInMs, bool isMax)
     {
         count = 1;
         this->heuristic = heuristic;
+        this->timeLimitInMs = timeLimitInMs;
         startTime = std::chrono::high_resolution_clock::now();
 
         auto actions = game.getActions(state);
@@ -124,6 +116,11 @@ public:
                 return actions.front();
             }
         }
+    }
+
+    void stop()
+    {
+        timeLimitInMs = 0;
     }
 
     int getLastCount() const

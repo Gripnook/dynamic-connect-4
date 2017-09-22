@@ -4,14 +4,13 @@
 #include <algorithm>
 
 #include "args.h"
-
-#include "game.h"
-#include "heuristics.h"
-#include "minimax.h"
-#include "alpha-beta.h"
-#include "iterative-alpha-beta.h"
-
 #include "gclient.h"
+
+#include "game/game.h"
+#include "game/heuristics.h"
+#include "search/minimax.h"
+#include "search/alpha-beta.h"
+#include "search/iterative-alpha-beta.h"
 
 using namespace Args;
 using namespace DynamicConnect4;
@@ -67,8 +66,8 @@ void playGame(
     int humanPlayer, int timeLimitInMs, const StateType& initialState, bool debug)
 {
     Game game;
-    IterativeAlphaBeta<Game> playerOneSearch{game, timeLimitInMs, debug};
-    IterativeAlphaBeta<Game> playerTwoSearch{game, timeLimitInMs, debug};
+    IterativeAlphaBeta<Game> playerOneSearch{game, debug};
+    IterativeAlphaBeta<Game> playerTwoSearch{game, debug};
     int playerOneWins = 0, playerTwoWins = 0, draws = 0;
     while (true)
     {
@@ -97,7 +96,8 @@ void playGame(
             {
                 action = humanPlayer == 1 ?
                     getPlayerAction(game, state) :
-                    playerOneSearch.search(state, playerOneHeuristic, true);
+                    playerOneSearch.search(
+                        state, playerOneHeuristic, timeLimitInMs, true);
                 state = game.getResult(state, action);
                 print(state);
                 std::cout << "move #" << move << std::endl;
@@ -110,7 +110,8 @@ void playGame(
             {
                 action = humanPlayer == 2 ?
                     getPlayerAction(game, state) :
-                    playerTwoSearch.search(state, playerTwoHeuristic, false);
+                    playerTwoSearch.search(
+                        state, playerTwoHeuristic, timeLimitInMs, false);
                 state = game.getResult(state, action);
                 print(state);
                 std::cout << "move #" << move << std::endl;

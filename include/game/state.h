@@ -5,9 +5,9 @@
 #include <functional>
 #include <cstdint>
 
-#include "definition.h"
-#include "point.h"
-#include "hash.h"
+#include "game/definition.h"
+#include "game/point.h"
+#include "util/hash.h"
 
 namespace DynamicConnect4 {
 

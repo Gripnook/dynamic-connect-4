@@ -1,10 +1,10 @@
-#include "game.h"
+#include "game/game.h"
 
 #include <algorithm>
 #include <limits>
 #include <iostream>
 
-#include "drawboard.h"
+#include "game/drawboard.h"
 
 namespace DynamicConnect4 {
 

@@ -4,9 +4,9 @@
 #include <utility>
 #include <iosfwd>
 
-#include "definition.h"
-#include "point.h"
-#include "state.h"
+#include "game/definition.h"
+#include "game/point.h"
+#include "game/state.h"
 
 namespace DynamicConnect4 {
 

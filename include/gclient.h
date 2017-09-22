@@ -7,9 +7,9 @@
 #include <algorithm>
 #include <thread>
 
-#include "game.h"
-#include "heuristics.h"
-#include "iterative-alpha-beta.h"
+#include "game/game.h"
+#include "game/heuristics.h"
+#include "search/iterative-alpha-beta.h"
 
 using namespace DynamicConnect4;
 using namespace Search;
@@ -28,7 +28,7 @@ public:
         int player,
         int timeLimitInMs,
         bool debug = false)
-        : player{player}, search{game, timeLimitInMs, debug}
+        : player{player}, search{game, debug}, timeLimitInMs{timeLimitInMs}
     {
         std::string login = gameId + " " + (player == 1 ? "white" : "black");
         std::cerr << "Sending: " << login << std::endl;
@@ -70,6 +70,7 @@ private:
     IterativeAlphaBeta<Game> search;
     StateType state;
     ActionType action;
+    int timeLimitInMs{};
     int move{0};
     bool isOurTurn{};
     int timeInMs{};
@@ -85,8 +86,8 @@ private:
             // This reduces our memory footprint by ensuring the search
             // transposition table is only used by other threads.
             std::thread compute{[&]() {
-                action =
-                    search.search(state, heuristic, player == 1 ? true : false);
+                action = search.search(
+                    state, heuristic, timeLimitInMs, player == 1 ? true : false);
             }};
             compute.join();
             send();
@@ -94,13 +95,16 @@ private:
         else
         {
             std::thread compute{[&]() {
-                search.search(state, heuristic, player == 1 ? false : true);
+                search.search(
+                    state,
+                    heuristic,
+                    std::numeric_limits<int>::max(),
+                    player == 1 ? false : true);
             }};
             action = receive();
-            auto timeLimitInMs = search.stop();
+            search.stop();
             if (compute.joinable())
                 compute.join();
-            search.reset(timeLimitInMs);
         }
     }
 

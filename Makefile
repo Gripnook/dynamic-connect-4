@@ -13,7 +13,7 @@
 
 # Configuration Settings
 TARGET := agent.exe
-CXXFLAGS := -std=c++1y -Wall -Wextra -pedantic -Isrc -pthread
+CXXFLAGS := -std=c++1y -Wall -Wextra -pedantic -Iinclude -pthread
 LIBFLAGS := 
 SRCS := main.cpp game.cpp state.cpp drawboard.cpp
 

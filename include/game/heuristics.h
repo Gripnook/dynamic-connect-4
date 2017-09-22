@@ -2,8 +2,8 @@
 
 #include <array>
 
-#include "game.h"
-#include "drawboard.h"
+#include "game/game.h"
+#include "game/drawboard.h"
 
 namespace DynamicConnect4 {
 
