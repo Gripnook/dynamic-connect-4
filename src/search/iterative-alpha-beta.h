@@ -1,6 +1,7 @@
 #pragma once
 
 #include <map>
+#include <vector>
 #include <limits>
 #include <algorithm>
 #include <utility>

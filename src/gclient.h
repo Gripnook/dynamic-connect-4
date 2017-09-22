@@ -5,6 +5,7 @@
 #include <string>
 #include <sstream>
 #include <algorithm>
+#include <limits>
 #include <thread>
 
 #include "game/game.h"
