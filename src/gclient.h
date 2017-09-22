@@ -94,6 +94,12 @@ private:
         }
         else
         {
+            // Why sit idle while waiting for the opponent to play? Instead, we
+            // use that time to search for their best move. Note that we ignore
+            // the result, and we stop the search when we get a response, but
+            // the act of searching itself enables the search algorithm to fill
+            // the transposition table with nodes we will likely be searching
+            // soon, improving our performance.
             std::thread compute{[&]() {
                 search.search(
                     state,
