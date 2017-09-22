@@ -13,6 +13,37 @@
 
 namespace Search {
 
+// A class implementing an iterative version of the alpha-beta search algorithm
+// for a game of type Game. This algorithm is optimized in several ways:
+//      1) It performs an iterative depth search until it runs out of time. It
+//          keeps the possible moves for the root in an array, which it sorts
+//          after each iteration using a stable sort. This allows it to get
+//          better move ordering in the next iteration. Being a stable sort, it
+//          also ensures that actions keep their relative ordering from previous
+//          iterations should they compare equally in this one.
+//      2) The moves at every node of the search tree other than the root are
+//          sorted according to their heuristic values to allow for better move
+//          ordering. The only exception is those nodes whose children are leaf
+//          nodes, for which there is no benefit to doing this.
+//      3) A transposition table is used to keep track of the moves seen so far.
+//
+// Game must define:
+//      StateType - The type of the state representation for a position.
+//      ActionType - The type of an action in the game.
+//      EvalType - The type of a numerical position evaluation.
+//
+//      std::vector<ActionType> getActions(StateType)
+//          A method to get a vector with the possible actions
+//          that can be taken from a given state.
+//
+//      StateType getResult(StateType, ActionType)
+//          A method to apply an action to a state and get the next state.
+//
+//      bool isTerminal(StateType)
+//          A method to check if a state is terminal.
+//
+//      EvalType getUtility(StateType)
+//          A method to get the utility value of a given terminal state.
 template <typename Game>
 class IterativeAlphaBeta
 {
@@ -241,6 +272,9 @@ private:
         std::function<bool(EvalType, EvalType)> comp,
         const std::map<ActionType, EvalType>& values) const
     {
+        // It is very important that the sort is stable, since it ensures that
+        // actions keep their relative ordering from previous sorts should they
+        // now be equal.
         std::stable_sort(
             std::begin(actions),
             std::end(actions),
