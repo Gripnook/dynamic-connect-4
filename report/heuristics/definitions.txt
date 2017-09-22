@@ -1,0 +1,2 @@
+slow=ConnectedPiecesV1,CentralDominanceV2
+fast=ConnectedPiecesV1

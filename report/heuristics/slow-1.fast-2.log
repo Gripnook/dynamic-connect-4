@@ -1,0 +1,3510 @@
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , , ,O
+5 O, , , , , ,X
+6 X, , , , , ,O
+7 O, , , , , , 
+player one evaluation: 0
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , ,O, 
+5 O, , , , , ,X
+6 X, , , , , ,O
+7 O, , , , , , 
+move #1
+1006571 nodes searched with max depth 11
+turn took 1 seconds
+action: 74W
+player one evaluation: 1.1875
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , ,O,X
+5 O, , , , , , 
+6 X, , , , , ,O
+7 O, , , , , , 
+move #2
+1345153 nodes searched with max depth 10
+turn took 1 seconds
+action: 75N
+player one evaluation: 0.1875
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3  ,O, , , , ,X
+4 X, , , , ,O,X
+5 O, , , , , , 
+6 X, , , , , ,O
+7 O, , , , , , 
+move #3
+1045197 nodes searched with max depth 11
+turn took 1 seconds
+action: 13E
+player one evaluation: 1.1875
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3  ,O, , , , ,X
+4  ,X, , , ,O,X
+5 O, , , , , , 
+6 X, , , , , ,O
+7 O, , , , , , 
+move #4
+1234501 nodes searched with max depth 11
+turn took 1 seconds
+action: 14E
+player one evaluation: 0
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3  ,O, , , , ,X
+4  ,X, , , ,O,X
+5  ,O, , , , , 
+6 X, , , , , ,O
+7 O, , , , , , 
+move #5
+1074330 nodes searched with max depth 10
+turn took 1 seconds
+action: 15E
+player one evaluation: 1.29883
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2  , , , , , ,O
+3 X,O, , , , ,X
+4  ,X, , , ,O,X
+5  ,O, , , , , 
+6 X, , , , , ,O
+7 O, , , , , , 
+move #6
+1091451 nodes searched with max depth 10
+turn took 1 seconds
+action: 12S
+player one evaluation: 0.298828
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2  , , , , , ,O
+3 X,O, , , , ,X
+4  ,X, , , ,O,X
+5  ,O, , , , , 
+6 X, , , , ,O, 
+7 O, , , , , , 
+move #7
+977881 nodes searched with max depth 10
+turn took 1 seconds
+action: 76W
+player one evaluation: 1.8125
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2  , , , , , ,O
+3  ,O, , , , ,X
+4 X,X, , , ,O,X
+5  ,O, , , , , 
+6 X, , , , ,O, 
+7 O, , , , , , 
+move #8
+1201042 nodes searched with max depth 10
+turn took 1 seconds
+action: 13S
+player one evaluation: 1.8125
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2  , , , , , ,O
+3  ,O, , , , ,X
+4 X,X, , , ,O,X
+5  ,O, , , ,O, 
+6 X, , , , , , 
+7 O, , , , , , 
+move #9
+1035900 nodes searched with max depth 10
+turn took 1 seconds
+action: 66N
+player one evaluation: 3.04688
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , ,X, 
+2  , , , , , ,O
+3  ,O, , , , ,X
+4 X,X, , , ,O,X
+5  ,O, , , ,O, 
+6 X, , , , , , 
+7 O, , , , , , 
+move #10
+1258761 nodes searched with max depth 10
+turn took 1 seconds
+action: 71W
+player one evaluation: 3.04688
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , ,X, 
+2  , , , , , ,O
+3  ,O, , , , ,X
+4 X,X, , , ,O,X
+5  ,O, , ,O, , 
+6 X, , , , , , 
+7 O, , , , , , 
+move #11
+1105350 nodes searched with max depth 10
+turn took 1 seconds
+action: 65W
+player one evaluation: 4.29688
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , ,X, 
+2  , , , , , ,O
+3  ,O, , , , ,X
+4 X, ,X, , ,O,X
+5  ,O, , ,O, , 
+6 X, , , , , , 
+7 O, , , , , , 
+move #12
+1128010 nodes searched with max depth 9
+turn took 1.017 seconds
+action: 24E
+player one evaluation: 4.29688
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , , , ,X, 
+2  , , , , , ,O
+3  ,O, , , , ,X
+4 X, ,X, , ,O,X
+5  , , , ,O, , 
+6 X,O, , , , , 
+7 O, , , , , , 
+move #13
+540896 nodes searched with max depth 9
+turn took 0.441 seconds
+action: 25S
+player one evaluation: 5.0625
+player two evaluation: 1
+
+  1 2 3 4 5 6 7
+1  , , , , ,X, 
+2  , , , , , ,O
+3  ,O, , , , ,X
+4  ,X,X, , ,O,X
+5  , , , ,O, , 
+6 X,O, , , , , 
+7 O, , , , , , 
+move #14
+27 nodes searched with max depth 2
+turn took 0.139 seconds
+action: 14E
+player one evaluation: 2.875
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , , , ,X, 
+2  , , , , , ,O
+3  ,O, , , , ,X
+4  ,X,X, ,O, ,X
+5  , , , ,O, , 
+6 X,O, , , , , 
+7 O, , , , , , 
+move #15
+30 nodes searched with max depth 2
+turn took 0.197 seconds
+action: 64W
+player one evaluation: 4.125
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , ,X,O
+3  ,O, , , , ,X
+4  ,X,X, ,O, ,X
+5  , , , ,O, , 
+6 X,O, , , , , 
+7 O, , , , , , 
+move #16
+42284 nodes searched with max depth 6
+turn took 0.027 seconds
+action: 61S
+player one evaluation: 1.91992
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , ,X,O
+3  ,O, , , , ,X
+4  ,X,X, ,O, ,X
+5  , , ,O, , , 
+6 X,O, , , , , 
+7 O, , , , , , 
+move #17
+33 nodes searched with max depth 2
+turn took 0 seconds
+action: 55W
+player one evaluation: 2.1543
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , ,X,O
+3  ,O, , , , ,X
+4  , ,X, ,O, ,X
+5  ,X, ,O, , , 
+6 X,O, , , , , 
+7 O, , , , , , 
+move #18
+663 nodes searched with max depth 4
+turn took 0.002 seconds
+action: 24S
+player one evaluation: 0.359375
+player two evaluation: -3
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , ,X,O
+3  ,O, , , , ,X
+4  , ,X, ,O, ,X
+5  ,X, ,O, , , 
+6 X, ,O, , , , 
+7 O, , , , , , 
+move #19
+32 nodes searched with max depth 2
+turn took 0 seconds
+action: 26E
+player one evaluation: 1.59375
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , , ,O
+3  ,O, , , ,X,X
+4  , ,X, ,O, ,X
+5  ,X, ,O, , , 
+6 X, ,O, , , , 
+7 O, , , , , , 
+move #20
+49 nodes searched with max depth 2
+turn took 0.002 seconds
+action: 62S
+player one evaluation: 0.388672
+player two evaluation: -3
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , , ,O
+3  ,O, , , ,X,X
+4  , ,X, ,O, ,X
+5  ,X, ,O, , , 
+6 X, ,O, , , , 
+7  ,O, , , , , 
+move #21
+2 nodes searched with max depth 1
+turn took 0 seconds
+action: 17E
+player one evaluation: 3.38867
+player two evaluation: 0
+
+player 1 wins!
+============================================================
+current score : 1-0-0
+============================================================
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , , ,O
+5 O, , , , , ,X
+6 X, , , , , ,O
+7 O, , , , , , 
+player one evaluation: 0
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , ,O, 
+5 O, , , , , ,X
+6 X, , , , , ,O
+7 O, , , , , , 
+move #1
+935348 nodes searched with max depth 12
+turn took 1 seconds
+action: 74W
+player one evaluation: 1.1875
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , ,O,X
+5 O, , , , , , 
+6 X, , , , , ,O
+7 O, , , , , , 
+move #2
+1361459 nodes searched with max depth 10
+turn took 1 seconds
+action: 75N
+player one evaluation: 0.1875
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3  ,O, , , , ,X
+4 X, , , , ,O,X
+5 O, , , , , , 
+6 X, , , , , ,O
+7 O, , , , , , 
+move #3
+758334 nodes searched with max depth 11
+turn took 1 seconds
+action: 13E
+player one evaluation: 1.1875
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3  ,O, , , , ,X
+4  ,X, , , ,O,X
+5 O, , , , , , 
+6 X, , , , , ,O
+7 O, , , , , , 
+move #4
+1220819 nodes searched with max depth 11
+turn took 1 seconds
+action: 14E
+player one evaluation: 0
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3  ,O, , , , ,X
+4  ,X, , , ,O,X
+5  ,O, , , , , 
+6 X, , , , , ,O
+7 O, , , , , , 
+move #5
+948666 nodes searched with max depth 11
+turn took 1 seconds
+action: 15E
+player one evaluation: 1.29883
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2  , , , , , ,O
+3 X,O, , , , ,X
+4  ,X, , , ,O,X
+5  ,O, , , , , 
+6 X, , , , , ,O
+7 O, , , , , , 
+move #6
+1272010 nodes searched with max depth 11
+turn took 1 seconds
+action: 12S
+player one evaluation: 0.298828
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2  , , , , , ,O
+3 X,O, , , , ,X
+4  ,X, , , ,O,X
+5  ,O, , , , , 
+6 X, , , , ,O, 
+7 O, , , , , , 
+move #7
+1022240 nodes searched with max depth 10
+turn took 1 seconds
+action: 76W
+player one evaluation: 1.8125
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2  , , , , , ,O
+3  ,O, , , , ,X
+4 X,X, , , ,O,X
+5  ,O, , , , , 
+6 X, , , , ,O, 
+7 O, , , , , , 
+move #8
+1272952 nodes searched with max depth 10
+turn took 1 seconds
+action: 13S
+player one evaluation: 1.8125
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2  , , , , , ,O
+3  ,O, , , , ,X
+4 X,X, , , ,O,X
+5  ,O, , , ,O, 
+6 X, , , , , , 
+7 O, , , , , , 
+move #9
+1116754 nodes searched with max depth 10
+turn took 1 seconds
+action: 66N
+player one evaluation: 3.04688
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , ,X, 
+2  , , , , , ,O
+3  ,O, , , , ,X
+4 X,X, , , ,O,X
+5  ,O, , , ,O, 
+6 X, , , , , , 
+7 O, , , , , , 
+move #10
+1300049 nodes searched with max depth 10
+turn took 1 seconds
+action: 71W
+player one evaluation: 3.04688
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , ,X, 
+2  , , , , , ,O
+3  ,O, , , , ,X
+4 X,X, , , ,O,X
+5  , ,O, , ,O, 
+6 X, , , , , , 
+7 O, , , , , , 
+move #11
+1079306 nodes searched with max depth 10
+turn took 1 seconds
+action: 25E
+player one evaluation: 4.29688
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , ,X,O
+3  ,O, , , , ,X
+4 X,X, , , ,O,X
+5  , ,O, , ,O, 
+6 X, , , , , , 
+7 O, , , , , , 
+move #12
+1400537 nodes searched with max depth 9
+turn took 1 seconds
+action: 61S
+player one evaluation: 2.48438
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , ,X,O
+3  ,O, , , , ,X
+4 X,X, , , ,O,X
+5  , ,O, ,O, , 
+6 X, , , , , , 
+7 O, , , , , , 
+move #13
+18 nodes searched with max depth 2
+turn took 0 seconds
+action: 65W
+player one evaluation: 3.73438
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , , ,O
+3  ,O, , , ,X,X
+4 X,X, , , ,O,X
+5  , ,O, ,O, , 
+6 X, , , , , , 
+7 O, , , , , , 
+move #14
+29932 nodes searched with max depth 8
+turn took 0.146 seconds
+action: 62S
+player one evaluation: 2.54688
+player two evaluation: -3
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , , ,O
+3  ,O, , , ,X,X
+4 X,X, , , ,O,X
+5  , ,O, ,O, , 
+6 X, , , , , , 
+7  ,O, , , , , 
+move #15
+25 nodes searched with max depth 2
+turn took 0 seconds
+action: 17E
+player one evaluation: 2.54688
+player two evaluation: -3
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , , ,O
+3  ,O, , , ,X,X
+4 X,X, , , ,O,X
+5 X, ,O, ,O, , 
+6  , , , , , , 
+7  ,O, , , , , 
+move #16
+10815 nodes searched with max depth 6
+turn took 0.01 seconds
+action: 16N
+player one evaluation: 0.546875
+player two evaluation: -5
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , , ,O
+3  ,O, , , ,X,X
+4 X,X, , ,O, ,X
+5 X, ,O, ,O, , 
+6  , , , , , , 
+7  ,O, , , , , 
+move #17
+32 nodes searched with max depth 2
+turn took 0 seconds
+action: 64W
+player one evaluation: 1.79688
+player two evaluation: -5
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , , ,O
+3  ,O, , , ,X,X
+4 X,X, , ,O, ,X
+5  ,X,O, ,O, , 
+6  , , , , , , 
+7  ,O, , , , , 
+move #18
+1955 nodes searched with max depth 4
+turn took 0.003 seconds
+action: 15E
+player one evaluation: 0.498047
+player two evaluation: -5
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , , ,O
+3  ,O, , , ,X,X
+4 X,X, , ,O, ,X
+5  ,X,O,O, , , 
+6  , , , , , , 
+7  ,O, , , , , 
+move #19
+71 nodes searched with max depth 2
+turn took 0 seconds
+action: 55W
+player one evaluation: 1.73242
+player two evaluation: -4
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , , ,O
+3  ,O, , , ,X,X
+4  ,X, , ,O, ,X
+5 X,X,O,O, , , 
+6  , , , , , , 
+7  ,O, , , , , 
+move #20
+92 nodes searched with max depth 2
+turn took 0.002 seconds
+action: 14S
+player one evaluation: 1.73242
+player two evaluation: -4
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , , ,O
+3  ,O, , , ,X,X
+4  ,X, , ,O, ,X
+5 X,X, ,O, , , 
+6  , ,O, , , , 
+7  ,O, , , , , 
+move #21
+8 nodes searched with max depth 1
+turn took 0 seconds
+action: 35S
+player one evaluation: 4.48242
+player two evaluation: 0
+
+player 1 wins!
+============================================================
+current score : 2-0-0
+============================================================
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , , ,O
+5 O, , , , , ,X
+6 X, , , , , ,O
+7 O, , , , , , 
+player one evaluation: 0
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , ,O, 
+5 O, , , , , ,X
+6 X, , , , , ,O
+7 O, , , , , , 
+move #1
+1013380 nodes searched with max depth 12
+turn took 1 seconds
+action: 74W
+player one evaluation: 1.1875
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , ,O,X
+5 O, , , , , , 
+6 X, , , , , ,O
+7 O, , , , , , 
+move #2
+1375999 nodes searched with max depth 10
+turn took 1 seconds
+action: 75N
+player one evaluation: 0.1875
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , ,O,X
+5  ,O, , , , , 
+6 X, , , , , ,O
+7 O, , , , , , 
+move #3
+901366 nodes searched with max depth 11
+turn took 1 seconds
+action: 15E
+player one evaluation: 1.1875
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , ,O,X
+5 X,O, , , , , 
+6  , , , , , ,O
+7 O, , , , , , 
+move #4
+1360246 nodes searched with max depth 11
+turn took 1 seconds
+action: 16N
+player one evaluation: 0.1875
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , ,O,X
+5 X,O, , , , , 
+6  , , , , ,O, 
+7 O, , , , , , 
+move #5
+1038191 nodes searched with max depth 11
+turn took 1 seconds
+action: 76W
+player one evaluation: 1.28125
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2  ,X, , , , ,O
+3 O, , , , , ,X
+4 X, , , , ,O,X
+5 X,O, , , , , 
+6  , , , , ,O, 
+7 O, , , , , , 
+move #6
+1370002 nodes searched with max depth 11
+turn took 1 seconds
+action: 12E
+player one evaluation: 0.46875
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2  ,X, , , , ,O
+3  ,O, , , , ,X
+4 X, , , , ,O,X
+5 X,O, , , , , 
+6  , , , , ,O, 
+7 O, , , , , , 
+move #7
+975681 nodes searched with max depth 10
+turn took 1 seconds
+action: 13E
+player one evaluation: 2.1875
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , , ,X, 
+2  ,X, , , , ,O
+3  ,O, , , , ,X
+4 X, , , , ,O,X
+5 X,O, , , , , 
+6  , , , , ,O, 
+7 O, , , , , , 
+move #8
+1282560 nodes searched with max depth 11
+turn took 1 seconds
+action: 71W
+player one evaluation: 2.1875
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , , ,X, 
+2  ,X, , , ,O, 
+3  ,O, , , , ,X
+4 X, , , , ,O,X
+5 X,O, , , , , 
+6  , , , , ,O, 
+7 O, , , , , , 
+move #9
+770126 nodes searched with max depth 10
+turn took 1 seconds
+action: 72W
+player one evaluation: 3.05273
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , , ,X, 
+2  ,X, , , ,O, 
+3  ,O, , , ,X, 
+4 X, , , , ,O,X
+5 X,O, , , , , 
+6  , , , , ,O, 
+7 O, , , , , , 
+move #10
+1171231 nodes searched with max depth 10
+turn took 1 seconds
+action: 73W
+player one evaluation: 2.05273
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , , ,X, 
+2  ,X, , , ,O, 
+3  , , , , ,X, 
+4 X,O, , , ,O,X
+5 X,O, , , , , 
+6  , , , , ,O, 
+7 O, , , , , , 
+move #11
+994180 nodes searched with max depth 10
+turn took 1 seconds
+action: 23S
+player one evaluation: 3.28125
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , ,X, 
+2  , ,X, , ,O, 
+3  , , , , ,X, 
+4 X,O, , , ,O,X
+5 X,O, , , , , 
+6  , , , , ,O, 
+7 O, , , , , , 
+move #12
+1335942 nodes searched with max depth 10
+turn took 1 seconds
+action: 22E
+player one evaluation: 3.09375
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , ,X, 
+2  , ,X, , ,O, 
+3  , , , , ,X, 
+4 X,O, , , ,O,X
+5 X,O, , , , , 
+6 O, , , , ,O, 
+7  , , , , , , 
+move #13
+980543 nodes searched with max depth 9
+turn took 1 seconds
+action: 17N
+player one evaluation: 4.09375
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , , , ,X, 
+2  , , ,X, ,O, 
+3  , , , , ,X, 
+4 X,O, , , ,O,X
+5 X,O, , , , , 
+6 O, , , , ,O, 
+7  , , , , , , 
+move #14
+1187405 nodes searched with max depth 10
+turn took 1 seconds
+action: 32E
+player one evaluation: 3.90625
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , , , ,X, 
+2  , , ,X,O, , 
+3  , , , , ,X, 
+4 X,O, , , ,O,X
+5 X,O, , , , , 
+6 O, , , , ,O, 
+7  , , , , , , 
+move #15
+1063597 nodes searched with max depth 10
+turn took 1 seconds
+action: 62W
+player one evaluation: 4.13477
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , ,X,O,X, 
+3  , , , , ,X, 
+4 X,O, , , ,O,X
+5 X,O, , , , , 
+6 O, , , , ,O, 
+7  , , , , , , 
+move #16
+1218350 nodes searched with max depth 10
+turn took 1 seconds
+action: 61S
+player one evaluation: 2.04102
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , ,X,O,X, 
+3  , , , , ,X, 
+4 X,O, , , ,O,X
+5 X,O, , , ,O, 
+6 O, , , , , , 
+7  , , , , , , 
+move #17
+975729 nodes searched with max depth 10
+turn took 1 seconds
+action: 66N
+player one evaluation: 3.26953
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , ,O,X, 
+3  , , ,X, ,X, 
+4 X,O, , , ,O,X
+5 X,O, , , ,O, 
+6 O, , , , , , 
+7  , , , , , , 
+move #18
+1170454 nodes searched with max depth 10
+turn took 1 seconds
+action: 42S
+player one evaluation: 2.17578
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , ,X, 
+3  , , ,X,O,X, 
+4 X,O, , , ,O,X
+5 X,O, , , ,O, 
+6 O, , , , , , 
+7  , , , , , , 
+move #19
+964137 nodes searched with max depth 10
+turn took 1 seconds
+action: 52S
+player one evaluation: 4.39453
+player two evaluation: 1
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , ,X, , 
+3  , , ,X,O,X, 
+4 X,O, , , ,O,X
+5 X,O, , , ,O, 
+6 O, , , , , , 
+7  , , , , , , 
+move #20
+1115154 nodes searched with max depth 10
+turn took 1 seconds
+action: 62W
+player one evaluation: 2.18945
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , ,X, , 
+3  , , ,X,O,X, 
+4 X, ,O, , ,O,X
+5 X,O, , , ,O, 
+6 O, , , , , , 
+7  , , , , , , 
+move #21
+934093 nodes searched with max depth 10
+turn took 1 seconds
+action: 24E
+player one evaluation: 4.4082
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , ,X, , 
+3  , , ,X,O,X, 
+4  ,X,O, , ,O,X
+5 X,O, , , ,O, 
+6 O, , , , , , 
+7  , , , , , , 
+move #22
+1043736 nodes searched with max depth 10
+turn took 1 seconds
+action: 14E
+player one evaluation: 2.26953
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , ,X, , 
+3  , , ,X,O,X, 
+4  ,X,O, ,O, ,X
+5 X,O, , , ,O, 
+6 O, , , , , , 
+7  , , , , , , 
+move #23
+953518 nodes searched with max depth 10
+turn took 1 seconds
+action: 64W
+player one evaluation: 3.48828
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , ,X, , , 
+3  , , ,X,O,X, 
+4  ,X,O, ,O, ,X
+5 X,O, , , ,O, 
+6 O, , , , , , 
+7  , , , , , , 
+move #24
+942151 nodes searched with max depth 11
+turn took 1 seconds
+action: 52W
+player one evaluation: 5.25391
+player two evaluation: 2
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , ,X, , , 
+3  , ,O,X,O,X, 
+4  ,X, , ,O, ,X
+5 X,O, , , ,O, 
+6 O, , , , , , 
+7  , , , , , , 
+move #25
+1036724 nodes searched with max depth 11
+turn took 1 seconds
+action: 34N
+player one evaluation: 3.02539
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , ,X, , 
+3  , ,O,X,O,X, 
+4  ,X, , ,O, ,X
+5 X,O, , , ,O, 
+6 O, , , , , , 
+7  , , , , , , 
+move #26
+1002377 nodes searched with max depth 10
+turn took 1.021 seconds
+action: 42E
+player one evaluation: 1.25977
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , ,X, , 
+3  , , ,X,O,X, 
+4  ,X,O, ,O, ,X
+5 X,O, , , ,O, 
+6 O, , , , , , 
+7  , , , , , , 
+move #27
+1051655 nodes searched with max depth 11
+turn took 1 seconds
+action: 33S
+player one evaluation: 3.48828
+player two evaluation: 0
+
+draw!
+============================================================
+current score : 2-1-0
+============================================================
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , , ,O
+5 O, , , , , ,X
+6 X, , , , , ,O
+7 O, , , , , , 
+player one evaluation: 0
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , ,O, 
+5 O, , , , , ,X
+6 X, , , , , ,O
+7 O, , , , , , 
+move #1
+946139 nodes searched with max depth 13
+turn took 1 seconds
+action: 74W
+player one evaluation: 1.1875
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , ,O,X
+5 O, , , , , , 
+6 X, , , , , ,O
+7 O, , , , , , 
+move #2
+1250492 nodes searched with max depth 11
+turn took 1 seconds
+action: 75N
+player one evaluation: 0.1875
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3  ,O, , , , ,X
+4 X, , , , ,O,X
+5 O, , , , , , 
+6 X, , , , , ,O
+7 O, , , , , , 
+move #3
+983934 nodes searched with max depth 12
+turn took 1 seconds
+action: 13E
+player one evaluation: 1.1875
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3  ,O, , , , ,X
+4  ,X, , , ,O,X
+5 O, , , , , , 
+6 X, , , , , ,O
+7 O, , , , , , 
+move #4
+1170954 nodes searched with max depth 11
+turn took 1 seconds
+action: 14E
+player one evaluation: 0
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3  ,O, , , , ,X
+4  ,X, , , ,O,X
+5  ,O, , , , , 
+6 X, , , , , ,O
+7 O, , , , , , 
+move #5
+875506 nodes searched with max depth 11
+turn took 1 seconds
+action: 15E
+player one evaluation: 1.29883
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2  , , , , , ,O
+3 X,O, , , , ,X
+4  ,X, , , ,O,X
+5  ,O, , , , , 
+6 X, , , , , ,O
+7 O, , , , , , 
+move #6
+1226951 nodes searched with max depth 11
+turn took 1 seconds
+action: 12S
+player one evaluation: 0.298828
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2  , , , , , ,O
+3 X,O, , , , ,X
+4  ,X, , , ,O,X
+5  , ,O, , , , 
+6 X, , , , , ,O
+7 O, , , , , , 
+move #7
+923362 nodes searched with max depth 11
+turn took 1 seconds
+action: 25E
+player one evaluation: 1.39258
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2  , , , , , ,O
+3  ,O, , , , ,X
+4 X,X, , , ,O,X
+5  , ,O, , , , 
+6 X, , , , , ,O
+7 O, , , , , , 
+move #8
+1257862 nodes searched with max depth 11
+turn took 1 seconds
+action: 13S
+player one evaluation: 1.39258
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2  , , , , , ,O
+3  ,O, , , , ,X
+4 X,X,O, , ,O,X
+5  , , , , , , 
+6 X, , , , , ,O
+7 O, , , , , , 
+move #9
+818047 nodes searched with max depth 11
+turn took 0.655 seconds
+action: 35N
+player one evaluation: 2.59766
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , ,X, 
+2  , , , , , ,O
+3  ,O, , , , ,X
+4 X,X,O, , ,O,X
+5  , , , , , , 
+6 X, , , , , ,O
+7 O, , , , , , 
+move #10
+102226 nodes searched with max depth 10
+turn took 0.446 seconds
+action: 71W
+player one evaluation: 2.59766
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , ,X, 
+2  , , , , , ,O
+3  ,O, , , , ,X
+4 X,X,O, , ,O,X
+5  , , , , , , 
+6 X, , , , ,O, 
+7 O, , , , , , 
+move #11
+28 nodes searched with max depth 2
+turn took 0.51 seconds
+action: 76W
+player one evaluation: 4.29688
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , ,X,O
+3  ,O, , , , ,X
+4 X,X,O, , ,O,X
+5  , , , , , , 
+6 X, , , , ,O, 
+7 O, , , , , , 
+move #12
+132773 nodes searched with max depth 8
+turn took 0.13 seconds
+action: 61S
+player one evaluation: 2.48438
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , ,X,O
+3  , ,O, , , ,X
+4 X,X,O, , ,O,X
+5  , , , , , , 
+6 X, , , , ,O, 
+7 O, , , , , , 
+move #13
+17 nodes searched with max depth 2
+turn took 0 seconds
+action: 23E
+player one evaluation: 3.73438
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , , ,O
+3  , ,O, , ,X,X
+4 X,X,O, , ,O,X
+5  , , , , , , 
+6 X, , , , ,O, 
+7 O, , , , , , 
+move #14
+15130 nodes searched with max depth 6
+turn took 0.012 seconds
+action: 62S
+player one evaluation: 2.54688
+player two evaluation: -3
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , , ,O
+3  , ,O, , ,X,X
+4 X,X,O, ,O, ,X
+5  , , , , , , 
+6 X, , , , ,O, 
+7 O, , , , , , 
+move #15
+16 nodes searched with max depth 2
+turn took 0 seconds
+action: 64W
+player one evaluation: 3.79688
+player two evaluation: -3
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , , ,O
+3  , ,O, , ,X,X
+4 X,X,O, ,O, ,X
+5 X, , , , , , 
+6  , , , , ,O, 
+7 O, , , , , , 
+move #16
+2040 nodes searched with max depth 4
+turn took 0.004 seconds
+action: 16N
+player one evaluation: 1.79688
+player two evaluation: -5
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , , ,O
+3  , ,O, , ,X,X
+4 X,X, ,O,O, ,X
+5 X, , , , , , 
+6  , , , , ,O, 
+7 O, , , , , , 
+move #17
+33 nodes searched with max depth 2
+turn took 0 seconds
+action: 34E
+player one evaluation: 3.03125
+player two evaluation: -4
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , , ,O
+3  , ,O, , ,X,X
+4 X,X, ,O,O, ,X
+5  ,X, , , , , 
+6  , , , , ,O, 
+7 O, , , , , , 
+move #18
+138 nodes searched with max depth 2
+turn took 0.004 seconds
+action: 15E
+player one evaluation: 1.73242
+player two evaluation: -4
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , , ,O
+3  , ,O, , ,X,X
+4 X,X, ,O, , ,X
+5  ,X, , ,O, , 
+6  , , , , ,O, 
+7 O, , , , , , 
+move #19
+12 nodes searched with max depth 1
+turn took 0 seconds
+action: 54S
+player one evaluation: 5.49805
+player two evaluation: 0
+
+player 1 wins!
+============================================================
+current score : 3-1-0
+============================================================
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , , ,O
+5 O, , , , , ,X
+6 X, , , , , ,O
+7 O, , , , , , 
+player one evaluation: 0
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , ,O, 
+5 O, , , , , ,X
+6 X, , , , , ,O
+7 O, , , , , , 
+move #1
+877190 nodes searched with max depth 13
+turn took 1 seconds
+action: 74W
+player one evaluation: 1.1875
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , ,O,X
+5 O, , , , , , 
+6 X, , , , , ,O
+7 O, , , , , , 
+move #2
+1353677 nodes searched with max depth 10
+turn took 1 seconds
+action: 75N
+player one evaluation: 0.1875
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3  ,O, , , , ,X
+4 X, , , , ,O,X
+5 O, , , , , , 
+6 X, , , , , ,O
+7 O, , , , , , 
+move #3
+861921 nodes searched with max depth 13
+turn took 1 seconds
+action: 13E
+player one evaluation: 1.1875
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3  ,O, , , , ,X
+4  ,X, , , ,O,X
+5 O, , , , , , 
+6 X, , , , , ,O
+7 O, , , , , , 
+move #4
+1283679 nodes searched with max depth 11
+turn took 1 seconds
+action: 14E
+player one evaluation: 0
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3  ,O, , , , ,X
+4  ,X, , , ,O,X
+5  ,O, , , , , 
+6 X, , , , , ,O
+7 O, , , , , , 
+move #5
+901526 nodes searched with max depth 12
+turn took 1 seconds
+action: 15E
+player one evaluation: 1.29883
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2  , , , , , ,O
+3 X,O, , , , ,X
+4  ,X, , , ,O,X
+5  ,O, , , , , 
+6 X, , , , , ,O
+7 O, , , , , , 
+move #6
+1211795 nodes searched with max depth 11
+turn took 1 seconds
+action: 12S
+player one evaluation: 0.298828
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2  , , , , , ,O
+3 X,O, , , , ,X
+4  ,X, , , ,O,X
+5  ,O, , , , ,O
+6 X, , , , , , 
+7 O, , , , , , 
+move #7
+823896 nodes searched with max depth 11
+turn took 1 seconds
+action: 76N
+player one evaluation: 1.29883
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , ,X, 
+2  , , , , , ,O
+3 X,O, , , , ,X
+4  ,X, , , ,O,X
+5  ,O, , , , ,O
+6 X, , , , , , 
+7 O, , , , , , 
+move #8
+1327099 nodes searched with max depth 11
+turn took 1 seconds
+action: 71W
+player one evaluation: 1.29883
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , ,X, 
+2  , , , , ,O, 
+3 X,O, , , , ,X
+4  ,X, , , ,O,X
+5  ,O, , , , ,O
+6 X, , , , , , 
+7 O, , , , , , 
+move #9
+958560 nodes searched with max depth 10
+turn took 1 seconds
+action: 72W
+player one evaluation: 2.8125
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , ,X, 
+2  , , , , ,O, 
+3 X,O, , , ,X, 
+4  ,X, , , ,O,X
+5  ,O, , , , ,O
+6 X, , , , , , 
+7 O, , , , , , 
+move #10
+1289237 nodes searched with max depth 10
+turn took 1 seconds
+action: 73W
+player one evaluation: 1.8125
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , ,X, 
+2  , , , , ,O, 
+3 X,O, , , ,X, 
+4  ,X, , , ,O,X
+5  ,O, , , ,O, 
+6 X, , , , , , 
+7 O, , , , , , 
+move #11
+896359 nodes searched with max depth 10
+turn took 1 seconds
+action: 75W
+player one evaluation: 2.90625
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , ,X, 
+2  , , , , ,O, 
+3 X,O, , , ,X, 
+4  ,X, , , ,O,X
+5 X,O, , , ,O, 
+6  , , , , , , 
+7 O, , , , , , 
+move #12
+1180526 nodes searched with max depth 10
+turn took 1 seconds
+action: 16N
+player one evaluation: 1.90625
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , , ,X, 
+2  , , , , ,O, 
+3 X,O, , , ,X, 
+4  ,X, , , ,O,X
+5 X,O, , ,O, , 
+6  , , , , , , 
+7 O, , , , , , 
+move #13
+910490 nodes searched with max depth 9
+turn took 1 seconds
+action: 65W
+player one evaluation: 3.125
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , ,X, , 
+2  , , , , ,O, 
+3 X,O, , , ,X, 
+4  ,X, , , ,O,X
+5 X,O, , ,O, , 
+6  , , , , , , 
+7 O, , , , , , 
+move #14
+1273284 nodes searched with max depth 9
+turn took 1 seconds
+action: 61W
+player one evaluation: 3.125
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , ,X, , 
+2  , , , , ,O, 
+3 X,O, , , ,X, 
+4  ,X, , , ,O,X
+5 X,O, , ,O, , 
+6  , , , , , , 
+7  ,O, , , , , 
+move #15
+477703 nodes searched with max depth 9
+turn took 0.404 seconds
+action: 17E
+player one evaluation: 3.125
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , ,X, , 
+2  , , , , ,O, 
+3 X,O, , , , ,X
+4  ,X, , , ,O,X
+5 X,O, , ,O, , 
+6  , , , , , , 
+7  ,O, , , , , 
+move #16
+15801 nodes searched with max depth 8
+turn took 0.161 seconds
+action: 63E
+player one evaluation: 4.125
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , ,X, , 
+2  , , , , ,O, 
+3 X,O, , , , ,X
+4  ,X, , , ,O,X
+5 X, ,O, ,O, , 
+6  , , , , , , 
+7  ,O, , , , , 
+move #17
+23 nodes searched with max depth 2
+turn took 0 seconds
+action: 25E
+player one evaluation: 5.34375
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , ,X, , 
+2  , , , , ,O, 
+3 X,O, , , ,X, 
+4  ,X, , , ,O,X
+5 X, ,O, ,O, , 
+6  , , , , , , 
+7  ,O, , , , , 
+move #18
+18735 nodes searched with max depth 6
+turn took 0.187 seconds
+action: 73W
+player one evaluation: 4.34375
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , ,X, , 
+2  , , , , ,O, 
+3 X,O, , , ,X, 
+4  ,X, , , ,O,X
+5 X, , ,O,O, , 
+6  , , , , , , 
+7  ,O, , , , , 
+move #19
+36 nodes searched with max depth 2
+turn took 0 seconds
+action: 35E
+player one evaluation: 5.57227
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , ,X,O, 
+3 X,O, , , ,X, 
+4  ,X, , , ,O,X
+5 X, , ,O,O, , 
+6  , , , , , , 
+7  ,O, , , , , 
+move #20
+960 nodes searched with max depth 4
+turn took 0.004 seconds
+action: 51S
+player one evaluation: 2.27344
+player two evaluation: -3
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , ,X,O, 
+3 X,O, , , ,X, 
+4  ,X, , , ,O,X
+5 X, , ,O,O, , 
+6  , , , , , , 
+7  , ,O, , , , 
+move #21
+43 nodes searched with max depth 2
+turn took 0 seconds
+action: 27E
+player one evaluation: 2.27344
+player two evaluation: -3
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , ,X,O, 
+3  ,O, , , ,X, 
+4 X,X, , , ,O,X
+5 X, , ,O,O, , 
+6  , , , , , , 
+7  , ,O, , , , 
+move #22
+141 nodes searched with max depth 2
+turn took 0.003 seconds
+action: 13S
+player one evaluation: 1.27344
+player two evaluation: -4
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , ,X,O, 
+3  ,O, , , ,X, 
+4 X,X, , , ,O,X
+5 X, , , ,O, , 
+6  , , ,O, , , 
+7  , ,O, , , , 
+move #23
+9 nodes searched with max depth 1
+turn took 0 seconds
+action: 45S
+player one evaluation: 4.05469
+player two evaluation: 0
+
+player 1 wins!
+============================================================
+current score : 4-1-0
+============================================================
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , , ,O
+5 O, , , , , ,X
+6 X, , , , , ,O
+7 O, , , , , , 
+player one evaluation: 0
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , ,O, 
+5 O, , , , , ,X
+6 X, , , , , ,O
+7 O, , , , , , 
+move #1
+793330 nodes searched with max depth 13
+turn took 1 seconds
+action: 74W
+player one evaluation: 1.1875
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , ,O,X
+5 O, , , , , , 
+6 X, , , , , ,O
+7 O, , , , , , 
+move #2
+1341198 nodes searched with max depth 10
+turn took 1 seconds
+action: 75N
+player one evaluation: 0.1875
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3  ,O, , , , ,X
+4 X, , , , ,O,X
+5 O, , , , , , 
+6 X, , , , , ,O
+7 O, , , , , , 
+move #3
+884143 nodes searched with max depth 13
+turn took 1 seconds
+action: 13E
+player one evaluation: 1.1875
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3  ,O, , , , ,X
+4  ,X, , , ,O,X
+5 O, , , , , , 
+6 X, , , , , ,O
+7 O, , , , , , 
+move #4
+1282379 nodes searched with max depth 11
+turn took 1 seconds
+action: 14E
+player one evaluation: 0
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3  ,O, , , , ,X
+4  ,X, , , ,O,X
+5  ,O, , , , , 
+6 X, , , , , ,O
+7 O, , , , , , 
+move #5
+901953 nodes searched with max depth 12
+turn took 1 seconds
+action: 15E
+player one evaluation: 1.29883
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2  , , , , , ,O
+3 X,O, , , , ,X
+4  ,X, , , ,O,X
+5  ,O, , , , , 
+6 X, , , , , ,O
+7 O, , , , , , 
+move #6
+1185483 nodes searched with max depth 11
+turn took 1 seconds
+action: 12S
+player one evaluation: 0.298828
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2  , , , , , ,O
+3 X,O, , , , ,X
+4  ,X, , , ,O,X
+5  , ,O, , , , 
+6 X, , , , , ,O
+7 O, , , , , , 
+move #7
+808917 nodes searched with max depth 11
+turn took 1 seconds
+action: 25E
+player one evaluation: 1.39258
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2  , , , , , ,O
+3  ,O, , , , ,X
+4 X,X, , , ,O,X
+5  , ,O, , , , 
+6 X, , , , , ,O
+7 O, , , , , , 
+move #8
+1255071 nodes searched with max depth 11
+turn took 1 seconds
+action: 13S
+player one evaluation: 1.39258
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2  , , , , , ,O
+3  ,O, , , , ,X
+4 X,X,O, , ,O,X
+5  , , , , , , 
+6 X, , , , , ,O
+7 O, , , , , , 
+move #9
+19 nodes searched with max depth 2
+turn took 0 seconds
+action: 35N
+player one evaluation: 2.59766
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , ,X, 
+2  , , , , , ,O
+3  ,O, , , , ,X
+4 X,X,O, , ,O,X
+5  , , , , , , 
+6 X, , , , , ,O
+7 O, , , , , , 
+move #10
+147500 nodes searched with max depth 10
+turn took 0.216 seconds
+action: 71W
+player one evaluation: 2.59766
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , ,X, 
+2  , , , , , ,O
+3  ,O, , , , ,X
+4 X,X,O, , ,O,X
+5  , , , , , , 
+6 X, , , , ,O, 
+7 O, , , , , , 
+move #11
+18 nodes searched with max depth 2
+turn took 0 seconds
+action: 76W
+player one evaluation: 4.29688
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , ,X,O
+3  ,O, , , , ,X
+4 X,X,O, , ,O,X
+5  , , , , , , 
+6 X, , , , ,O, 
+7 O, , , , , , 
+move #12
+132773 nodes searched with max depth 8
+turn took 0.222 seconds
+action: 61S
+player one evaluation: 2.48438
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , ,X,O
+3  , ,O, , , ,X
+4 X,X,O, , ,O,X
+5  , , , , , , 
+6 X, , , , ,O, 
+7 O, , , , , , 
+move #13
+17 nodes searched with max depth 2
+turn took 0 seconds
+action: 23E
+player one evaluation: 3.73438
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , , ,O
+3  , ,O, , ,X,X
+4 X,X,O, , ,O,X
+5  , , , , , , 
+6 X, , , , ,O, 
+7 O, , , , , , 
+move #14
+15130 nodes searched with max depth 6
+turn took 0.013 seconds
+action: 62S
+player one evaluation: 2.54688
+player two evaluation: -3
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , , ,O
+3  , ,O, , ,X,X
+4 X,X,O, ,O, ,X
+5  , , , , , , 
+6 X, , , , ,O, 
+7 O, , , , , , 
+move #15
+16 nodes searched with max depth 2
+turn took 0 seconds
+action: 64W
+player one evaluation: 3.79688
+player two evaluation: -3
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , , ,O
+3  , ,O, , ,X,X
+4 X,X,O, ,O, ,X
+5 X, , , , , , 
+6  , , , , ,O, 
+7 O, , , , , , 
+move #16
+2040 nodes searched with max depth 4
+turn took 0.005 seconds
+action: 16N
+player one evaluation: 1.79688
+player two evaluation: -5
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , , ,O
+3  , ,O, , ,X,X
+4 X,X, ,O,O, ,X
+5 X, , , , , , 
+6  , , , , ,O, 
+7 O, , , , , , 
+move #17
+21 nodes searched with max depth 2
+turn took 0 seconds
+action: 34E
+player one evaluation: 3.03125
+player two evaluation: -4
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , , ,O
+3  , ,O, , ,X,X
+4 X,X, ,O,O, ,X
+5  ,X, , , , , 
+6  , , , , ,O, 
+7 O, , , , , , 
+move #18
+138 nodes searched with max depth 2
+turn took 0.004 seconds
+action: 15E
+player one evaluation: 1.73242
+player two evaluation: -4
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , , ,O
+3  , ,O, , ,X,X
+4 X,X, ,O, , ,X
+5  ,X, , ,O, , 
+6  , , , , ,O, 
+7 O, , , , , , 
+move #19
+12 nodes searched with max depth 1
+turn took 0 seconds
+action: 54S
+player one evaluation: 5.49805
+player two evaluation: 0
+
+player 1 wins!
+============================================================
+current score : 5-1-0
+============================================================
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , , ,O
+5 O, , , , , ,X
+6 X, , , , , ,O
+7 O, , , , , , 
+player one evaluation: 0
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , ,O, 
+5 O, , , , , ,X
+6 X, , , , , ,O
+7 O, , , , , , 
+move #1
+808504 nodes searched with max depth 13
+turn took 1 seconds
+action: 74W
+player one evaluation: 1.1875
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , ,O,X
+5 O, , , , , , 
+6 X, , , , , ,O
+7 O, , , , , , 
+move #2
+1310540 nodes searched with max depth 10
+turn took 1 seconds
+action: 75N
+player one evaluation: 0.1875
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , ,O,X
+5 O, , , , , , 
+6 X, , , , ,O, 
+7 O, , , , , , 
+move #3
+819327 nodes searched with max depth 12
+turn took 1 seconds
+action: 76W
+player one evaluation: 1
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2  ,X, , , , ,O
+3 O, , , , , ,X
+4 X, , , , ,O,X
+5 O, , , , , , 
+6 X, , , , ,O, 
+7 O, , , , , , 
+move #4
+1342534 nodes searched with max depth 11
+turn took 1 seconds
+action: 12E
+player one evaluation: 0.1875
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2  ,X, , , , ,O
+3  ,O, , , , ,X
+4 X, , , , ,O,X
+5 O, , , , , , 
+6 X, , , , ,O, 
+7 O, , , , , , 
+move #5
+854976 nodes searched with max depth 12
+turn took 1 seconds
+action: 13E
+player one evaluation: 1.46875
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2  ,X, , , , ,O
+3 X,O, , , , ,X
+4  , , , , ,O,X
+5 O, , , , , , 
+6 X, , , , ,O, 
+7 O, , , , , , 
+move #6
+1241499 nodes searched with max depth 10
+turn took 1 seconds
+action: 14N
+player one evaluation: 0.46875
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2  ,X, , , , ,O
+3 X,O, , , , ,X
+4  , , , , ,O,X
+5 O, , , , ,O, 
+6 X, , , , , , 
+7 O, , , , , , 
+move #7
+1031833 nodes searched with max depth 10
+turn took 1 seconds
+action: 66N
+player one evaluation: 1.67383
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , ,X, 
+2  ,X, , , , ,O
+3 X,O, , , , ,X
+4  , , , , ,O,X
+5 O, , , , ,O, 
+6 X, , , , , , 
+7 O, , , , , , 
+move #8
+1366506 nodes searched with max depth 10
+turn took 1 seconds
+action: 71W
+player one evaluation: 1.67383
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , ,X, 
+2  ,X, , , ,O, 
+3 X,O, , , , ,X
+4  , , , , ,O,X
+5 O, , , , ,O, 
+6 X, , , , , , 
+7 O, , , , , , 
+move #9
+976684 nodes searched with max depth 10
+turn took 1 seconds
+action: 72W
+player one evaluation: 3.1875
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , ,X, 
+2  ,X, , , ,O, 
+3 X,O, , , ,X, 
+4  , , , , ,O,X
+5 O, , , , ,O, 
+6 X, , , , , , 
+7 O, , , , , , 
+move #10
+1314045 nodes searched with max depth 10
+turn took 1 seconds
+action: 73W
+player one evaluation: 2.1875
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , ,X, 
+2  ,X, , , ,O, 
+3 X,O, , , ,X, 
+4  , , , , ,O,X
+5 O, , , ,O, , 
+6 X, , , , , , 
+7 O, , , , , , 
+move #11
+958497 nodes searched with max depth 9
+turn took 1 seconds
+action: 65W
+player one evaluation: 3.4375
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , ,X, , 
+2  ,X, , , ,O, 
+3 X,O, , , ,X, 
+4  , , , , ,O,X
+5 O, , , ,O, , 
+6 X, , , , , , 
+7 O, , , , , , 
+move #12
+1214842 nodes searched with max depth 9
+turn took 1 seconds
+action: 61W
+player one evaluation: 3.4375
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , ,X, , 
+2  ,X, , ,O, , 
+3 X,O, , , ,X, 
+4  , , , , ,O,X
+5 O, , , ,O, , 
+6 X, , , , , , 
+7 O, , , , , , 
+move #13
+1000115 nodes searched with max depth 10
+turn took 1 seconds
+action: 62W
+player one evaluation: 3.67188
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , ,X, , 
+2  ,X, , ,O, , 
+3 X,O, , ,X, , 
+4  , , , , ,O,X
+5 O, , , ,O, , 
+6 X, , , , , , 
+7 O, , , , , , 
+move #14
+1279441 nodes searched with max depth 9
+turn took 1 seconds
+action: 63W
+player one evaluation: 3.67188
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , , ,X, , 
+2  ,X, , ,O, , 
+3 X,O, , ,X, , 
+4  , , , , ,O,X
+5  ,O, , ,O, , 
+6 X, , , , , , 
+7 O, , , , , , 
+move #15
+985087 nodes searched with max depth 9
+turn took 1 seconds
+action: 15E
+player one evaluation: 4.72852
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , ,X, , , 
+2  ,X, , ,O, , 
+3 X,O, , ,X, , 
+4  , , , , ,O,X
+5  ,O, , ,O, , 
+6 X, , , , , , 
+7 O, , , , , , 
+move #16
+1267031 nodes searched with max depth 9
+turn took 1 seconds
+action: 51W
+player one evaluation: 4.72852
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , ,X, , , 
+2  ,X, , ,O, , 
+3 X,O, , ,X, , 
+4  , , , , ,O,X
+5  , , , ,O, , 
+6 X,O, , , , , 
+7 O, , , , , , 
+move #17
+853332 nodes searched with max depth 9
+turn took 0.738 seconds
+action: 25S
+player one evaluation: 5.5
+player two evaluation: 1
+
+  1 2 3 4 5 6 7
+1  , ,X, , , , 
+2  ,X, , ,O, , 
+3 X,O, , ,X, , 
+4  , , , , ,O,X
+5  , , , ,O, , 
+6 X,O, , , , , 
+7 O, , , , , , 
+move #18
+29 nodes searched with max depth 2
+turn took 0.176 seconds
+action: 41W
+player one evaluation: 3.5
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , ,X, , , , 
+2  ,X, , ,O, , 
+3 X,O, , ,X, , 
+4  , , , , ,O,X
+5  , , , ,O, , 
+6 X,O, , , , , 
+7  ,O, , , , , 
+move #19
+54 nodes searched with max depth 2
+turn took 0 seconds
+action: 17E
+player one evaluation: 3.5
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , ,X, , , , 
+2  ,X, , ,O, , 
+3 X,O, , ,X, , 
+4  , , , , ,O,X
+5 X, , , ,O, , 
+6  ,O, , , , , 
+7  ,O, , , , , 
+move #20
+30538 nodes searched with max depth 6
+turn took 0.027 seconds
+action: 16N
+player one evaluation: 3.5
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , ,X, , , , 
+2  ,X, , ,O, , 
+3 X,O, , ,X, , 
+4  , , , ,O, ,X
+5 X, , , ,O, , 
+6  ,O, , , , , 
+7  ,O, , , , , 
+move #21
+38 nodes searched with max depth 2
+turn took 0 seconds
+action: 64W
+player one evaluation: 4.71875
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , ,X, , , , 
+2  ,X, , ,O, , 
+3 X,O, , ,X, , 
+4 X, , , ,O, ,X
+5  , , , ,O, , 
+6  ,O, , , , , 
+7  ,O, , , , , 
+move #22
+4329 nodes searched with max depth 4
+turn took 0.005 seconds
+action: 15N
+player one evaluation: 3.71875
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , ,X, , , , 
+2  ,X, , ,O, , 
+3 X,O, , ,X, , 
+4 X, , , ,O, ,X
+5  , , , ,O, , 
+6  , ,O, , , , 
+7  ,O, , , , , 
+move #23
+48 nodes searched with max depth 2
+turn took 0 seconds
+action: 26E
+player one evaluation: 3.94727
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , ,X, , , , 
+2  ,X, , ,O, , 
+3 X,O, , , ,X, 
+4 X, , , ,O, ,X
+5  , , , ,O, , 
+6  , ,O, , , , 
+7  ,O, , , , , 
+move #24
+259 nodes searched with max depth 2
+turn took 0.004 seconds
+action: 53E
+player one evaluation: 3.94727
+player two evaluation: -3
+
+  1 2 3 4 5 6 7
+1  , ,X, , , , 
+2  ,X, , ,O, , 
+3 X,O, , , ,X, 
+4 X, , , ,O, ,X
+5  , , ,O, , , 
+6  , ,O, , , , 
+7  ,O, , , , , 
+move #25
+19 nodes searched with max depth 1
+turn took 0 seconds
+action: 55W
+player one evaluation: 8.17578
+player two evaluation: 1
+
+player 1 wins!
+============================================================
+current score : 6-1-0
+============================================================
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , , ,O
+5 O, , , , , ,X
+6 X, , , , , ,O
+7 O, , , , , , 
+player one evaluation: 0
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , ,O, 
+5 O, , , , , ,X
+6 X, , , , , ,O
+7 O, , , , , , 
+move #1
+622922 nodes searched with max depth 13
+turn took 1 seconds
+action: 74W
+player one evaluation: 1.1875
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , ,O,X
+5 O, , , , , , 
+6 X, , , , , ,O
+7 O, , , , , , 
+move #2
+1397320 nodes searched with max depth 10
+turn took 1 seconds
+action: 75N
+player one evaluation: 0.1875
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , ,O,X
+5  ,O, , , , , 
+6 X, , , , , ,O
+7 O, , , , , , 
+move #3
+885003 nodes searched with max depth 13
+turn took 1 seconds
+action: 15E
+player one evaluation: 1.1875
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , ,O,X
+5 X,O, , , , , 
+6  , , , , , ,O
+7 O, , , , , , 
+move #4
+1416933 nodes searched with max depth 11
+turn took 1 seconds
+action: 16N
+player one evaluation: 0.1875
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X,O, , , ,O,X
+5 X, , , , , , 
+6  , , , , , ,O
+7 O, , , , , , 
+move #5
+967277 nodes searched with max depth 11
+turn took 1 seconds
+action: 25N
+player one evaluation: 1.375
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2  ,X, , , , ,O
+3 O, , , , , ,X
+4 X,O, , , ,O,X
+5 X, , , , , , 
+6  , , , , , ,O
+7 O, , , , , , 
+move #6
+1248772 nodes searched with max depth 11
+turn took 1 seconds
+action: 12E
+player one evaluation: 0.5625
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2  ,X, , , , ,O
+3  ,O, , , , ,X
+4 X,O, , , ,O,X
+5 X, , , , , , 
+6  , , , , , ,O
+7 O, , , , , , 
+move #7
+945385 nodes searched with max depth 11
+turn took 1 seconds
+action: 13E
+player one evaluation: 1.87891
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3  ,O, , , , ,X
+4 X,O, , , ,O,X
+5 X, , , , , , 
+6  , , , , , ,O
+7 O, , , , , , 
+move #8
+1342582 nodes searched with max depth 11
+turn took 1 seconds
+action: 22W
+player one evaluation: 2.69141
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3  ,O, , , , ,X
+4 X,O, , , ,O,X
+5 X, , , , , , 
+6  , , , , ,O, 
+7 O, , , , , , 
+move #9
+707801 nodes searched with max depth 11
+turn took 0.599 seconds
+action: 76W
+player one evaluation: 4.23438
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2  , , , , , ,O
+3 X,O, , , , ,X
+4 X,O, , , ,O,X
+5 X, , , , , , 
+6  , , , , ,O, 
+7 O, , , , , , 
+move #10
+744435 nodes searched with max depth 10
+turn took 0.651 seconds
+action: 12S
+player one evaluation: 2.23438
+player two evaluation: -3
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2  , , , , , ,O
+3 X,O, , , , ,X
+4 X, ,O, , ,O,X
+5 X, , , , , , 
+6  , , , , ,O, 
+7 O, , , , , , 
+move #11
+17 nodes searched with max depth 2
+turn took 0 seconds
+action: 24E
+player one evaluation: 3.48438
+player two evaluation: -3
+
+  1 2 3 4 5 6 7
+1  , , , , ,X, 
+2  , , , , , ,O
+3 X,O, , , , ,X
+4 X, ,O, , ,O,X
+5 X, , , , , , 
+6  , , , , ,O, 
+7 O, , , , , , 
+move #12
+82867 nodes searched with max depth 8
+turn took 0.194 seconds
+action: 71W
+player one evaluation: 3.48438
+player two evaluation: -3
+
+  1 2 3 4 5 6 7
+1  , , , , ,X, 
+2  , , , , , ,O
+3 X, ,O, , , ,X
+4 X, ,O, , ,O,X
+5 X, , , , , , 
+6  , , , , ,O, 
+7 O, , , , , , 
+move #13
+20 nodes searched with max depth 2
+turn took 0 seconds
+action: 23E
+player one evaluation: 4.73438
+player two evaluation: -3
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , ,X,O
+3 X, ,O, , , ,X
+4 X, ,O, , ,O,X
+5 X, , , , , , 
+6  , , , , ,O, 
+7 O, , , , , , 
+move #14
+12082 nodes searched with max depth 6
+turn took 0.011 seconds
+action: 61S
+player one evaluation: 2.92188
+player two evaluation: -4
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , ,X,O
+3 X, ,O, , , ,X
+4 X, ,O, ,O, ,X
+5 X, , , , , , 
+6  , , , , ,O, 
+7 O, , , , , , 
+move #15
+18 nodes searched with max depth 2
+turn took 0 seconds
+action: 64W
+player one evaluation: 4.17188
+player two evaluation: -4
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , , ,O
+3 X, ,O, , ,X,X
+4 X, ,O, ,O, ,X
+5 X, , , , , , 
+6  , , , , ,O, 
+7 O, , , , , , 
+move #16
+1970 nodes searched with max depth 4
+turn took 0.005 seconds
+action: 62S
+player one evaluation: 2.98438
+player two evaluation: -5
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , , ,O
+3 X, ,O, , ,X,X
+4 X, , ,O,O, ,X
+5 X, , , , , , 
+6  , , , , ,O, 
+7 O, , , , , , 
+move #17
+22 nodes searched with max depth 2
+turn took 0 seconds
+action: 34E
+player one evaluation: 4.21875
+player two evaluation: -4
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , , ,O
+3 X, ,O, , , ,X
+4 X, , ,O,O,X,X
+5 X, , , , , , 
+6  , , , , ,O, 
+7 O, , , , , , 
+move #18
+127 nodes searched with max depth 2
+turn took 0.004 seconds
+action: 63S
+player one evaluation: 4.03125
+player two evaluation: -4
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , , ,O
+3 X, ,O, , , ,X
+4 X, , ,O, ,X,X
+5 X, , , ,O, , 
+6  , , , , ,O, 
+7 O, , , , , , 
+move #19
+11 nodes searched with max depth 1
+turn took 0 seconds
+action: 54S
+player one evaluation: 7.79688
+player two evaluation: 0
+
+player 1 wins!
+============================================================
+current score : 7-1-0
+============================================================
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , , ,O
+5 O, , , , , ,X
+6 X, , , , , ,O
+7 O, , , , , , 
+player one evaluation: 0
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , , ,O
+5 O, , , , , ,X
+6 X, , , , ,O, 
+7 O, , , , , , 
+move #1
+891691 nodes searched with max depth 11
+turn took 1 seconds
+action: 76W
+player one evaluation: 0.8125
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , , ,O
+5 O, , , , ,X, 
+6 X, , , , ,O, 
+7 O, , , , , , 
+move #2
+1404597 nodes searched with max depth 11
+turn took 1 seconds
+action: 75W
+player one evaluation: -0.1875
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , ,O, 
+5 O, , , , ,X, 
+6 X, , , , ,O, 
+7 O, , , , , , 
+move #3
+929195 nodes searched with max depth 12
+turn took 1 seconds
+action: 74W
+player one evaluation: 1
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2  ,X, , , , ,O
+3 O, , , , , ,X
+4 X, , , , ,O, 
+5 O, , , , ,X, 
+6 X, , , , ,O, 
+7 O, , , , , , 
+move #4
+1444988 nodes searched with max depth 10
+turn took 1 seconds
+action: 12E
+player one evaluation: 0.1875
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2  ,X, , , , ,O
+3  ,O, , , , ,X
+4 X, , , , ,O, 
+5 O, , , , ,X, 
+6 X, , , , ,O, 
+7 O, , , , , , 
+move #5
+924589 nodes searched with max depth 11
+turn took 1 seconds
+action: 13E
+player one evaluation: 1.46875
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , , , ,X, 
+2  ,X, , , , ,O
+3  ,O, , , , ,X
+4 X, , , , ,O, 
+5 O, , , , ,X, 
+6 X, , , , ,O, 
+7 O, , , , , , 
+move #6
+1239290 nodes searched with max depth 10
+turn took 1 seconds
+action: 71W
+player one evaluation: 1.46875
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , , , ,X, 
+2  ,X, , , ,O, 
+3  ,O, , , , ,X
+4 X, , , , ,O, 
+5 O, , , , ,X, 
+6 X, , , , ,O, 
+7 O, , , , , , 
+move #7
+965870 nodes searched with max depth 10
+turn took 1 seconds
+action: 72W
+player one evaluation: 2.95312
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , , , ,X, 
+2  ,X, , , ,O, 
+3 X,O, , , , ,X
+4  , , , , ,O, 
+5 O, , , , ,X, 
+6 X, , , , ,O, 
+7 O, , , , , , 
+move #8
+1369698 nodes searched with max depth 10
+turn took 1 seconds
+action: 14N
+player one evaluation: 1.95312
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , ,X, 
+2  ,X, , , , , 
+3 X,O, , , ,O,X
+4  , , , , ,O, 
+5 O, , , , ,X, 
+6 X, , , , ,O, 
+7 O, , , , , , 
+move #9
+939874 nodes searched with max depth 10
+turn took 1 seconds
+action: 62S
+player one evaluation: 3.1875
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , , ,X, , 
+2  ,X, , , , , 
+3 X,O, , , ,O,X
+4  , , , , ,O, 
+5 O, , , , ,X, 
+6 X, , , , ,O, 
+7 O, , , , , , 
+move #10
+1377401 nodes searched with max depth 10
+turn took 1 seconds
+action: 61W
+player one evaluation: 3.1875
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , , ,X, , 
+2  ,X, , , , , 
+3 X,O, , , ,O,X
+4  , , , ,O, , 
+5 O, , , , ,X, 
+6 X, , , , ,O, 
+7 O, , , , , , 
+move #11
+993291 nodes searched with max depth 10
+turn took 1 seconds
+action: 64W
+player one evaluation: 4.4375
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , ,X, , , 
+2  ,X, , , , , 
+3 X,O, , , ,O,X
+4  , , , ,O, , 
+5 O, , , , ,X, 
+6 X, , , , ,O, 
+7 O, , , , , , 
+move #12
+1300566 nodes searched with max depth 9
+turn took 1 seconds
+action: 51W
+player one evaluation: 4.4375
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , ,X, , , 
+2  ,X, , , , , 
+3 X,O, , , ,O,X
+4  , , , ,O, , 
+5  ,O, , , ,X, 
+6 X, , , , ,O, 
+7 O, , , , , , 
+move #13
+999144 nodes searched with max depth 9
+turn took 1 seconds
+action: 15E
+player one evaluation: 5.5
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , ,X, , , 
+2  ,X, , , , , 
+3 X,O, , , ,O, 
+4  , , , ,O, ,X
+5  ,O, , , ,X, 
+6 X, , , , ,O, 
+7 O, , , , , , 
+move #14
+1220713 nodes searched with max depth 9
+turn took 1 seconds
+action: 73S
+player one evaluation: 4.5
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , ,X, , , 
+2  ,X, , , , , 
+3 X,O, , , ,O, 
+4  , , , ,O, ,X
+5  ,O, , , ,X, 
+6 X, , , ,O, , 
+7 O, , , , , , 
+move #15
+1198976 nodes searched with max depth 8
+turn took 1 seconds
+action: 66W
+player one evaluation: 4.72852
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , ,X, , , 
+2  ,X, , , , , 
+3 X,O, , , ,O, 
+4  , , , ,O, ,X
+5  ,O, , ,X, , 
+6 X, , , ,O, , 
+7 O, , , , , , 
+move #16
+1193364 nodes searched with max depth 9
+turn took 1 seconds
+action: 65W
+player one evaluation: 4.72852
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , ,X, , , 
+2  ,X, , , , , 
+3 X,O, , , ,O, 
+4  , , , ,O, ,X
+5  , ,O, ,X, , 
+6 X, , , ,O, , 
+7 O, , , , , , 
+move #17
+1044779 nodes searched with max depth 9
+turn took 1 seconds
+action: 25E
+player one evaluation: 5.94727
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , ,X, , , 
+2  ,X, , , , , 
+3 X,O, , , ,O, 
+4  , , , ,O, ,X
+5  , ,O,X, , , 
+6 X, , , ,O, , 
+7 O, , , , , , 
+move #18
+1397612 nodes searched with max depth 9
+turn took 1 seconds
+action: 55W
+player one evaluation: 5.75977
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , ,X, , , 
+2  ,X, , , , , 
+3 X,O, , , ,O, 
+4  , , , ,O, ,X
+5  , ,O,X,O, , 
+6 X, , , , , , 
+7 O, , , , , , 
+move #19
+537744 nodes searched with max depth 9
+turn took 0.443 seconds
+action: 56N
+player one evaluation: 7.97852
+player two evaluation: 1
+
+  1 2 3 4 5 6 7
+1  , ,X, , , , 
+2  ,X, , , , , 
+3 X,O, , , ,O, 
+4  , , , ,O, ,X
+5  , ,O,X,O, , 
+6 X, , , , , , 
+7 O, , , , , , 
+move #20
+636356 nodes searched with max depth 8
+turn took 0.66 seconds
+action: 41W
+player one evaluation: 5.97852
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , ,X, , , , 
+2  ,X, , , , , 
+3 X,O, , ,O, , 
+4  , , , ,O, ,X
+5  , ,O,X,O, , 
+6 X, , , , , , 
+7 O, , , , , , 
+move #21
+17 nodes searched with max depth 2
+turn took 0 seconds
+action: 63W
+player one evaluation: 8.19727
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , ,X, , , , 
+2  ,X, , , , , 
+3 X,O, , ,O, , 
+4  , , ,X,O, ,X
+5  , ,O, ,O, , 
+6 X, , , , , , 
+7 O, , , , , , 
+move #22
+48830 nodes searched with max depth 6
+turn took 0.277 seconds
+action: 45N
+player one evaluation: 8.00977
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , ,X, , , , 
+2  ,X, , , , , 
+3 X,O, , ,O, , 
+4  , , ,X,O, ,X
+5  , , ,O,O, , 
+6 X, , , , , , 
+7 O, , , , , , 
+move #23
+16 nodes searched with max depth 2
+turn took 0 seconds
+action: 35E
+player one evaluation: 10.2383
+player two evaluation: 2
+
+  1 2 3 4 5 6 7
+1  , ,X, , , , 
+2  ,X, , , , , 
+3 X,O, , ,O, , 
+4  , , ,X,O, ,X
+5 X, , ,O,O, , 
+6  , , , , , , 
+7 O, , , , , , 
+move #24
+2868 nodes searched with max depth 4
+turn took 0.006 seconds
+action: 16N
+player one evaluation: 10.2383
+player two evaluation: 2
+
+  1 2 3 4 5 6 7
+1  , ,X, , , , 
+2  ,X, , , , , 
+3 X,O, , ,O, , 
+4  , , ,X,O, ,X
+5 X, , , ,O, , 
+6  , , ,O, , , 
+7 O, , , , , , 
+move #25
+21 nodes searched with max depth 2
+turn took 0 seconds
+action: 45S
+player one evaluation: 8.01953
+player two evaluation: 1
+
+  1 2 3 4 5 6 7
+1  , ,X, , , , 
+2  ,X, , , , , 
+3 X,O, , ,O, , 
+4 X, , ,X,O, ,X
+5  , , , ,O, , 
+6  , , ,O, , , 
+7 O, , , , , , 
+move #26
+124 nodes searched with max depth 2
+turn took 0.004 seconds
+action: 15N
+player one evaluation: 7.01953
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , ,X, , , , 
+2  ,X, , , , , 
+3 X,O, , ,O, , 
+4 X, , ,X,O, ,X
+5  , , , ,O, , 
+6  , , , ,O, , 
+7 O, , , , , , 
+move #27
+6 nodes searched with max depth 1
+turn took 0 seconds
+action: 46E
+player one evaluation: 8.79102
+player two evaluation: 2
+
+player 1 wins!
+============================================================
+current score : 8-1-0
+============================================================
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , , ,O
+5 O, , , , , ,X
+6 X, , , , , ,O
+7 O, , , , , , 
+player one evaluation: 0
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , ,O, 
+5 O, , , , , ,X
+6 X, , , , , ,O
+7 O, , , , , , 
+move #1
+868282 nodes searched with max depth 12
+turn took 1 seconds
+action: 74W
+player one evaluation: 1.1875
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , ,O,X
+5 O, , , , , , 
+6 X, , , , , ,O
+7 O, , , , , , 
+move #2
+1396096 nodes searched with max depth 10
+turn took 1 seconds
+action: 75N
+player one evaluation: 0.1875
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , ,O,X
+5  ,O, , , , , 
+6 X, , , , , ,O
+7 O, , , , , , 
+move #3
+817786 nodes searched with max depth 13
+turn took 1 seconds
+action: 15E
+player one evaluation: 1.1875
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , ,O,X
+5 X,O, , , , , 
+6  , , , , , ,O
+7 O, , , , , , 
+move #4
+1402117 nodes searched with max depth 11
+turn took 1 seconds
+action: 16N
+player one evaluation: 0.1875
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3  ,O, , , , ,X
+4 X, , , , ,O,X
+5 X,O, , , , , 
+6  , , , , , ,O
+7 O, , , , , , 
+move #5
+896053 nodes searched with max depth 12
+turn took 1 seconds
+action: 13E
+player one evaluation: 1.48633
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3  ,O, , , ,X, 
+4 X, , , , ,O,X
+5 X,O, , , , , 
+6  , , , , , ,O
+7 O, , , , , , 
+move #6
+1234332 nodes searched with max depth 11
+turn took 1 seconds
+action: 73W
+player one evaluation: 0.486328
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , ,O, 
+3  ,O, , , ,X, 
+4 X, , , , ,O,X
+5 X,O, , , , , 
+6  , , , , , ,O
+7 O, , , , , , 
+move #7
+1158840 nodes searched with max depth 10
+turn took 1 seconds
+action: 72W
+player one evaluation: 2
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , ,O, 
+3  ,O, , , ,X, 
+4  ,X, , , ,O,X
+5 X,O, , , , , 
+6  , , , , , ,O
+7 O, , , , , , 
+move #8
+1206855 nodes searched with max depth 11
+turn took 1 seconds
+action: 14E
+player one evaluation: 0.8125
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , ,O, 
+3  ,O, , , ,X, 
+4  ,X, , , ,O,X
+5 X,O, , , , , 
+6 O, , , , , ,O
+7  , , , , , , 
+move #9
+880152 nodes searched with max depth 10
+turn took 1 seconds
+action: 17N
+player one evaluation: 1.8125
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , ,O, 
+3  ,O, , , ,X,X
+4  ,X, , , ,O, 
+5 X,O, , , , , 
+6 O, , , , , ,O
+7  , , , , , , 
+move #10
+1168735 nodes searched with max depth 10
+turn took 1 seconds
+action: 74N
+player one evaluation: 1.8125
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , ,O, 
+3  , ,O, , ,X,X
+4  ,X, , , ,O, 
+5 X,O, , , , , 
+6 O, , , , , ,O
+7  , , , , , , 
+move #11
+969303 nodes searched with max depth 10
+turn took 1 seconds
+action: 23E
+player one evaluation: 3.0625
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2 X, , , , ,O,X
+3  , ,O, , ,X,X
+4  ,X, , , ,O, 
+5 X,O, , , , , 
+6 O, , , , , ,O
+7  , , , , , , 
+move #12
+1368664 nodes searched with max depth 9
+turn took 1 seconds
+action: 71S
+player one evaluation: 1.0625
+player two evaluation: -3
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2 X, , , , ,O,X
+3  , , , , ,X,X
+4  ,X,O, , ,O, 
+5 X,O, , , , , 
+6 O, , , , , ,O
+7  , , , , , , 
+move #13
+340735 nodes searched with max depth 11
+turn took 0.428 seconds
+action: 33S
+player one evaluation: 3.29688
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , ,O,X
+3 X, , , , ,X,X
+4  ,X,O, , ,O, 
+5 X,O, , , , , 
+6 O, , , , , ,O
+7  , , , , , , 
+move #14
+1095375 nodes searched with max depth 10
+turn took 0.931 seconds
+action: 12S
+player one evaluation: 2.29688
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , ,O,X
+3 X, , , , ,X,X
+4  ,X,O, ,O, , 
+5 X,O, , , , , 
+6 O, , , , , ,O
+7  , , , , , , 
+move #15
+17 nodes searched with max depth 2
+turn took 0 seconds
+action: 64W
+player one evaluation: 3.54688
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , ,O,X
+3 X, , , ,X, ,X
+4  ,X,O, ,O, , 
+5 X,O, , , , , 
+6 O, , , , , ,O
+7  , , , , , , 
+move #16
+18318 nodes searched with max depth 8
+turn took 0.188 seconds
+action: 63W
+player one evaluation: 4.54688
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , ,O,X
+3 X, , , ,X, ,X
+4  ,X,O,O, , , 
+5 X,O, , , , , 
+6 O, , , , , ,O
+7  , , , , , , 
+move #17
+18 nodes searched with max depth 2
+turn took 0 seconds
+action: 54W
+player one evaluation: 5.78125
+player two evaluation: 1
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , ,O,X
+3 X, , ,X, , ,X
+4  ,X,O,O, , , 
+5 X,O, , , , , 
+6 O, , , , , ,O
+7  , , , , , , 
+move #18
+6809 nodes searched with max depth 6
+turn took 0.009 seconds
+action: 53W
+player one evaluation: 5.59375
+player two evaluation: 1
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , ,O,X
+3 X, , ,X, , ,X
+4  ,X, ,O, , , 
+5 X,O,O, , , , 
+6 O, , , , , ,O
+7  , , , , , , 
+move #19
+24 nodes searched with max depth 2
+turn took 0 seconds
+action: 34S
+player one evaluation: 4.35938
+player two evaluation: 0
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , ,O,X
+3 X, ,X, , , ,X
+4  ,X, ,O, , , 
+5 X,O,O, , , , 
+6 O, , , , , ,O
+7  , , , , , , 
+move #20
+1401 nodes searched with max depth 4
+turn took 0.005 seconds
+action: 43W
+player one evaluation: 2.54688
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , ,O,X
+3 X, ,X, , , ,X
+4  ,X, ,O, , , 
+5 X, ,O, , , , 
+6 O,O, , , , ,O
+7  , , , , , , 
+move #21
+37 nodes searched with max depth 2
+turn took 0 seconds
+action: 25S
+player one evaluation: 3.3125
+player two evaluation: -1
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , ,O,X
+3  ,X,X, , , ,X
+4  ,X, ,O, , , 
+5 X, ,O, , , , 
+6 O,O, , , , ,O
+7  , , , , , , 
+move #22
+49 nodes searched with max depth 2
+turn took 0.004 seconds
+action: 13E
+player one evaluation: 0.919922
+player two evaluation: -2
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , , ,O,X
+3  ,X,X, , , ,X
+4  ,X, ,O, , , 
+5 X, ,O, , , , 
+6  ,O, , , , ,O
+7 O, , , , , , 
+move #23
+2 nodes searched with max depth 1
+turn took 0 seconds
+action: 16S
+player one evaluation: 2.91992
+player two evaluation: 0
+
+player 1 wins!
+============================================================
+current score : 9-1-0
+============================================================
