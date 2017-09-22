@@ -3,14 +3,11 @@
 #include <array>
 
 #include "game/game.h"
-#include "game/drawboard.h"
 
 namespace DynamicConnect4 {
 
 using StateType = Game::StateType;
-using ActionType = Game::ActionType;
 using EvalType = Game::EvalType;
-
 
 // A measure of a player's domination of the center of the board.
 // This heuristic awards a score to each piece based on a lookup table,
@@ -24,10 +21,19 @@ public:
     }
 
 private:
-    static const std::array<std::array<EvalType, boardSize>, boardSize> lookupTable;
-
     EvalType eval(int player, const StateType& state) const
     {
+        static const std::array<std::array<EvalType, boardSize>, boardSize>
+            lookupTable{{
+                {0.0000f, 0.0000f, 0.0000f, 0.0000f, 0.0000f, 0.0000f, 0.0000f},
+                {0.0000f, 0.8125f, 1.0000f, 1.1875f, 1.0000f, 0.8125f, 0.0000f},
+                {0.0000f, 1.0000f, 2.0000f, 2.1875f, 2.0000f, 1.0000f, 0.0000f},
+                {0.0000f, 1.1875f, 2.1875f, 2.3750f, 2.1875f, 1.1875f, 0.0000f},
+                {0.0000f, 1.0000f, 2.0000f, 2.1875f, 2.0000f, 1.0000f, 0.0000f},
+                {0.0000f, 0.8125f, 1.0000f, 1.1875f, 1.0000f, 0.8125f, 0.0000f},
+                {0.0000f, 0.0000f, 0.0000f, 0.0000f, 0.0000f, 0.0000f, 0.0000f},
+            }};
+
         EvalType result = 0;
         auto& pieces = player == 1 ? state.whitePieces : state.blackPieces;
         for (const auto& piece : pieces)
@@ -35,17 +41,6 @@ private:
         return result;
     }
 };
-
-const std::array<std::array<EvalType, boardSize>, boardSize>
-    CentralDominanceV1::lookupTable{{
-        {0.0000f, 0.0000f, 0.0000f, 0.0000f, 0.0000f, 0.0000f, 0.0000f},
-        {0.0000f, 0.8125f, 1.0000f, 1.1875f, 1.0000f, 0.8125f, 0.0000f},
-        {0.0000f, 1.0000f, 2.0000f, 2.1875f, 2.0000f, 1.0000f, 0.0000f},
-        {0.0000f, 1.1875f, 2.1875f, 2.3750f, 2.1875f, 1.1875f, 0.0000f},
-        {0.0000f, 1.0000f, 2.0000f, 2.1875f, 2.0000f, 1.0000f, 0.0000f},
-        {0.0000f, 0.8125f, 1.0000f, 1.1875f, 1.0000f, 0.8125f, 0.0000f},
-        {0.0000f, 0.0000f, 0.0000f, 0.0000f, 0.0000f, 0.0000f, 0.0000f},
-    }};
 
 // A measure of a player's domination of the center of the board.
 // This heuristic awards a score to each piece based on a lookup table,
@@ -61,10 +56,19 @@ public:
     }
 
 private:
-    static const std::array<std::array<EvalType, boardSize>, boardSize> lookupTable;
-
     EvalType eval(int player, const StateType& state) const
     {
+        static const std::array<std::array<EvalType, boardSize>, boardSize>
+            lookupTable{{
+                {0.0000f, 0.0000f, 0.0000f, 0.0000f, 0.0000f, 0.0000f, 0.0000f},
+                {0.0000f, 0.8125f, 1.0000f, 1.1875f, 1.0000f, 0.8125f, 0.0000f},
+                {0.0000f, 1.0000f, 2.0000f, 2.1875f, 2.0000f, 1.0000f, 0.0000f},
+                {0.0000f, 1.1875f, 2.1875f, 2.3750f, 2.1875f, 1.1875f, 0.0000f},
+                {0.0000f, 1.0000f, 2.0000f, 2.1875f, 2.0000f, 1.0000f, 0.0000f},
+                {0.0000f, 0.8125f, 1.0000f, 1.1875f, 1.0000f, 0.8125f, 0.0000f},
+                {0.0000f, 0.0000f, 0.0000f, 0.0000f, 0.0000f, 0.0000f, 0.0000f},
+            }};
+
         EvalType result = 0;
         int count = 0;
         auto& pieces = player == 1 ? state.whitePieces : state.blackPieces;
@@ -85,15 +89,4 @@ private:
         return result;
     }
 };
-
-const std::array<std::array<EvalType, boardSize>, boardSize>
-    CentralDominanceV2::lookupTable{{
-        {0.0000f, 0.0000f, 0.0000f, 0.0000f, 0.0000f, 0.0000f, 0.0000f},
-        {0.0000f, 0.8125f, 1.0000f, 1.1875f, 1.0000f, 0.8125f, 0.0000f},
-        {0.0000f, 1.0000f, 2.0000f, 2.1875f, 2.0000f, 1.0000f, 0.0000f},
-        {0.0000f, 1.1875f, 2.1875f, 2.3750f, 2.1875f, 1.1875f, 0.0000f},
-        {0.0000f, 1.0000f, 2.0000f, 2.1875f, 2.0000f, 1.0000f, 0.0000f},
-        {0.0000f, 0.8125f, 1.0000f, 1.1875f, 1.0000f, 0.8125f, 0.0000f},
-        {0.0000f, 0.0000f, 0.0000f, 0.0000f, 0.0000f, 0.0000f, 0.0000f},
-    }};
 }

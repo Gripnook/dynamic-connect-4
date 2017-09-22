@@ -6,7 +6,6 @@
 namespace DynamicConnect4 {
 
 using StateType = Game::StateType;
-using ActionType = Game::ActionType;
 using EvalType = Game::EvalType;
 
 // A measure of how connected the pieces of each player are.
@@ -60,11 +59,11 @@ public:
     }
 
 private:
-    static const EvalType diagonalFactor;
-
     EvalType
         eval(int player, const StateType& state, const Drawboard& board) const
     {
+        static const EvalType diagonalFactor = 1.21875f;
+
         EvalType result = 0;
         // Since the pieces are sorted, we only need to look forward in the row,
         // column, diagonal, and antidiagonal for each piece.
@@ -85,8 +84,6 @@ private:
         return result;
     }
 };
-
-const EvalType ConnectedPiecesV2::diagonalFactor = 1.21875f;
 
 // A measure of how connected the pieces of each player are.
 // This heuristic awards N*(N-1)/2 for each connected set of
