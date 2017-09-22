@@ -4,7 +4,22 @@
 <title>Assignment #1</title>
 <!--  ------------------------------------------------------------ -->
 
+
         <link rel="stylesheet" type="text/css" href="Assignment%20%231_files/style01.css">
+
+<style>
+td {
+    border: 1px solid grey;
+}
+
+th {
+    border: 1px solid grey;
+    background-color: #fbf9e9;
+    font-weight: bold;
+    font-size: 11pt;
+    text-align: center
+}
+</style>
 
 <!--  ------------------------------------------------------------ -->
 </head><body bgcolor="#ffffff"> 
@@ -88,7 +103,7 @@ pieces either horizontally, vertically, or diagonally.
   would be represented as follows:
 </p>
 
-<pre>  1 2 3 4 5 6 7
+<pre>    1 2 3 4 5 6 7
   1  , , , , , ,X
   2 X, , , , , ,O
   3 O, , , , , ,X
@@ -235,12 +250,13 @@ O, , , , , ,
   </li>
 
   <li> Explain the heuristic evaluation function you used and
-    provides a clear rationale for the factors you included.
+    provide a clear rationale for the factors you included.
   </li>
 
-  <li> Discuss the computational trade-offs with respect to the use
-    of a more complex evaluation function and the depth of the game
-    tree that can be evaluated.
+  <li> A more complex evaluation function will increase computation
+    time.  Since each move is time constrained, explain whether this
+    favours the use of simpler evaluation functions so that your agent
+    can evaluate nodes deeper in the game tree.
   </li>
 </ol>
 
@@ -283,7 +299,8 @@ hardcopy of your source code should be included as an appendix.
 
 <p></p><h2> Marking scheme </h2>
 
-<table cellspacing="2" bordercolor="#000000" border="1">
+<!--
+<table border="1" bordercolor="#000000" cellspacing="2">
 <tbody><tr><td valign="middle"> <b><font color="#000080">Component</font></b><font color="#000080"></font></td>
 <td valign="middle"> <b><font color="#000080">Weight</font></b><font color="#000080"></font></td>
 </tr>
@@ -297,6 +314,104 @@ hardcopy of your source code should be included as an appendix.
 <tr><td> Tournament</td><td>3</td></tr>
 <tr><td> <b>Total</b></td><td><b>25</b></td></tr>
 </tbody></table>
+-->
+
+	  <table cellspacing="0" cellpadding="3">
+
+	    <tbody><tr align="left">
+	      <th>Question/Criterion</th><th>Unsatisfactory</th><th>Bare minimum</th><th>Satisfactory</th><th>Above and beyond</th>
+	    </tr>
+
+	    <tr>
+	      <td>1. For each of the configurations given in the assignment 
+specifications, graph the total number of states explored by your 
+program when using depth cutoffs of 3, 4, 5 and 6, both with minimax and
+ alpha-beta. Assume it is white's turn to play.</td>
+	      <td>0: No graph provided</td>
+	      <td>1: Graph shows results for one or two depth cutoffs.</td>
+	      <td>3: Graph shows results for at least three depth cutoffs and 
+is clearly labelled, indicating number of nodes expanded for each 
+cutoff.</td>
+	      <td>5: Graph shows results for all requested depth cutoffs and is
+ clearly labelled, indicating number of nodes expanded for each cutoff. 
+ <strike>The report explains how the values were computed (averaged) from multiple moves.</strike></td>
+	    </tr>
+
+	    <tr>
+	      <td>2. Estimate a formula that relates the depth cutoff to the 
+number of states visited for each of minimax and alpha-beta algorithms.</td>
+	      <td>0: No formula given</td>
+	      <td>1: Report includes formula with minimal explanation and no comparison between minimax and alpha-beta algorithms.</td>
+	      <td>2: Report includes formula and comparison allowing for an 
+obvious appreciation of the performance benefits of alpha-beta pruning.</td>
+	    </tr>
+
+	    <tr>
+	      <td>3. Explain whether the number of states explored depends on 
+the order in which you generate new states during the search. Justify 
+your response using results from your program.</td>
+	      <td>0: No No discussion.</td>
+	      <td>1: Report includes a minimal description of how generating 
+states can affect the number of states explored without graphs or 
+tables.</td>
+	      <td>3: Report includes a meaningful graph comparing two different
+ methods in which new states can be generated, and analyzes their 
+performance.</td>
+	      <td>5: The report additionally describes how, in theory, the 
+states could be ordered to achieve optimal savings from alpha-beta 
+pruning.</td>
+	    </tr>
+
+	    <tr>
+	      <td>4. Explain the heuristic evaluation function you used and provide a clear rationale for the factors you included.</td>
+	      <td>0: No discussion.</td>
+	      <td>1: An explanation of the heuristic evaluation function used without providing a clear rationale.</td>
+	      <td>3: An explanation of the heuristic evaluation function used with a reasonable rationale for the factors included.</td>
+	      <td>5: An explanation of the heuristic evaluation function used 
+with a thorough explanation of how each of the factors were developed.</td>
+	    </tr>
+
+	    <tr>
+	      <td>5. Discuss the computational trade-offs with respect to the 
+use of a more complex evaluation function and the depth of the game tree
+ that can be evaluated.</td>
+	      <td>0: No discussion provided.</td>
+	      <td>1: Trivial explanation provided, for example, noting only 
+that computing the more complex evaluation function (may) decrease the 
+maximum depth of the game tree that can be evaluated within a given time
+ limit.</td>
+	      <td>2: Answer includes explanation of memory/time tradeoffs -- 
+for example, that the deeper search from simpler (but faster) evaluation
+ function requires more memory.</td>
+	      <td>4: Answer includes previous elements and provides test 
+results showing the tree depth and/or number of nodes explored in a 
+given time limit for different choices of evaluation function, as well 
+as an analysis of the improved capability of play resulting from a 
+"shallower" exploration of the game tree but using a more competent 
+heuristic.</td>
+	    </tr>
+
+	    <tr>
+	      <td>6. Code and documentation.</td>
+	      <td>0: Invoking the main program without correct arguments does not provide meaningful feedback.</td>
+	      <td>1: Agent program provides meaningful feedback when invoked.  
+Program is organized, making it easy to find alpha-beta pruning code and
+ heuristic evaluation function.  Comments delineate major blocks of 
+code.</td>
+	      <td>2: In addition to meaningful feedback and well-organized and 
+commented code, the documentation provided allows the assessor to easily
+ launch the game agent from a manually specified board state.</td>
+	    </tr>
+
+	    <tr>
+	      <td>7. Tournament performance.</td>
+	      <td>0: Agent did not compile or run correctly.</td>
+	      <td>1: Agent played the game of Dyanmic Connect-4 correctly, but did not win any games through its choice of heuristics.</td>
+	      <td>2: Top-third of agents in class competition.</td>
+	      <td>3: Top-performing agent in class competition.</td>
+	    </tr>
+
+	  </tbody></table>
 
 <p>
 <img src="Assignment%20%231_files/h_line.gif">
@@ -304,7 +419,7 @@ hardcopy of your source code should be included as an appendix.
 </p><p>
 <i>
 Original specifications by Stéphane Pelletier and Jeremy Cooperstock<br>
-Last updated on 5 September 2017
+Last updated on 19 September 2017
 </i>
 
 </p>
