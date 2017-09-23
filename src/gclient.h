@@ -88,7 +88,10 @@ private:
             // transposition table is only used by other threads.
             std::thread compute{[&]() {
                 action = search.search(
-                    state, heuristic, timeLimitInMs, player == 1 ? true : false);
+                    state,
+                    heuristic,
+                    timeLimitInMs,
+                    player == 1 ? true : false);
             }};
             compute.join();
             send();

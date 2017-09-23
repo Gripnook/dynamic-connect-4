@@ -94,8 +94,9 @@ public:
 
     double getHitRate() const
     {
-        return accesses == 0 ? 0.0 :
-                               static_cast<double>(accesses - misses) / accesses;
+        if (accesses == 0)
+            return 0.0;
+        return static_cast<double>(accesses - misses) / accesses;
     }
 
 private:

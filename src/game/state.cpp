@@ -9,7 +9,8 @@ namespace DynamicConnect4 {
 bool operator==(const State& lhs, const State& rhs)
 {
     return lhs.isPlayerOne == rhs.isPlayerOne &&
-        lhs.whitePieces == rhs.whitePieces && lhs.blackPieces == rhs.blackPieces;
+        lhs.whitePieces == rhs.whitePieces &&
+        lhs.blackPieces == rhs.blackPieces;
 }
 
 bool operator!=(const State& lhs, const State& rhs)

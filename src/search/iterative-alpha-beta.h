@@ -61,7 +61,10 @@ public:
     }
 
     ActionType search(
-        const StateType& state, Heuristic heuristic, int timeLimitInMs, bool isMax)
+        const StateType& state,
+        Heuristic heuristic,
+        int timeLimitInMs,
+        bool isMax)
     {
         count = 1;
         this->heuristic = heuristic;
@@ -94,7 +97,11 @@ public:
             for (const auto& action : actions)
             {
                 auto value = alphaBeta(
-                    game.getResult(state, action), alpha, beta, depth - 1, !isMax);
+                    game.getResult(state, action),
+                    alpha,
+                    beta,
+                    depth - 1,
+                    !isMax);
                 if (value == winIndicator)
                 {
                     // We found our goal, so we can stop searching.
@@ -251,7 +258,8 @@ private:
                 transpositionTable.emplace(
                     state, bestValue, depth, Flag::lowerBound);
             else
-                transpositionTable.emplace(state, bestValue, depth, Flag::exact);
+                transpositionTable.emplace(
+                    state, bestValue, depth, Flag::exact);
         }
 
         return bestValue;

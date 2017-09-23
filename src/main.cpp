@@ -22,7 +22,10 @@ using ActionType = Game::ActionType;
 using EvalType = Game::EvalType;
 
 void playGame(
-    int humanPlayer, int timeLimitInMs, const StateType& initialState, bool debug);
+    int humanPlayer,
+    int timeLimitInMs,
+    const StateType& initialState,
+    bool debug);
 ActionType getPlayerAction(const Game& game, const StateType& state);
 void print(const StateType& state);
 
@@ -68,7 +71,10 @@ int main(int argc, char** argv)
 }
 
 void playGame(
-    int humanPlayer, int timeLimitInMs, const StateType& initialState, bool debug)
+    int humanPlayer,
+    int timeLimitInMs,
+    const StateType& initialState,
+    bool debug)
 {
     Game game;
     IterativeAlphaBeta<Game> playerOneSearch{game, debug};
@@ -158,7 +164,8 @@ void playGame(
             std::cout << "player 1 wins!" << std::endl;
             ++playerOneWins;
         }
-        else if (game.getUtility(state) == std::numeric_limits<EvalType>::lowest())
+        else if (
+            game.getUtility(state) == std::numeric_limits<EvalType>::lowest())
         {
             std::cout << "player 2 wins!" << std::endl;
             ++playerTwoWins;

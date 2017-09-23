@@ -40,8 +40,8 @@ public:
     {
     }
 
-    ActionType
-        search(const StateType& state, Heuristic heuristic, int depth, bool isMax)
+    ActionType search(
+        const StateType& state, Heuristic heuristic, int depth, bool isMax)
     {
         count = 1;
         this->heuristic = heuristic;
