@@ -3,10 +3,11 @@
 #include <list>
 #include <unordered_map>
 #include <utility>
+#include <cstdint>
 
 namespace Search {
 
-enum class Flag
+enum class Flag : int8_t
 {
     exact,
     lowerBound,
