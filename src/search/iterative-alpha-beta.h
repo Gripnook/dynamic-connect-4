@@ -24,8 +24,12 @@ namespace Search {
 //          iterations should they compare equally in this one.
 //      2) The moves at every node of the search tree other than the root are
 //          sorted according to their heuristic values to allow for better move
-//          ordering. The only exception is those nodes whose children are leaf
-//          nodes, for which there is no benefit to doing this.
+//          ordering. The exception is those nodes at a depth d with branching
+//          factor b for which the cost of sorting (c*b*lg(b)) and evaluating
+//          heuristics (h*b) is mathematically higher than the benefit obtained
+//          through ordering (h*b^floor(d/2)). This corresponds to sorting for
+//          nodes of depth at least 4. Note that in this case, the depth is
+//          measured as the distance from the leaves of the search tree.
 //      3) A transposition table is used to keep track of the moves seen so far.
 //
 // Game must define:
@@ -227,7 +231,7 @@ private:
         auto actions = game.getActions(state);
         // Sorting the actions using the heuristic helps us consider
         // the best actions first.
-        if (depth > 1)
+        if (depth >= 4)
             actions = heuristicSort(actions, state, comp);
         for (const auto& action : actions)
         {
