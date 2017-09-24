@@ -3,7 +3,7 @@
 progname=`basename "$0"`
 
 printUsage () {
-    echo "Usage: $progname <server> <port> <gameId> <player>"
+    echo "Usage: $progname <server> <port> <game-id> <1|2>"
 }
 
 if [[ -z "$1" || -z "$2" || -z "$3" || -z "$4" ]]; then
@@ -22,7 +22,7 @@ fi
 
 gameId="$3"
 if [[ "$gameId" =~ .*[[:space:]]+.* ]]; then
-    echo "Error: gameId must not contain whitespace"
+    echo "Error: game-id must not contain whitespace"
     printUsage
     exit 3
 fi
