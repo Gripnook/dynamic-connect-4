@@ -1,0 +1,46 @@
+Sending: round-5.hao.andrei black
+round-5.hao.andrei black
+Response: Trying 132.206.74.217...
+Response: Connected to vivaldi.cim.mcgill.ca.
+Response: Escape character is '^]'.
+Response: round-5.hao.andrei black
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , , ,O
+5 O, , , , , ,X
+6 X, , , , , ,O
+7 O, , , , , , 
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , , ,O
+5 O, , , , , ,X
+6 X, , , , ,O, 
+7 O, , , , , , 
+move #1
+turn took 9.904 seconds
+action: 76W
+position evaluation: 0.8125
+
+Sending: 75W
+75W
+Response: 75W
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , , ,O
+5 O, , , , ,X, 
+6 X, , , , ,O, 
+7 O, , , , , , 
+move #2
+29332203 nodes searched with max depth 15
+turn took 19 seconds
+action: 75W
+position evaluation: -0.1875
+
+Connection closed by foreign host.
+terminate called without an active exception

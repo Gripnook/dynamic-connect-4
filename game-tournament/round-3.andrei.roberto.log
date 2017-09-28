@@ -1,0 +1,303 @@
+Sending: round-3.andrei.roberto white
+round-3.andrei.roberto white
+Response: Trying 132.206.74.217...
+Response: Connected to vivaldi.cim.mcgill.ca.
+Response: Escape character is '^]'.
+Response: round-3.andrei.roberto white
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , , ,O
+5 O, , , , , ,X
+6 X, , , , , ,O
+7 O, , , , , , 
+Sending: 74W
+74W
+Response: 74W
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3 O, , , , , ,X
+4 X, , , , ,O, 
+5 O, , , , , ,X
+6 X, , , , , ,O
+7 O, , , , , , 
+move #1
+26645089 nodes searched with max depth 14
+turn took 19.023 seconds
+action: 74W
+position evaluation: 1.1875
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2  ,X, , , , ,O
+3 O, , , , , ,X
+4 X, , , , ,O, 
+5 O, , , , , ,X
+6 X, , , , , ,O
+7 O, , , , , , 
+move #2
+turn took 3.062 seconds
+action: 12E
+position evaluation: 0.375
+
+Sending: 13E
+13E
+Response: 13E
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2  ,X, , , , ,O
+3  ,O, , , , ,X
+4 X, , , , ,O, 
+5 O, , , , , ,X
+6 X, , , , , ,O
+7 O, , , , , , 
+move #3
+23950875 nodes searched with max depth 14
+turn took 19 seconds
+action: 13E
+position evaluation: 1.375
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3  ,O, , , , ,X
+4 X, , , , ,O, 
+5 O, , , , , ,X
+6 X, , , , , ,O
+7 O, , , , , , 
+move #4
+turn took 4.486 seconds
+action: 22W
+position evaluation: 2.1875
+
+Sending: 23S
+23S
+Response: 23S
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2 X, , , , , ,O
+3  , , , , , ,X
+4 X,O, , , ,O, 
+5 O, , , , , ,X
+6 X, , , , , ,O
+7 O, , , , , , 
+move #5
+27209552 nodes searched with max depth 13
+turn took 19 seconds
+action: 23S
+position evaluation: 3.375
+
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2  , , , , , ,O
+3 X, , , , , ,X
+4 X,O, , , ,O, 
+5 O, , , , , ,X
+6 X, , , , , ,O
+7 O, , , , , , 
+move #6
+turn took 2.505 seconds
+action: 12S
+position evaluation: 2.375
+
+Sending: 64N
+64N
+Response: 64N
+  1 2 3 4 5 6 7
+1  , , , , , ,X
+2  , , , , , ,O
+3 X, , , , ,O,X
+4 X,O, , , , , 
+5 O, , , , , ,X
+6 X, , , , , ,O
+7 O, , , , , , 
+move #7
+8161260 nodes searched with max depth 13
+turn took 4.711 seconds
+action: 64N
+position evaluation: 3.1875
+
+  1 2 3 4 5 6 7
+1  , , , , ,X, 
+2  , , , , , ,O
+3 X, , , , ,O,X
+4 X,O, , , , , 
+5 O, , , , , ,X
+6 X, , , , , ,O
+7 O, , , , , , 
+move #8
+turn took 3.045 seconds
+action: 71W
+position evaluation: 3.1875
+
+Sending: 72W
+72W
+Response: 72W
+  1 2 3 4 5 6 7
+1  , , , , ,X, 
+2  , , , , ,O, 
+3 X, , , , ,O,X
+4 X,O, , , , , 
+5 O, , , , , ,X
+6 X, , , , , ,O
+7 O, , , , , , 
+move #9
+872385 nodes searched with max depth 11
+turn took 1.211 seconds
+action: 72W
+position evaluation: 4.28125
+
+  1 2 3 4 5 6 7
+1  , , , ,X, , 
+2  , , , , ,O, 
+3 X, , , , ,O,X
+4 X,O, , , , , 
+5 O, , , , , ,X
+6 X, , , , , ,O
+7 O, , , , , , 
+move #10
+turn took 4.697 seconds
+action: 61W
+position evaluation: 4.28125
+
+Sending: 15E
+15E
+Response: 15E
+  1 2 3 4 5 6 7
+1  , , , ,X, , 
+2  , , , , ,O, 
+3 X, , , , ,O,X
+4 X,O, , , , , 
+5  ,O, , , , ,X
+6 X, , , , , ,O
+7 O, , , , , , 
+move #11
+309844 nodes searched with max depth 9
+turn took 0.226 seconds
+action: 15E
+position evaluation: 6
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , ,X,O, 
+3 X, , , , ,O,X
+4 X,O, , , , , 
+5  ,O, , , , ,X
+6 X, , , , , ,O
+7 O, , , , , , 
+move #12
+turn took 4.235 seconds
+action: 51S
+position evaluation: 5
+
+Sending: 63W
+63W
+Response: 63W
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , ,X,O, 
+3 X, , , ,O, ,X
+4 X,O, , , , , 
+5  ,O, , , , ,X
+6 X, , , , , ,O
+7 O, , , , , , 
+move #13
+70866 nodes searched with max depth 7
+turn took 0.072 seconds
+action: 63W
+position evaluation: 6.25
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , ,X,O, 
+3 X, , , ,O, ,X
+4 X,O, , , , , 
+5 X,O, , , , ,X
+6  , , , , , ,O
+7 O, , , , , , 
+move #14
+turn took 19.007 seconds
+action: 16N
+position evaluation: 4.25
+
+Sending: 24E
+24E
+Response: 24E
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , ,X,O, 
+3 X, , , ,O, ,X
+4 X, ,O, , , , 
+5 X,O, , , , ,X
+6  , , , , , ,O
+7 O, , , , , , 
+move #15
+5118 nodes searched with max depth 5
+turn took 0.011 seconds
+action: 24E
+position evaluation: 5.5
+
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , ,X,O, 
+3 X, , , ,O, ,X
+4 X, ,O, , , ,X
+5 X,O, , , , , 
+6  , , , , , ,O
+7 O, , , , , , 
+move #16
+turn took 19.057 seconds
+action: 75N
+position evaluation: 4.5
+
+Sending: 17N
+17N
+Response: 17N
+  1 2 3 4 5 6 7
+1  , , , , , , 
+2  , , , ,X,O, 
+3 X, , , ,O, ,X
+4 X, ,O, , , ,X
+5 X,O, , , , , 
+6 O, , , , , ,O
+7  , , , , , , 
+move #17
+365 nodes searched with max depth 3
+turn took 0.001 seconds
+action: 17N
+position evaluation: 6.5
+
+  1 2 3 4 5 6 7
+1  , , , ,X, , 
+2  , , , , ,O, 
+3 X, , , ,O, ,X
+4 X, ,O, , , ,X
+5 X,O, , , , , 
+6 O, , , , , ,O
+7  , , , , , , 
+move #18
+turn took 1.8 seconds
+action: 52N
+position evaluation: 7.5
+
+Sending: 53W
+53W
+Response: 53W
+  1 2 3 4 5 6 7
+1  , , , ,X, , 
+2  , , , , ,O, 
+3 X, , ,O, , ,X
+4 X, ,O, , , ,X
+5 X,O, , , , , 
+6 O, , , , , ,O
+7  , , , , , , 
+move #19
+12 nodes searched with max depth 1
+turn took 0 seconds
+action: 53W
+position evaluation: 9.73438
+
+we won!
+Connection closed by foreign host.
