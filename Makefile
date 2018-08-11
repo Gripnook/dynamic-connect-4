@@ -12,11 +12,11 @@
 
 
 # Configuration Settings
-TARGET := agent.exe
-CXXFLAGS := -std=c++1y -Wall -Wextra -pedantic -Isrc -pthread
-LIBFLAGS := 
-SRCS := main.cpp game/game.cpp game/state.cpp game/drawboard.cpp
-DIRECTORIES := game game/heuristics search util
+TARGET := dc4.so
+CXXFLAGS := -std=c++1y -Wall -Wextra -pedantic -Isrc -I/usr/include/python3.5 -pthread
+LIBFLAGS := -lboost_python-py35
+SRCS := ml/main.cpp game/game.cpp game/state.cpp game/drawboard.cpp
+DIRECTORIES := game game/heuristics search util ml
 
 
 CXX_RELEASE := g++
@@ -38,6 +38,7 @@ DEPS_DEBUG := $(OBJS_DEBUG:.o=.d)
 
 all: release
 	cp $(RELEASE_DIR)/$(TARGET) $(TARGET)
+	python3 main.py
 
 .PHONY: release debug clean
 release: $(RELEASE_DIR) $(RELEASE_DIRS) $(RELEASE_DIR)/$(TARGET)
@@ -51,10 +52,10 @@ $(RELEASE_DIR):
 $(RELEASE_DIRS):
 	mkdir -p $@
 $(RELEASE_DIR)/$(TARGET): $(OBJS_RELEASE)
-	$(CXX_RELEASE) $(CXXFLAGS_RELEASE) $^ -o $@ $(LIBFLAGS)
+	$(CXX_RELEASE) $(CXXFLAGS_RELEASE) $^ -shared -o $@ $(LIBFLAGS)
 -include $(DEPS_RELEASE)
 $(RELEASE_DIR)/%.o: $(SRC_DIR)/%.cpp
-	$(CXX_RELEASE) $(CXXFLAGS_RELEASE) -MMD -c $< -o $@
+	$(CXX_RELEASE) $(CXXFLAGS_RELEASE) -MMD -c -fpic $< -o $@
 
 
 $(DEBUG_DIR):
@@ -62,8 +63,8 @@ $(DEBUG_DIR):
 $(DEBUG_DIRS):
 	mkdir -p $@
 $(DEBUG_DIR)/$(TARGET): $(OBJS_DEBUG)
-	$(CXX_DEBUG) $(CXXFLAGS_DEBUG) $^ -o $@ $(LIBFLAGS)
+	$(CXX_DEBUG) $(CXXFLAGS_DEBUG) $^ -shared -o $@ $(LIBFLAGS)
 -include $(DEPS_DEBUG)
 $(DEBUG_DIR)/%.o: $(SRC_DIR)/%.cpp
-	$(CXX_DEBUG) $(CXXFLAGS_DEBUG) -MMD -c $< -o $@
+	$(CXX_DEBUG) $(CXXFLAGS_DEBUG) -MMD -c -fpic $< -o $@
 

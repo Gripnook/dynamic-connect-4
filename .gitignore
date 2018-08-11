@@ -49,6 +49,7 @@ Temporary Items
 # Build files
 build
 agent.exe
+dc4.so
 
 # Visual Studio
 .vs
